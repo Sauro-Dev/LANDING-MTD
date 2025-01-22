@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { User } from 'lucide-react';
+import mtdLogo from '../assets/mtd-logov2.png';
 
 interface NavbarProps {
     title?: string;
@@ -18,7 +19,11 @@ const Navbar: FC<NavbarProps> = ({ title = 'MAKE THE DIFFERENCE' }) => {
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex items-center space-x-8">
                     <Link to="/landing" className="flex items-center">
-                        <div className="h-10 w-10 bg-white rounded-full" />
+                        <img
+                            src={mtdLogo}
+                            alt="MTD Logo"
+                            className="h-10 w-10 object-contain"
+                        />
                         <span className="text-white ml-2 font-bold">{title}</span>
                     </Link>
                     <div className="hidden md:flex space-x-6">
