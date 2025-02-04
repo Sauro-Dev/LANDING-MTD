@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Landing from '../components/Landing';
-import AboutUs from '../components/AboutUs';
-import PlayList from "../components/PlayList.tsx";
-import Library from "../components/Library.tsx";
-import Newsletters from "../components/Newsletters.tsx";
+import Landing from '../components/landing/Landing.tsx';
+import AboutUs from '../components/landing/AboutUs.tsx';
+import PlayList from "../components/landing/PlayList.tsx";
+import Library from "../components/landing/Library.tsx";
+import Newsletters from "../components/landing/Newsletters.tsx";
 
 const AppRouter: FC = () => {
     return (

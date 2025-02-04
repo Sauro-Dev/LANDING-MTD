@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { Edit } from 'lucide-react';
-import Navbar from "./Navbar";
+import Navbar from "../common/Navbar.tsx";
 
 // Selector Component
 const TypeSelector: FC<{ activeType: string; onTypeChange: (type: string) => void }> = ({

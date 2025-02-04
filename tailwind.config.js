@@ -7,10 +7,11 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: {
-                    DEFAULT: '#646cff',
-                    hover: '#535bf2',
-                },
+                primary: '#ED117F',
+                secondary: '#F4C22E',
+                accent: '#F1C135',
+                dark: '#000000',
+                light: '#FFFFFF',
             },
             container: {
                 center: true,
@@ -19,4 +20,4 @@ export default {
         },
     },
     plugins: [],
-}
+};

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Edit } from 'lucide-react';
-import Navbar from "./Navbar.tsx";
+import Navbar from "../common/Navbar.tsx";
 
 // Componente para las tarjetas del equipo
 interface TeamMemberCardProps {

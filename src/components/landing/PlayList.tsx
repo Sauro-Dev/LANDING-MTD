@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
-import Navbar from './Navbar';
+import Navbar from '../common/Navbar.tsx';
 
 interface PlaylistCardProps {
     id: number;  // Cambiamos para usar solo el id
