@@ -6,6 +6,7 @@ import ValuesSection from "./main/ValuesSection.tsx";
 import FAQSection from "./main/FAQSection.tsx";
 import CertificationsSection from "./main/CerttificationSection.tsx";
 import Footer from "../common/Footer.tsx";
+import ResponsiveMarquee from "../ui/partners/ResponsiveMarquee.tsx";
 
 
 const Landing: FC = () => {
@@ -13,6 +14,7 @@ const Landing: FC = () => {
         <div className="min-h-screen">
             <Navbar />
             <HeroSection />
+            <ResponsiveMarquee />
             <AreasSection />
             <ValuesSection />
             <FAQSection />
