@@ -17,6 +17,9 @@ export default {
                 center: true,
                 padding: '1rem',
             },
+            fontFamily: {
+                poppins: ['Poppins', 'sans-serif'],
+            },
             animation: {
                 'infinite-scroll-half': 'infinite-scroll-half 25s linear infinite',
                 'infinite-scroll-half-mobile': 'infinite-scroll-half-mobile 35s linear infinite',
