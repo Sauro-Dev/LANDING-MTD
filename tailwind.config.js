@@ -18,9 +18,9 @@ export default {
                 padding: '1rem',
             },
             animation: {
-                'infinite-scroll-half': 'infinite-scroll-half 25s linear infinite',
-                'infinite-scroll-half-mobile': 'infinite-scroll-half-mobile 35s linear infinite',
-                'infinite-scroll-highres': 'infinite-scroll-highres 20s linear infinite',
+                'infinite-scroll-half': 'infinite-scroll-half 15s linear infinite',
+                'infinite-scroll-half-mobile': 'infinite-scroll-half-mobile 20s linear infinite',
+                'infinite-scroll-highres': 'infinite-scroll-highres 10s linear infinite',
             },
             keyframes: {
                 'infinite-scroll-half': {
