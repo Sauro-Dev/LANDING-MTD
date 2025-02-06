@@ -9,7 +9,7 @@ import Footer from "../common/Footer.tsx";
 import ResponsiveMarquee from "../ui/partners/ResponsiveMarquee.tsx";
 
 
-const Landing: FC = () => {
+const Home: FC = () => {
     return (
         <div className="min-h-screen">
             <Navbar />
@@ -23,4 +23,4 @@ const Landing: FC = () => {
         </div>
     );
 };
-export default Landing;
+export default Home;
