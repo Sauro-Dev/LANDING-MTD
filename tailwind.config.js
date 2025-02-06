@@ -26,12 +26,9 @@ export default {
             // Definición de animaciones para el carrusel infinito:
             // Se utiliza "translateX(-50%)" para desplazar el contenedor duplicado (dos copias de los ítems)
             animation: {
-                // Para pantallas estándar: 25 segundos
-                'infinite-scroll-half': 'infinite-scroll-half 25s linear infinite',
-                // Para dispositivos móviles: 35 segundos (más lenta para mayor fluidez)
-                'infinite-scroll-half-mobile': 'infinite-scroll-half-mobile 35s linear infinite',
-                // Para pantallas de alta resolución (por ejemplo, 2K): 20 segundos (más rápida)
-                'infinite-scroll-highres': 'infinite-scroll-highres 20s linear infinite',
+                'infinite-scroll-half': 'infinite-scroll-half 15s linear infinite',
+                'infinite-scroll-half-mobile': 'infinite-scroll-half-mobile 20s linear infinite',
+                'infinite-scroll-highres': 'infinite-scroll-highres 10s linear infinite',
             },
             keyframes: {
                 'infinite-scroll-half': {
