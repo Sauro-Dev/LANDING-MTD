@@ -33,35 +33,24 @@ const ResponsiveMarquee: React.FC = () => {
         animationClass = 'animate-infinite-scroll-highres';
     }
 
-    // Duplicar el arreglo para generar el efecto continuo
-    const allLogos = [...logos, ...logos];
+    const duplicatedLogos = [...logos, ...logos, ...logos, ...logos, ...logos]; // Duplicación extra para cubrir el espacio
 
     return (
         <div className="bg-white">
-            {/* Título centrado con las clases definidas en Tailwind */}
-            <h2 className="text-primary font-sans text-center text-2xl font-bold py-4">
+            <h2 className="py-4 font-sans text-2xl font-bold text-center text-primary">
                 Nuestros Aliados
             </h2>
-            <div className="overflow-hidden">
-                <div className={cn("flex whitespace-nowrap", animationClass)}>
-                    {allLogos.map((logo, index) => {
-                        // El arreglo original tiene 3 logos; la primera copia son índices 0-2 y la segunda 3-5.
-                        // Eliminamos el margen derecho del último elemento de la primera copia (índice 2)
-                        // y el margen izquierdo del primer elemento de la segunda copia (índice 3)
-                        let marginClass = "mx-4";
-                        if (index === logos.length - 1 || index === logos.length) {
-                            marginClass = "mx-0";
-                        }
-                        return (
-                            <div key={index} className="flex-shrink-0">
-                                <img
-                                    src={logo.src}
-                                    alt={logo.alt}
-                                    className={`h-12 sm:h-16 md:h-20 lg:h-24 ${marginClass}`}
-                                />
-                            </div>
-                        );
-                    })}
+            <div className="relative overflow-hidden">
+                <div className={cn("flex w-auto min-w-max -mx-1 whitespace-nowrap hover:[animation-play-state:paused]", animationClass)}>
+                    {duplicatedLogos.map((logo, index) => (
+                        <div key={index} className="flex-shrink-0 mx-12">
+                            <img
+                                src={logo.src}
+                                alt={logo.alt}
+                                className="object-contain h-12 sm:h-16 md:h-20 lg:h-24"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
