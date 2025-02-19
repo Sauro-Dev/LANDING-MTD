@@ -44,10 +44,10 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
 
     const decodeToken = (token: string) => {
         try {
-            const payload = JSON.parse(atob(token.split(".")[1]));
+            const payload = JSON.parse(atob(token.split(".")[1])); // Decodificar payload del JWT
             return {
                 name: payload.username || "Usuario",
-                surname: payload.surname || "",
+                surname: payload.surname || "", // Asegurar que tenemos un apellido
             };
         } catch {
             return { name: "Usuario", surname: "" };
