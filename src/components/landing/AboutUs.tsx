@@ -10,7 +10,7 @@ import Footer from "../common/Footer.tsx";
 
 const AboutUs: FC = () => {
     return (
-        <div className="min-h-screen pt-16">
+        <div className="min-h-screen">
             <Navbar />
             <TeamSection />
             <CollaboratorSection />

@@ -18,7 +18,7 @@ const Navbar: FC = () => {
     ];
 
     return (
-        <nav className="bg-primary p-4 fixed w-full top-0 z-50 shadow-md font-poppins">
+        <nav className="bg-primary p-4 w-full top-0 z-50 shadow-md font-poppins">
             <div className="container mx-auto flex justify-between items-center">
                 {/* Menú Hamburguesa */}
                 <button
@@ -37,15 +37,15 @@ const Navbar: FC = () => {
                     <img
                         src={mtdLogo}
                         alt="MTD Logo"
-                        className="h-12 w-12 md:h-14 md:w-14 object-contain transition-all duration-300"
+                        className="h-16 w-16 md:h-16 md:w-16 object-contain transition-all duration-300"
                     />
                     <div className="flex flex-col leading-tight -space-y-0.5">
-                        <span className="text-light font-bold text-xl md:text-2xl font-poppins">MAKE THE</span>
-                        <span className="text-light font-bold text-xl md:text-2xl font-poppins">DIFFERENCE</span>
+                        <span className="text-light font-medium text-xl md:text-2xl font-poppins">MAKE THE</span>
+                        <span className="text-light font-medium text-xl md:text-2xl font-poppins">DIFFERENCE</span>
                     </div>
                 </Link>
                 {/* Menú desktop */}
-                <div className="hidden md:flex space-x-6 lg:space-x-8 text-xl font-semibold">
+                <div className="hidden md:flex space-x-6 lg:space-x-8 text-xl font-medium">
                     {routes.map((route) => (
                         <Link
                             key={route.path}
