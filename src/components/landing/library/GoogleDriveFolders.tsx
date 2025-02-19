@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import driveFolder from '../../../assets/library/drivefolder.png';
+import driveFolder from "../../../assets/library/drivefolder.png";
+import readingGirl from "../../../assets/library/chicaleyendo.png"; // Imagen de la chica leyendo
 
 const API_KEY = "AIzaSyByqLVx-zkF_0leNc4uwXBiGLLSdB2L2lc"; // Tu API Key
 const FOLDER_ID = "1WacAVstGYV6XnRiIw4L55BeuwtYFDa8T"; // ID de la carpeta
@@ -50,7 +51,7 @@ const GoogleDriveFolders: FC = () => {
                 <p className="text-center text-yellow-300">{error}</p>
             ) : (
                 <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-4xl">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
                         {folders.map((folder) => (
                             <a
                                 key={folder.id}
@@ -64,13 +65,22 @@ const GoogleDriveFolders: FC = () => {
                                     alt="Carpeta"
                                     className="w-20 h-20 mb-2"
                                 />
-                                <span className="font-semibold">{folder.name}</span>
+                                <span className="font-semibold text-center">{folder.name}</span>
                             </a>
                         ))}
                     </div>
 
-                    {/* Frase final */}
-                    <p className="mt-28 mb-12 font-semibold text-4xl italic text-white">"Abre la puerta al conocimiento"</p>
+                    {/* Contenedor de la frase y la imagen */}
+                    <div className="mt-20 flex items-center justify-center gap-6">
+                        <p className="font-light text-2xl italic text-white text-center">
+                            "Abre la puerta al conocimiento"
+                        </p>
+                        <img
+                            src={readingGirl}
+                            alt="Chica leyendo"
+                            className="hidden md:block w-52 md:w-64 h-auto -mb-16"
+                        />
+                    </div>
                 </>
             )}
         </div>
