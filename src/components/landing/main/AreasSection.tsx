@@ -2,34 +2,34 @@ import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AreasSection: FC = () => {
-    const navigate = useNavigate(); // Hook para la navegación
+    const navigate = useNavigate();
 
     return (
-        <div className="relative py-32 bg-white flex items-center justify-between container mx-auto min-h-[500px]">
-            <img
-                src="/src/assets/faq/Decore.png"
-                alt="Decoración"
-                className="absolute right-0 bottom-0 w-[45%] h-auto -z-10"
-            />
-            <div className="text-left w-1/2 space-y-4">
-                <h2 className="text-[48px] font-bold text-black">HAZ LA DIFERENCIA</h2>
-                <p className="text-[48px] font-semibold text-black leading-tight">
-                    ¡En Make The Difference <br />
-                    buscamos alguien como tú!
-                </p>
-                <button
-                    className="bg-pink-600 text-white font-extrabold py-4 px-12 rounded-lg text-[48px] shadow-lg hover:bg-pink-700 transition-all uppercase"
-                    onClick={() => navigate("/volunteer-form")} // Redirige al formulario
-                >
-                    ¡ÚNETENOS!
-                </button>
-            </div>
-            <div className="w-1/2 flex justify-end">
-                <img
-                    src="/src/assets/faq/alumn.png"
-                    alt="Estudiante Make The Difference"
-                    className="w-[350px] h-auto object-cover absolute bottom-0 right-10"
-                />
+        <div className="relative py-16 bg-white flex flex-col items-center justify-center overflow-hidden">
+            {/* Contenedor principal */}
+            <div className="container mx-auto flex flex-row items-center justify-center gap-36 px-4 md:px-16 text-center">
+                {/* Texto y botón */}
+                <div className="max-w-lg space-y-6 flex flex-col items-center">
+                    <h2 className="text-4xl font-bold text-black">HAZ LA DIFERENCIA</h2>
+                    <p className="text-4xl font-medium text-black leading-snug">
+                        ¡En Make The Difference buscamos alguien como tú!
+                    </p>
+                    <button
+                        className="bg-pink-600 text-white font-extrabold py-5 px-10 rounded-2xl text-5xl shadow-xl hover:bg-pink-700 transition-all"
+                        onClick={() => navigate("/volunteer-form")}
+                    >
+                        ¡ÚNETENOS!
+                    </button>
+                </div>
+
+                {/* Imagen */}
+                <div className="w-full max-w-sm flex justify-center">
+                    <img
+                        src="/src/assets/faq/alumn.png"
+                        alt="Estudiante Make The Difference"
+                        className="w-full object-contain drop-shadow-lg"
+                    />
+                </div>
             </div>
         </div>
     );

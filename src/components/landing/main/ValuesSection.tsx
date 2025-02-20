@@ -5,8 +5,18 @@ const ValuesSection: FC = () => {
     return (
         <section className="relative w-full bg-white">
             {/* Contenedor Principal */}
-            <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-12 py-16">
-                <img src="/src/assets/faq/alumn2.png" alt="Líder" className="w-80 md:w-96 h-auto" />
+            <div className="container mx-auto flex flex-row items-center justify-between py-16">
+                {/* Contenedor de imagen con destello */}
+                <div className="relative group">
+                    <div className="absolute inset-0 bg-blue-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all">
+                    </div>
+                    <img
+                        src="/src/assets/faq/alumn2.png"
+                        alt="Líder"
+                        className="w-80 md:w-96 h-auto relative z-10 drop-shadow-xl"
+                    />
+                </div>
+
                 <div className="text-right max-w-2xl relative">
                     <p className="text-lg font-semibold text-gray-700 absolute -top-6 right-0">Sé un líder</p>
                     <h2 className="text-5xl md:text-6xl font-bold text-blue-900 mb-16">Únete Y Sé Parte Del Cambio</h2>
