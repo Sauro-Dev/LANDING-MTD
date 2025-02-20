@@ -5,6 +5,7 @@ import AboutUs from '../components/landing/AboutUs.tsx';
 import PlayList from "../components/landing/PlayList.tsx";
 import Library from "../components/landing/Library.tsx";
 import Newsletters from "../components/landing/Newsletters.tsx";
+import VolunteerForm from "../components/landing/forms/VolunteerForm.tsx";
 
 const AppRouter: FC = () => {
     return (
@@ -20,6 +21,10 @@ const AppRouter: FC = () => {
                     <Route path="/playlists" element={<PlayList />} />
                     <Route path="/biblioteca" element={<Library />} />
                     <Route path="/boletines" element={<Newsletters />} />
+
+
+                    {/* Ruta del formulario */}
+                    <Route path="/volunteer-form" element={<VolunteerForm />} />
 
                     {/* Ruta 404 - Página no encontrada */}
                     <Route path="*" element={<Navigate to="/home" replace />} />
