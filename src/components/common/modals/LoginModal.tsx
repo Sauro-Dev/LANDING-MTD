@@ -4,22 +4,20 @@ import environment from "../../../enviroment";
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onLoginSuccess?: (token: string) => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess = () => {} }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
-    const [userData, setUserData] = useState<{ name: string; surname: string } | null>(null);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const modalRef = useRef<HTMLDivElement>(null);
 
+    // Leer el token de localStorage al cargar
     useEffect(() => {
-        const storedToken = localStorage.getItem("token");
-        if (storedToken) {
-            const storedName = localStorage.getItem("name");
-            const storedSurname = localStorage.getItem("surname");
-            setUserData({ name: storedName || "", surname: storedSurname || "" });
+        const token = localStorage.getItem("token");
+        if (token) {
+            setIsAuthenticated(true);
         }
     }, []);
 
@@ -42,18 +40,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
 
     if (!isOpen) return null;
 
-    const decodeToken = (token: string) => {
-        try {
-            const payload = JSON.parse(atob(token.split(".")[1])); // Decodificar payload del JWT
-            return {
-                name: payload.username || "Usuario",
-                surname: payload.surname || "", // Asegurar que tenemos un apellido
-            };
-        } catch {
-            return { name: "Usuario", surname: "" };
-        }
-    };
-
     const handleLogin = async () => {
         setError(null);
 
@@ -72,39 +58,42 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
                 return;
             }
 
-            const data: { token: string } = await response.json();
+            const data = await response.json();
             localStorage.setItem("token", data.token);
 
-            // Decodificar token para extraer nombre y apellido
-            const userInfo = decodeToken(data.token);
-            localStorage.setItem("name", userInfo.name);
-            localStorage.setItem("surname", userInfo.surname);
-            setUserData(userInfo);
-
-            onLoginSuccess(data.token);
-            onClose(); // 🚀 Cerrar modal solo si el login es exitoso
+            window.location.href = `http://localhost:4200/admin-panel?token=${data.token}`;
         } catch {
             setError("Error al conectar con el servidor. Intente nuevamente.");
         }
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            await fetch(`${environment.API_URL}/users/logout`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+            });
+        }
+
         localStorage.removeItem("token");
-        localStorage.removeItem("name");
-        localStorage.removeItem("surname");
-        setUserData(null);
-        onClose();
+        window.dispatchEvent(new StorageEvent("storage", { key: "token", newValue: null }));
+        window.location.reload();
     };
 
     return (
         <div className="fixed top-16 right-4 z-50">
             <div ref={modalRef} className="bg-white p-6 rounded-lg shadow-lg w-80">
                 <h2 className="text-xl font-semibold mb-4">
-                    {userData ? `Bienvenido, ${userData.name} ${userData.surname}` : "Iniciar Sesión"}
+                    {isAuthenticated ? "Bienvenido" : "Iniciar Sesión"}
                 </h2>
 
-                {userData ? (
-                    // Opciones si el usuario está autenticado
+                {isAuthenticated ? (
+                    // Si está autenticado, mostrar opciones de sistema y logout
                     <div className="space-y-4">
                         <a
                             href={environment.ANGULAR_APP_URL}
@@ -120,7 +109,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onLoginSuccess
                         </button>
                     </div>
                 ) : (
-                    // Formulario de login
+                    // Si no está autenticado, mostrar el formulario de login
                     <form onSubmit={(e) => e.preventDefault()}>
                         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                         <div className="mb-4">
