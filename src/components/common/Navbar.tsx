@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { User, Menu } from "lucide-react"; // Eliminamos 'X' porque no se usa
-import mtdLogo from "../../assets/mtd-logov2.png";
+import mtdLogo from "../../assets/logos/mtd-logov2.png";
 import LoginModal from "./modals/LoginModal";
 
 const Navbar: FC = () => {

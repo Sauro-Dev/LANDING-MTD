@@ -1,129 +1,179 @@
-import { FC, useState } from 'react';
-import { ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
+import {FC, useState} from 'react';
 import Navbar from '../common/Navbar.tsx';
+import Footer from "../common/Footer.tsx";
+import spotifyLogo from "../../assets/logos/spotify-logo.svg";
 
-interface PlaylistCardProps {
-    id: number;  // Cambiamos para usar solo el id
-    onRemove: (id: number) => void;  // Actualizamos para pasar el id
-}
 
-// Componente Tarjeta de Playlist
-const PlaylistCard: FC<PlaylistCardProps> = ({ id, onRemove }) => (
-    <div className="relative bg-gray-800 aspect-square rounded-lg flex flex-col items-center justify-center text-white">
-        <button
-            onClick={() => onRemove(id)}
-            className="absolute top-2 right-2 hover:text-pink-300"
-        >
-            <X size={20} />
-        </button>
-        <h3 className="text-2xl font-bold mb-4">PLAYLIST</h3>
-        <div className="flex space-x-2">
-            <span>E</span>
-            <span>X</span>
-        </div>
-    </div>
-);
+const playlistsData = [
+    {
+        id: '02IIpD4fdzXj3YNImNAHna',
+        // title: 'Playlist 1', // No mostraremos el título
+        embedUrl:
+            'https://open.spotify.com/embed/playlist/02IIpD4fdzXj3YNImNAHna?utm_source=generator&theme=0',
+        directUrl: 'https://open.spotify.com/playlist/02IIpD4fdzXj3YNImNAHna',
+    },
+    {
+        id: '1WCRwQ0f4yT8tuIUUxP5m1',
+        // title: 'Playlist 2',
+        embedUrl:
+            'https://open.spotify.com/embed/playlist/1WCRwQ0f4yT8tuIUUxP5m1?utm_source=generator&theme=0',
+        directUrl: 'https://open.spotify.com/playlist/1WCRwQ0f4yT8tuIUUxP5m1',
+    },
+];
 
-// Componente Letra
-const LyricsSection: FC = () => (
-    <div className="bg-gray-800 aspect-[4/3] rounded-lg p-6 text-white">
-        <h2 className="text-2xl font-bold text-center mb-4">LETRA</h2>
-        <div className="h-full overflow-y-auto">
-            <p className="text-center text-gray-300">
-                Contenido de la letra de la canción...
-            </p>
-        </div>
-    </div>
-);
-
-// Componente Principal Playlist
 const PlayList: FC = () => {
-    const [playlists, setPlaylists] = useState([
-        { id: 1 },
-        { id: 2 },
-        { id: 3 },
-    ]);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    const handleAddPlaylist = () => {
-        const newPlaylist = {
-            id: playlists.length + 1,
-        };
-        setPlaylists([...playlists, newPlaylist]);
+    const currentPlaylist = playlistsData[currentIndex];
+    const showArrows = playlistsData.length > 1;
+
+    // Retroceder
+    const goPrev = () => {
+        if (currentIndex > 0) setCurrentIndex((idx) => idx - 1);
     };
 
-    const handleRemovePlaylist = (id: number) => {
-        setPlaylists(playlists.filter(playlist => playlist.id !== id));
+    // Avanzar
+    const goNext = () => {
+        if (currentIndex < playlistsData.length - 1) setCurrentIndex((idx) => idx + 1);
     };
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="flex flex-col min-h-screen bg-gray-100">
             <Navbar />
-            <div className="container mx-auto px-4 pt-24">
-                {/* Botón Agregar */}
-                <div className="flex justify-center mb-8">
-                    <button
-                        onClick={handleAddPlaylist}
-                        className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 flex items-center gap-2"
+
+            {/* Aplica la fuente league spartan en todo el contenido */}
+            <main className="flex-grow pt-24 pb-8 font-league-spartan">
+                {/* Encabezado, elimínalo si no lo deseas */}
+                <h1 className="text-2xl font-league-spartan mb-6 text-center">
+                    Playlists Recomendadas
+                </h1>
+
+                {/* Contenedor relativo para las flechas y el iframe */}
+                <div className="relative flex flex-col items-center">
+                    {/* Flecha Izquierda (se muestra si hay +1 playlist) */}
+                    {showArrows && (
+                        <button
+                            onClick={goPrev}
+                            className="
+                absolute
+                z-10
+                left-[57rem]
+                top-1/2
+                transform
+                -translate-y-1/2
+                bg-primary
+                w-10
+                h-10
+                rounded-full
+                flex
+                items-center
+                justify-center
+                shadow
+                hover:bg-pink-600
+              "
+                        >
+                            <svg
+                                className="w-5 h-5 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M12.293 16.293a1 1 0 01-1.414 0l-5-5a1
+                     1 0 010-1.414l5-5a1 1 0 011.414
+                     1.414L8.414 10l3.879 3.879a1 1
+                     0 010 1.414z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </button>
+                    )}
+
+                    {/* Flecha Derecha (se muestra si hay +1 playlist) */}
+                    {showArrows && (
+                        <button
+                            onClick={goNext}
+                            className="
+                absolute
+                z-10
+                right-[57rem]
+                top-1/2
+                transform
+                -translate-y-1/2
+                bg-primary
+                w-10
+                h-10
+                rounded-full
+                flex
+                items-center
+                justify-center
+                shadow
+                hover:bg-pink-600
+              "
+                        >
+                            <svg
+                                className="w-5 h-5 text-white"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    d="M7.707 16.293a1 1 0
+                     001.414 0l5-5a1 1 0
+                     000-1.414l-5-5a1 1 0
+                     10-1.414 1.414L11.586 10l-3.879
+                     3.879a1 1 0 000 1.414z"
+                                    clipRule="evenodd"
+                                />
+                            </svg>
+                        </button>
+                    )}
+
+                    {/* No mostramos currentPlaylist.title */}
+                    {/* Iframe */}
+                    <iframe
+                        className="rounded-md"
+                        style={{
+                            width: '350px',
+                            height: '352px',
+                            borderRadius: '12px',
+                        }}
+                        src={currentPlaylist.embedUrl}
+                        frameBorder="0"
+                        allowFullScreen={false}
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                    ></iframe>
+
+                    {/* Botón Escuchar en Spotify */}
+                    <a
+                        href={currentPlaylist.directUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="
+              mt-4
+              inline-flex
+              items-center
+              bg-secondary
+              text-black
+              px-4
+              py-2
+              rounded
+              hover:bg-pink-600
+              transition-colors
+            "
                     >
-                        <Plus size={20} />
-                        Agregar
-                    </button>
+                        <img
+                            src={spotifyLogo}
+                            alt="Spotify Logo"
+                            className="w-5 h-5 mr-2"
+                        />
+                        Escuchar en Spotify
+                    </a>
                 </div>
+            </main>
 
-                {/* Carousel de Playlists */}
-                <div className="relative">
-                    <button className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-purple-500 p-2 rounded-full text-white hover:bg-purple-600">
-                        <ChevronLeft size={24} />
-                    </button>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mx-12">
-                        {playlists.map((playlist) => (
-                            <PlaylistCard
-                                key={playlist.id}
-                                id={playlist.id}
-                                onRemove={handleRemovePlaylist}
-                            />
-                        ))}
-                    </div>
-
-                    <button className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-purple-500 p-2 rounded-full text-white hover:bg-purple-600">
-                        <ChevronRight size={24} />
-                    </button>
-                </div>
-
-                {/* Sección de Letra */}
-                <div className="mt-12 mb-8">
-                    <LyricsSection />
-                </div>
-
-                {/* Footer Quote */}
-                <div className="mt-12 text-center text-gray-600">
-                    <p className="italic">
-                        "Nunca dudes que un pequeño grupo de ciudadanos comprometidos puede
-                        cambiar el mundo. De hecho, solo eso puede lograrlo"
-                    </p>
-                    <p className="mt-2">-Margaret Mead</p>
-                </div>
-            </div>
-
-            {/* Footer Contact */}
-            <footer className="bg-black text-white py-8">
-                <div className="container mx-auto px-4">
-                    <div className="flex flex-col md:flex-row justify-between items-center">
-                        <div className="space-x-4">
-                            <a href="#" className="hover:text-pink-300">Facebook</a>
-                            <a href="#" className="hover:text-pink-300">Instagram</a>
-                            <a href="#" className="hover:text-pink-300">Twitter</a>
-                            <a href="#" className="hover:text-pink-300">TikTok</a>
-                        </div>
-                        <div className="mt-4 md:mt-0">
-                            <h3 className="font-bold mb-2">CONTÁCTANOS</h3>
-                            <p>example@hotmail.com</p>
-                            <p>+51 111222333</p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };
