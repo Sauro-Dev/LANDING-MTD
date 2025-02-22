@@ -7,22 +7,29 @@ const VolunteerForm = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
-        lastnameP: "",
-        lastnameM: "",
+        paternalSurname: "",
+        maternalSurname: "",
         email: "",
         dni: "",
-        phone: "",
-        callingCode: "+51",
         birthdate: "",
+        phoneNumber: "",
+        codeNumber: "+51",
         area: "",
-        hours: "",
+        estimatedHours: "",
         motivation: "",
+        country: "Peru",
+        region: "",
     });
 
     const [selectedCountry, setSelectedCountry] = useState<CountryCode>("PE"); // País predeterminado (Perú)
     const [phoneValid, setPhoneValid] = useState(true);
     const [countries, setCountries] = useState<{ code: CountryCode; name: string }[]>([]);
     const [errors, setErrors] = useState({ email: "", dni: "", birthdate: "" });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showModal, setShowModal] = useState(false); // Control de la modal
+
+
+
 
     useEffect(() => {
         // Obtener la lista de países
@@ -37,7 +44,7 @@ const VolunteerForm = () => {
         // Actualizar el código del país en `callingCode` cuando cambie la selección
         setFormData((prev) => ({
             ...prev,
-            callingCode: `+${getCountryCallingCode(selectedCountry)}`,
+            codeNumber: `+${getCountryCallingCode(selectedCountry)}`,
         }));
     }, [selectedCountry]);
 
@@ -62,7 +69,7 @@ const VolunteerForm = () => {
             }));
         }
 
-        if (name === "phone") {
+        if (name === "phoneNumber") {
             setPhoneValid(isValidPhoneNumber(value, selectedCountry));
         }
 
@@ -90,8 +97,9 @@ const VolunteerForm = () => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         if (!phoneValid) {
             alert("Número de teléfono no válido.");
             return;
@@ -100,8 +108,26 @@ const VolunteerForm = () => {
             alert(errors.birthdate);
             return;
         }
-        console.log("Datos enviados:", formData);
-        alert("Formulario enviado con éxito (No conectado aún al backend)");
+
+        setIsSubmitting(true); // Deshabilitar botón de envío mientras se procesa
+
+        try {
+            const response = await fetch("http://localhost:8080/api/v1/volunteers/form", { // Cambia la URL aquí
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                setShowModal(true); // Muestra modal de éxito
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || "Hubo un error en el envío.");
+            }
+        } catch (error) {
+            console.error("Error en el envío del formulario:", error);
+            alert("Error al conectar con el servidor."); // Mensaje de error
+        }
     };
 
     return (
@@ -140,8 +166,8 @@ const VolunteerForm = () => {
                             <label className="text-gray-700 font-medium">Apellido Paterno</label>
                             <input
                                 type="text"
-                                name="lastnameP"
-                                value={formData.lastnameP}
+                                name="paternalSurname"
+                                value={formData.paternalSurname}
                                 onChange={handleChange}
                                 placeholder="Apellido Paterno"
                                 required
@@ -152,8 +178,8 @@ const VolunteerForm = () => {
                             <label className="text-gray-700 font-medium">Apellido Materno</label>
                             <input
                                 type="text"
-                                name="lastnameM"
-                                value={formData.lastnameM}
+                                name="maternalSurname"
+                                value={formData.maternalSurname}
                                 onChange={handleChange}
                                 placeholder="Apellido Materno"
                                 required
@@ -216,8 +242,8 @@ const VolunteerForm = () => {
                                 </select>
                                 <input
                                     type="tel"
-                                    name="phone"
-                                    value={formData.phone}
+                                    name="phoneNumber"
+                                    value={formData.phoneNumber}
                                     onChange={handleChange}
                                     placeholder="Número de celular"
                                     required
@@ -267,8 +293,8 @@ const VolunteerForm = () => {
                         <div className="flex flex-col">
                             <label className="text-gray-700 font-medium">Horas disponible por semana</label>
                             <select
-                                name="hours"
-                                value={formData.hours}
+                                name="estimatedHours"
+                                value={formData.estimatedHours}
                                 onChange={handleChange}
                                 required
                                 className="border rounded-lg p-2 w-full"
@@ -295,8 +321,12 @@ const VolunteerForm = () => {
                     </div>
 
                     <div className="flex justify-center gap-6 mt-6">
-                        <button type="submit" className="bg-pink-600 text-white font-bold py-3 px-8 rounded-lg">
-                            Enviar
+                        <button
+                            type="submit"
+                            className="bg-pink-600 text-white font-bold py-3 px-8 rounded-lg"
+                            disabled={isSubmitting} // Se desactiva mientras envía
+                        >
+                            {isSubmitting ? "Enviando..." : "Enviar"}
                         </button>
                         <button type="button" className="bg-teal-500 text-white font-bold py-3 px-8 rounded-lg">
                             Cancelar
@@ -304,8 +334,25 @@ const VolunteerForm = () => {
                     </div>
                 </form>
             </div>
+
+            {/* Modal de confirmación */}
+            {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                    <div className="bg-white rounded-lg p-6 shadow-lg text-center max-w-md">
+                        <h2 className="text-2xl font-bold text-gray-800">Solicitud Enviada</h2>
+                        <p className="text-gray-600 mt-2">Su solicitud ha sido procesada y está en espera de validación.</p>
+                        <button
+                            className="mt-4 bg-pink-600 text-white px-6 py-2 rounded-lg hover:bg-pink-700"
+                            onClick={() => setShowModal(false)}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
+
 
 export default VolunteerForm;
