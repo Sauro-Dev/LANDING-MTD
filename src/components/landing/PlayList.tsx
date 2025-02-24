@@ -7,7 +7,7 @@ import spotifyLogo from "../../assets/logos/spotify-logo.svg";
 const playlistsData = [
     {
         id: '02IIpD4fdzXj3YNImNAHna',
-        // title: 'Playlist 1', // No mostraremos el título
+        // title: 'Playlist 1', //
         embedUrl:
             'https://open.spotify.com/embed/playlist/02IIpD4fdzXj3YNImNAHna?utm_source=generator&theme=0',
         directUrl: 'https://open.spotify.com/playlist/02IIpD4fdzXj3YNImNAHna',
