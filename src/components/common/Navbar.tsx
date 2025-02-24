@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { User, Menu } from "lucide-react"; // Eliminamos 'X' porque no se usa
+import { User, Menu } from "lucide-react";
 import mtdLogo from "../../assets/logos/mtd-logov2.png";
 import LoginModal from "./modals/LoginModal";
 
@@ -10,7 +10,9 @@ const Navbar: FC = () => {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     const isActiveRoute = (path: string) =>
-        location.pathname === path ? "text-secondary" : "text-light hover:text-secondary";
+        location.pathname === path
+            ? "text-secondary"
+            : "text-light hover:text-secondary";
 
     const routes = [
         { path: "/nosotros", name: "NOSOTROS" },
@@ -20,7 +22,17 @@ const Navbar: FC = () => {
     ];
 
     return (
-        <nav className="bg-primary p-4 w-full top-0 z-50 shadow-md font-poppins">
+        <nav
+            className="
+        bg-primary
+        p-4
+        w-full
+        top-0
+        z-50
+        font-poppins
+        /* Quita o ajusta shadow-md si no quieres sombra */
+      "
+        >
             <div className="container mx-auto flex justify-between items-center">
                 {/* Menú Hamburguesa */}
                 <button
@@ -31,7 +43,7 @@ const Navbar: FC = () => {
                 </button>
 
                 {/* Logo y título */}
-                <Link to="/landing" className="flex items-center space-x-3 md:space-x-4">
+                <Link to="/home" className="flex items-center space-x-3 md:space-x-4">
                     <img src={mtdLogo} alt="MTD Logo" className="h-16 w-16 object-contain" />
                     <div className="flex flex-col leading-tight">
                         <span className="text-light font-medium text-xl">MAKE THE</span>
@@ -45,7 +57,13 @@ const Navbar: FC = () => {
                         <Link
                             key={route.path}
                             to={route.path}
-                            className={`px-4 py-2.5 rounded-lg transition-colors ${isActiveRoute(route.path)} hover:bg-primary-dark`}
+                            className={`
+                px-4 py-2.5
+                rounded-lg
+                transition-colors
+                ${isActiveRoute(route.path)}
+                hover:bg-primary-dark
+              `}
                         >
                             {route.name}
                         </Link>
