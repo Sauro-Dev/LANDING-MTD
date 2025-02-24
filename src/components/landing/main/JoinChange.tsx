@@ -13,6 +13,7 @@ const JoinChange: React.FC = () => {
                             src="/src/assets/faq/Team1.png"
                             alt="Team members"
                             className="relative drop-shadow-xl"
+                            style={{ maskImage: "linear-gradient(black 80%, transparent)" }}
                         />
                     </div>
 

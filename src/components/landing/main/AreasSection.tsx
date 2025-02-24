@@ -27,6 +27,7 @@ const AreasSection: FC = () => {
                         src="/src/assets/faq/alumn.png"
                         alt="Estudiante Make The Difference"
                         className="w-full object-cover drop-shadow-lg rounded-md"
+                        style={{ maskImage: "linear-gradient(black 80%, transparent)" }}
                     />
                 </div>
             </div>
