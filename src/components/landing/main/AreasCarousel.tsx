@@ -60,7 +60,7 @@ const AreasCarousel: React.FC = () => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="bg-white py-8">
             <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12 lg:py-16">
                 {/* Image Section */}
                 <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] mb-6 sm:mb-8 lg:mb-12 overflow-hidden rounded-xl sm:rounded-2xl">

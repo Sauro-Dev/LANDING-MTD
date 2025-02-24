@@ -1,23 +1,39 @@
 import { FC } from 'react';
 
+const FAQSection: FC = () => {
+    return (
+        <div className="py-8 flex flex-col items-center justify-center p-4">
+            <h1 className="text-3xl md:text-4xl font-semibold mb-8 md:mb-12 text-center">
+                Preguntas Frecuentes
+            </h1>
 
-const FAQSection: FC = () => (
-    <div className="py-16 bg-white">
-        <div className="container mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-12">Preguntas Frecuentes</h2>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20">
-                <img src="/src/assets/faq/person.png" alt="Preguntas" className="w-40 md:w-60 h-auto" />
-                <div className="bg-pink-300 px-8 py-6 md:px-12 md:py-8 rounded-2xl text-center shadow-lg max-w-md">
-                    <p className="text-lg leading-relaxed text-gray-800">
-                        En Make The Difference estamos comprometidos con nuestro público. Si tienes alguna pregunta,
-                        estaremos dispuestos a aclarar tus inquietudes.
+            <div className="max-w-6xl w-full flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 p-4">
+                {/* Contenedor de imagen alineado */}
+                <div className="flex justify-center md:justify-end">
+                    <div className="w-28 h-28 md:w-48 md:h-48 lg:w-64 lg:h-64 relative">
+                        <img
+                            src="src/assets/faq/person.png"
+                            alt="Ilustración de persona con preguntas"
+                            className="w-full h-full object-contain"
+                        />
+                    </div>
+                </div>
+
+                {/* Contenedor rosa centrado */}
+                <div className="bg-pink-300 rounded-xl md:rounded-[40px] p-4 md:p-6 lg:p-8 text-center flex-1 flex flex-col items-center gap-4">
+                    <p className="text-sm md:text-lg lg:text-2xl leading-relaxed text-black">
+                        En Make The Difference estamos comprometidos con nuestro público, si tienes alguna pregunta estaremos dispuestos a aclarar tus inquietudes.
                     </p>
-                    <button className="mt-4 bg-pink-600 text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md hover:bg-pink-700 transition-all">
+
+                    <button
+                        className="bg-pink-500 hover:bg-pink-600 text-white border-2 border-pink-800 rounded-full px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 text-sm md:text-base lg:text-lg transition-all duration-300 transform hover:scale-105"
+                    >
                         ¿Otra duda?
                     </button>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
+
 export default FAQSection;
