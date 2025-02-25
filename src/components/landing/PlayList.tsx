@@ -42,35 +42,32 @@ const PlayList: FC = () => {
             <Navbar />
 
             {/* Aplica la fuente league spartan en todo el contenido */}
-            <main className="flex-grow pt-24 pb-8 font-league-spartan">
+            <main className="flex-grow pt-24 pb-8 font-league-spartan px-4">
                 {/* Encabezado, elimínalo si no lo deseas */}
-                <h1 className="text-2xl font-league-spartan mb-6 text-center">
+                <h1 className="text-2xl md:text-3xl font-league-spartan mb-6 md:mb-10 text-center">
                     Playlists Recomendadas
                 </h1>
 
+            <div className="relative max-w-6xl mx-auto">
                 {/* Contenedor relativo para las flechas y el iframe */}
-                <div className="relative flex flex-col items-center">
+                <div className="flex items-center justify-center gap-4">
                     {/* Flecha Izquierda (se muestra si hay +1 playlist) */}
                     {showArrows && (
                         <button
                             onClick={goPrev}
                             className="
-                absolute
-                z-10
-                left-[57rem]
-                top-1/2
-                transform
-                -translate-y-1/2
-                bg-primary
-                w-10
-                h-10
-                rounded-full
-                flex
-                items-center
-                justify-center
-                shadow
-                hover:bg-pink-600
-              "
+                              z-10
+                              bg-primary
+                              w-8 h-8 md:w-10 md:h-10
+                              rounded-full
+                              flex
+                              items-center
+                              justify-center
+                              shadow
+                              hover:bg-pink-600
+                              transition-colors
+                              shrink-0
+                            "
                         >
                             <svg
                                 className="w-5 h-5 text-white"
@@ -89,27 +86,39 @@ const PlayList: FC = () => {
                         </button>
                     )}
 
+                    {/* Contenedor del iframe */}
+                    <div className="relative w-full max-w-[350px] md:max-w-[450px] lg:max-w-[600px]">
+                        <iframe
+                            className="rounded-md w-full"
+                            style={{
+                                height: '352px',
+                                borderRadius: '12px',
+                            }}
+                            src={currentPlaylist.embedUrl}
+                            frameBorder="0"
+                            allowFullScreen={false}
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"
+                        ></iframe>
+                    </div>
+
                     {/* Flecha Derecha (se muestra si hay +1 playlist) */}
                     {showArrows && (
                         <button
                             onClick={goNext}
                             className="
-                absolute
-                z-10
-                right-[57rem]
-                top-1/2
-                transform
-                -translate-y-1/2
-                bg-primary
-                w-10
-                h-10
-                rounded-full
-                flex
-                items-center
-                justify-center
-                shadow
-                hover:bg-pink-600
-              "
+                            z-10
+                            bg-primary
+                            w-8 h-8 md:w-10 md:h-10
+                            rounded-full
+                            flex
+                            items-center
+                            justify-center
+                            shadow
+                            hover:bg-pink-600
+                            transition-colors
+                            shrink-0
+                        "
                         >
                             <svg
                                 className="w-5 h-5 text-white"
@@ -128,40 +137,28 @@ const PlayList: FC = () => {
                             </svg>
                         </button>
                     )}
+                </div>
 
-                    {/* No mostramos currentPlaylist.title */}
-                    {/* Iframe */}
-                    <iframe
-                        className="rounded-md"
-                        style={{
-                            width: '350px',
-                            height: '352px',
-                            borderRadius: '12px',
-                        }}
-                        src={currentPlaylist.embedUrl}
-                        frameBorder="0"
-                        allowFullScreen={false}
-                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                        loading="lazy"
-                    ></iframe>
+
+
 
                     {/* Botón Escuchar en Spotify */}
+                <div className="w-full flex justify-center mt-4 md:mt-6">
                     <a
                         href={currentPlaylist.directUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="
-              mt-4
-              inline-flex
-              items-center
-              bg-secondary
-              text-black
-              px-4
-              py-2
-              rounded
-              hover:bg-pink-600
-              transition-colors
-            "
+                                inline-flex
+                                items-center
+                                bg-secondary
+                                text-black
+                                px-4
+                                py-2
+                                rounded
+                                hover:bg-pink-600
+                                transition-colors
+                            "
                     >
                         <img
                             src={spotifyLogo}
@@ -171,6 +168,7 @@ const PlayList: FC = () => {
                         Escuchar en Spotify
                     </a>
                 </div>
+            </div>
             </main>
 
             <Footer />
