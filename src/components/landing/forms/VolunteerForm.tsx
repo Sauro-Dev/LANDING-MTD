@@ -142,267 +142,309 @@ const VolunteerForm: FC = () => {
         }
     };
 
+    // Maneja el reseteo del formulario (Revision )
+    const handleReset = () => {
+        setFormData({
+            name: "",
+            paternalSurname: "",
+            maternalSurname: "",
+            email: "",
+            dni: "",
+            birthdate: "",
+            phoneNumber: "",
+            codeNumber: "+51",
+            country: "",
+            region: "",
+            motivation: "",
+            estimatedHours: "THREE",
+        });
+        setError("");
+        setServerResponse("");
+    };
+
     return (
         <div className="min-h-screen bg-light flex flex-col">
-            <Navbar/>
-            <div className="flex-1 flex flex-col items-center justify-center p-4">
+            {/* Navbar */}
+            <Navbar />
+
+            {/*
+              Barra rosa debajo del navbar
+              Botón "Volver" a la izquierda, título centrado
+            */}
+            <div className="w-full  relative flex items-center justify-center py-4 mb-4">
+                <button
+                    onClick={() => navigate("/home")}
+                    className="absolute left-4 bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700 transition-colors"
+                >
+                    Volver
+                </button>
+                <h1 className="text-2xl font-semibold text-black">
+                    Formulario de Voluntariado
+                </h1>
+            </div>
+
+            {/* Contenedor principal (tarjeta blanca con el formulario) */}
+            <div className="flex-1 flex flex-col items-center justify-center p-4 w-full">
                 <div className="max-w-4xl w-full bg-white shadow-md rounded-md p-6">
-                    {/* Encabezado con Botón Volver y Título */}
-                    <div className="flex items-center justify-start mb-6">
-                        {/* 2. Usas la variable navigate en el onClick */}
-                        <button
-                            onClick={() => navigate("/home")} // Ajusta la ruta a tu preferencia
-                            className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600 transition-colors"
-                        >
-                            Volver
-                        </button>
-                        <h1 className="text-2xl font-semibold ml-4 text-primary">
-                            Formulario de Voluntariado
-                        </h1>
-                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Nombres */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="name">
+                                    Nombres
+                                </label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    maxLength={25}
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="Nombres"
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. Eduardo</span>
+                            </div>
 
-                    {/* Formulario */}
-                    <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* Nombre */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="name">
-                                Nombres
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                maxLength={25}
-                                value={formData.name}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
+                            {/* Apellido Paterno */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="paternalSurname">
+                                    Apellido Paterno
+                                </label>
+                                <input
+                                    type="text"
+                                    id="paternalSurname"
+                                    name="paternalSurname"
+                                    maxLength={25}
+                                    value={formData.paternalSurname}
+                                    onChange={handleChange}
+                                    placeholder="Apellido Paterno"
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. Martínez</span>
+                            </div>
 
-                        {/* Apellido Paterno */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="paternalSurname">
-                                Apellido Paterno
-                            </label>
-                            <input
-                                type="text"
-                                id="paternalSurname"
-                                name="paternalSurname"
-                                maxLength={25}
-                                value={formData.paternalSurname}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
+                            {/* Apellido Materno */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="maternalSurname">
+                                    Apellido Materno
+                                </label>
+                                <input
+                                    type="text"
+                                    id="maternalSurname"
+                                    name="maternalSurname"
+                                    maxLength={25}
+                                    value={formData.maternalSurname}
+                                    onChange={handleChange}
+                                    placeholder="Apellido Materno"
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. García</span>
+                            </div>
 
-                        {/* Apellido Materno */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="maternalSurname">
-                                Apellido Materno
-                            </label>
-                            <input
-                                type="text"
-                                id="maternalSurname"
-                                name="maternalSurname"
-                                maxLength={25}
-                                value={formData.maternalSurname}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
+                            {/* Email */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="email">
+                                    Correo
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    maxLength={50}
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Correo"
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. nombres@dominio.tld</span>
+                            </div>
 
-                        {/* Email */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="email">
-                                Correo
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                maxLength={50}
-                                value={formData.email}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
+                            {/* DNI */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="dni">
+                                    DNI
+                                </label>
+                                <input
+                                    type="text"
+                                    id="dni"
+                                    name="dni"
+                                    pattern="^[0-9]{8}$"
+                                    value={formData.dni}
+                                    onChange={handleChange}
+                                    placeholder="DNI"
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. 11223344</span>
+                            </div>
 
-                        {/* DNI */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="dni">
-                                DNI
-                            </label>
-                            <input
-                                type="text"
-                                id="dni"
-                                name="dni"
-                                pattern="^[0-9]{8}$"
-                                value={formData.dni}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
+                            {/* Fecha de nacimiento */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="birthdate">
+                                    Fecha de Nacimiento
+                                </label>
+                                <input
+                                    type="date"
+                                    id="birthdate"
+                                    name="birthdate"
+                                    value={formData.birthdate}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. 10 - 10 - 1990</span>
+                            </div>
 
-                        {/* Fecha de nacimiento */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="birthdate">
-                                Fecha de Nacimiento
-                            </label>
-                            <input
-                                type="date"
-                                id="birthdate"
-                                name="birthdate"
-                                value={formData.birthdate}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
+                            {/* Teléfono */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="phoneNumber">
+                                    Número de celular
+                                </label>
+                                <input
+                                    type="text"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    pattern="^[0-9]{9}$"
+                                    value={formData.phoneNumber}
+                                    onChange={handleChange}
+                                    placeholder="Numero de Celular"
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. 111222333 </span>
+                            </div>
 
-                        {/* Teléfono */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="phoneNumber">
-                                Número de celular
-                            </label>
-                            <input
-                                type="text"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                pattern="^[0-9]{9}$"
-                                value={formData.phoneNumber}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
+                            {/* Codigo de Telefono */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="countrySelect">
+                                    Código de País
+                                </label>
+                                <CountrySelect
+                                    countries={countries}
+                                    selectedCountry={selectedCountry}
+                                    onChange={(value) => setSelectedCountry(value)}
+                                />
+                            </div>
 
-                        {/* Codigo de Telefono */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="countrySelect">
-                                Código de País
-                            </label>
-                            <CountrySelect
-                                countries={countries}
-                                selectedCountry={selectedCountry}
-                                onChange={(value) => setSelectedCountry(value)}
-                            />
-                        </div>
+                            {/* País */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="country">
+                                    País
+                                </label>
+                                <input
+                                    type="text"
+                                    id="country"
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                    placeholder="País"
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. Perù</span>
+                            </div>
 
-                        {/* País */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="country">
-                                País
-                            </label>
-                            <input
-                                type="text"
-                                id="country"
-                                name="country"
-                                value={formData.country}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
+                            {/* Región */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="region">
+                                    Región
+                                </label>
+                                <input
+                                    type="text"
+                                    id="region"
+                                    name="region"
+                                    value={formData.region}
+                                    onChange={handleChange}
+                                    placeholder="Regíon"
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                />
+                                <span className="text-gray-400 text-sm">Ej. La Libertad</span>
+                            </div>
 
-                        {/* Región */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="region">
-                                Región
-                            </label>
-                            <input
-                                type="text"
-                                id="region"
-                                name="region"
-                                value={formData.region}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            />
-                        </div>
-
-                        {/* Horas estimadas */}
-                        <div className="flex flex-col">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="estimatedHours">
-                                Horas Estimadas
-                            </label>
-                            <select
-                                id="estimatedHours"
-                                name="estimatedHours"
-                                value={formData.estimatedHours}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                required
-                            >
-                                <option value="" disabled>
-                                    Seleccionar
-                                </option>
-                                {estimatedHoursOptions.map((opt) => (
-                                    <option key={opt.value} value={opt.value}>
-                                        {opt.label}
+                            {/* Horas estimadas */}
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="estimatedHours">
+                                    Horas Estimadas
+                                </label>
+                                <select
+                                    id="estimatedHours"
+                                    name="estimatedHours"
+                                    value={formData.estimatedHours}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                >
+                                    <option value="" disabled>
+                                        Seleccionar
                                     </option>
-                                ))}
-                            </select>
+                                    {estimatedHoursOptions.map((opt) => (
+                                        <option key={opt.value} value={opt.value}>
+                                            {opt.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Motivación */}
+                            <div className="flex flex-col md:col-span-2">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="motivation">
+                                    Motivación
+                                </label>
+                                <textarea
+                                    id="motivation"
+                                    name="motivation"
+                                    maxLength={200}
+                                    value={formData.motivation}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded-md p-2"
+                                    rows={4}
+                                    required
+                                />
+                            </div>
+
+                            {/* Mensajes de respuesta o error */}
+                            <div className="md:col-span-2 flex flex-col items-center">
+                                {serverResponse && (
+                                    <p className="text-green-600 font-medium mb-2">{serverResponse}</p>
+                                )}
+                                {error && <p className="text-red-600 font-medium mb-2">{error}</p>}
+                            </div>
                         </div>
 
-                        {/* Motivación */}
-                        <div className="flex flex-col md:col-span-2">
-                            <label className="text-gray-700 font-medium mb-1" htmlFor="motivation">
-                                Motivación
-                            </label>
-                            <textarea
-                                id="motivation"
-                                name="motivation"
-                                maxLength={200}
-                                value={formData.motivation}
-                                onChange={handleChange}
-                                className="border border-gray-300 rounded-md p-2"
-                                rows={4}
-                                required
-                            />
-                        </div>
-
-                        {/* Mensajes de respuesta o error */}
-                        <div className="md:col-span-2 flex flex-col items-center">
-                            {serverResponse && (
-                                <p className="text-green-600 font-medium mb-2">{serverResponse}</p>
-                            )}
-                            {error && <p className="text-red-600 font-medium mb-2">{error}</p>}
-                        </div>
-
-                        {/* Botones */}
-                        <div className="md:col-span-2 flex justify-center space-x-4 mt-4">
+                        {/* Botones (Enviar / Cancelar) */}
+                        <div className="flex justify-center space-x-4 mt-4">
                             <button
                                 type="submit"
-                                className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors"
+                                className="
+                                    bg-pink-500
+                                    text-white
+                                    px-6
+                                    py-2
+                                    rounded-md
+                                    hover:bg-pink-600
+                                    transition-colors
+                                "
                             >
                                 Enviar
                             </button>
                             <button
                                 type="button"
-                                onClick={() => {
-                                    setFormData({
-                                        name: "",
-                                        paternalSurname: "",
-                                        maternalSurname: "",
-                                        email: "",
-                                        dni: "",
-                                        birthdate: "",
-                                        phoneNumber: "",
-                                        codeNumber: "+51",
-                                        country: "",
-                                        region: "",
-                                        motivation: "",
-                                        estimatedHours: "THREE",
-                                    });
-                                    setError("");
-                                    setServerResponse("");
-                                }}
-                                className="bg-gray-300 text-black px-6 py-2 rounded-md hover:bg-gray-400 transition-colors"
+                                onClick={handleReset}
+                                className="
+                                    bg-teal-500
+                                    text-white
+                                    px-6
+                                    py-2
+                                    rounded-md
+                                    hover:bg-teal-600
+                                    transition-colors
+                                "
                             >
                                 Cancelar
                             </button>
