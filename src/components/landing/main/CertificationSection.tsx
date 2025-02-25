@@ -1,33 +1,52 @@
 import { FC } from "react";
 import { motion } from "framer-motion";
 
+/**
+ * Interfaz CertificationProps
+ * Define las propiedades que recibe el componente `Certification`,
+ * incluyendo la imagen, título y descripción de la certificación.
+ */
 interface CertificationProps {
-    image: string;
-    title: string;
-    description: string;
+    image: string;      // Ruta de la imagen de la certificación
+    title: string;      // Nombre de la certificación
+    description: string; // Descripción breve de la certificación
 }
 
+/**
+ * Componente Certification
+ *
+ * Representa una tarjeta individual de certificación con animación de aparición.
+ */
 const Certification: FC<CertificationProps> = ({ image, title, description }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 20 }} // Animación inicial (desaparecido y desplazado hacia abajo)
+            whileInView={{ opacity: 1, y: 0 }} // Aparece cuando entra en la vista
+            transition={{ duration: 0.5 }} // Duración de la animación
             className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-xs mx-auto"
         >
+            {/* Imagen de la certificación */}
             <div className="w-48 h-48 mb-6 relative">
                 <img
-                    src={image}
-                    alt={title}
+                    src={image}  // Ruta de la imagen
+                    alt={title}  // Descripción accesible
                     className="w-full h-full object-contain"
                 />
             </div>
+
+            {/* Descripción de la certificación */}
             <p className="text-sm text-gray-600 text-center mt-4">{description}</p>
         </motion.div>
     );
 };
 
+/**
+ * Componente CertificationSection
+ *
+ * Muestra una sección con todas las certificaciones obtenidas por la organización.
+ */
 const CertificationSection: FC = () => {
+    // Lista de certificaciones con sus respectivas imágenes, títulos y descripciones.
     const certifications = [
         {
             image: "src/assets/faq/upn.png",
@@ -54,17 +73,21 @@ const CertificationSection: FC = () => {
     return (
         <section className="py-16 px-4 bg-white">
             <div className="container mx-auto">
+
+                {/* Título de la sección con animación */}
                 <motion.h2
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: -20 }} // Desaparece y está desplazado hacia arriba inicialmente
+                    animate={{ opacity: 1, y: 0 }} // Aparece con desplazamiento hacia abajo
                     className="text-4xl font-semibold text-center mb-12"
                 >
                     Certificaciones
                 </motion.h2>
+
+                {/* Grid de tarjetas de certificación */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {certifications.map((cert, index) => (
                         <Certification
-                            key={index}
+                            key={index} // Uso del índice como clave (mejor si fuera un ID único)
                             image={cert.image}
                             title={cert.title}
                             description={cert.description}
