@@ -22,6 +22,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
     const [selectedFile, setSelectedFile] = useState<LandingFile | null>(null);
     const [numPages, setNumPages] = useState<number>(0);
     const [pageNumber, setPageNumber] = useState<number>(1);
+    const [isClosing, setIsClosing] = useState(false);
 
     useEffect(() => {
         fetch(`${environment.API_URL}/landing-files/all`)
@@ -59,9 +60,13 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
     };
 
     const closePdfViewer = () => {
-        setSelectedFile(null);
-        setNumPages(0);
-        setPageNumber(1);
+        setIsClosing(true);
+        setTimeout(() => {
+            setSelectedFile(null);
+            setNumPages(0);
+            setPageNumber(1);
+            setIsClosing(false);
+        }, 300); // 300ms: duración de la animación de fade out
     };
 
     const onDocumentLoadSuccess = (pdf: any) => {
@@ -150,7 +155,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
 
             {/* Modal del visor PDF */}
             {selectedFile && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 animate-fade-in">
+                <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}>
                     <div
                         className="bg-white rounded-lg w-full max-w-6xl relative shadow-xl"
                         style={{ maxHeight: '80vh' }}
@@ -164,7 +169,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                                     : selectedFile.fileName}
                             </h2>
                             <div className="flex items-center space-x-4">
-                                {/* Botón de descargar */}
+                                {/* Botón de descargar usando el icono de public/download.png */}
                                 <button
                                     onClick={() => downloadFile(selectedFile)}
                                     className="transition-colors hover:opacity-80"
