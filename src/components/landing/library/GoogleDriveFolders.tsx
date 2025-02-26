@@ -73,14 +73,14 @@ const GoogleDriveFolders: FC = () => {
             ) : (
                 <>
                     {/* Contenedor de carpetas obtenidas de Google Drive */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl animate-fade-in">
                         {folders.map((folder) => (
                             <a
                                 key={folder.id}
                                 href={`https://drive.google.com/drive/u/1/folders/${folder.id}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-white text-black rounded-xl p-6 shadow-lg flex flex-col items-center"
+                                className="bg-white text-black rounded-xl p-6 shadow-lg flex flex-col items-center animate-fade-in"
                             >
                                 {/* Imagen representativa de la carpeta */}
                                 <img
@@ -95,7 +95,7 @@ const GoogleDriveFolders: FC = () => {
                     </div>
 
                     {/* Contenedor de la frase inspiradora y la imagen decorativa */}
-                    <div className="mt-20 flex items-center justify-center gap-6">
+                    <div className="mt-20 flex items-center justify-center gap-6 animate-fade-in">
                         <p className="font-light text-2xl italic text-white text-center">
                             "Abre la puerta al conocimiento"
                         </p>
