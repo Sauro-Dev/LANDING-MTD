@@ -29,6 +29,8 @@ export default {
                 'infinite-scroll-half': 'infinite-scroll-half 15s linear infinite',
                 'infinite-scroll-half-mobile': 'infinite-scroll-half-mobile 20s linear infinite',
                 'infinite-scroll-highres': 'infinite-scroll-highres 10s linear infinite',
+                'fade-in': 'fadeIn 300ms cubic-bezier(0.4, 0, 0.6, 1) forwards',
+                'fade-out': 'fadeOut 300ms cubic-bezier(0.4, 0, 0.6, 1) forwards',
             },
             keyframes: {
                 'infinite-scroll-half': {
@@ -43,6 +45,22 @@ export default {
                     from: { transform: 'translateX(0)' },
                     to: { transform: 'translateX(-50%)' },
                 },
+            },
+
+            fadeIn: {
+                '0%': {
+                    opacity: '0.4',
+                    transform: 'scale(1.02)',
+                },
+                '100%': {
+                    opacity: '1',
+                    transform: 'scale(1)',
+                },
+            },
+
+            fadeOut: {
+                '0%': { opacity: '1' },
+                '100%': { opacity: '0' },
             },
         },
     },
