@@ -32,7 +32,6 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                 return response.json();
             })
             .then((data: LandingFile[]) => {
-                console.log("Archivos recibidos:", data);
                 const normalizedFiles = data.map(file => ({
                     ...file,
                     normalizedSector:
@@ -70,27 +69,38 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>;
+        return <div className="text-center py-8 animate-fade-in">Cargando...</div>;
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div className="text-center py-8 animate-fade-in">Error: {error}</div>;
     }
 
     if (files.length === 0) {
-        return <div>No hay {type} disponibles.</div>;
+        return <div className="text-center py-8 animate-fade-in">No hay {type} disponibles.</div>;
     }
 
     return (
         <>
+            {/* Contenedor de tarjetas */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 {files.map(file => {
                     const displayName = file.fileName.includes('_')
                         ? file.fileName.split('_').slice(1).join('_')
                         : file.fileName;
                     return (
-                        <div key={file.idLandingFiles} className="flex flex-col items-center">
-                            <div className="w-full max-w-md aspect-[3/4] relative group cursor-pointer">
+                        <div
+                            key={file.idLandingFiles}
+                            className="flex flex-col items-center animate-fadeInUp transition transform duration-500 hover:scale-105"
+                        >
+                            <div
+                                className="w-full max-w-md aspect-[3/4] relative cursor-pointer"
+                                onClick={() => {
+                                    if (file.fileTypes === 'application/pdf') {
+                                        openPdfViewer(file);
+                                    }
+                                }}
+                            >
                                 {file.fileTypes.startsWith('image/') ? (
                                     <img
                                         src={`${environment.API_URL}/landing-files/${file.idLandingFiles}`}
@@ -98,12 +108,17 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                                         className="w-full h-full object-cover rounded-lg shadow-lg"
                                     />
                                 ) : file.fileTypes === 'application/pdf' ? (
-                                    <div onClick={() => openPdfViewer(file)}>
+                                    <div>
                                         <Document
                                             file={`${environment.API_URL}/landing-files/${file.idLandingFiles}`}
                                             loading="Cargando PDF..."
                                         >
-                                            <Page pageNumber={1} width={350} />
+                                            <Page
+                                                pageNumber={1}
+                                                width={350}
+                                                renderTextLayer={false}
+                                                renderAnnotationLayer={false}
+                                            />
                                         </Document>
                                     </div>
                                 ) : (
@@ -111,26 +126,12 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                                         <span className="text-gray-700">Vista previa no disponible</span>
                                     </div>
                                 )}
-                                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 rounded-lg flex items-center justify-center">
-                  <span
-                      className="text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                      onClick={() => {
-                          if (file.fileTypes === 'application/pdf') {
-                              openPdfViewer(file);
-                          }
-                      }}
-                  >
-                    {type === 'noticias' ? 'Ver noticia' : 'Ver revista'}
-                  </span>
-                                </div>
                             </div>
                             <div className="mt-4 text-center">
                                 <h3 className="text-lg font-bold">
                                     {type === 'noticias' ? 'Noticia Destacada' : 'Revista Informativa'}
                                 </h3>
-                                <p className="text-gray-600">
-                                    {displayName}
-                                </p>
+                                <p className="text-gray-600">{displayName}</p>
                             </div>
                         </div>
                     );
@@ -138,7 +139,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
             </div>
 
             {selectedFile && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 animate-fade-in">
                     <div
                         className="bg-white rounded-lg w-full max-w-6xl relative shadow-xl"
                         style={{ maxHeight: '80vh' }}
@@ -146,15 +147,14 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                         {/* Navbar del visor PDF */}
                         <div className="bg-gray-100 p-4 flex justify-between items-center rounded-t-lg w-full border-b">
                             <h2 className="text-xl font-semibold">
-                                {type === 'noticias' ? 'Noticia' : 'Revista'} - {
-                                selectedFile.fileName.includes('_')
+                                {type === 'noticias' ? 'Noticia' : 'Revista'} -{" "}
+                                {selectedFile.fileName.includes('_')
                                     ? selectedFile.fileName.split('_').slice(1).join('_')
-                                    : selectedFile.fileName
-                            }
+                                    : selectedFile.fileName}
                             </h2>
                             <button
                                 onClick={closePdfViewer}
-                                className="text-black font-bold px-3 py-1 bg-gray-300 rounded hover:bg-gray-400"
+                                className="text-black font-bold px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition-colors"
                             >
                                 Cerrar
                             </button>
@@ -170,16 +170,21 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                                 onLoadSuccess={onDocumentLoadSuccess}
                                 loading="Cargando PDF..."
                             >
-                                <Page pageNumber={pageNumber} width={700} />
+                                <Page
+                                    pageNumber={pageNumber}
+                                    width={700}
+                                    renderTextLayer={false}
+                                    renderAnnotationLayer={false}
+                                />
                             </Document>
                         </div>
 
-                        {/* Footer de navegación más espacioso */}
+                        {/* Footer de navegación */}
                         <div className="px-8 pb-4 flex justify-between items-center border-t">
                             <button
                                 onClick={() => setPageNumber(prev => Math.max(prev - 1, 1))}
                                 disabled={pageNumber <= 1}
-                                className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+                                className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 transition-colors"
                             >
                                 Anterior
                             </button>
@@ -189,7 +194,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                             <button
                                 onClick={() => setPageNumber(prev => Math.min(prev + 1, numPages))}
                                 disabled={pageNumber >= numPages}
-                                className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+                                className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 transition-colors"
                             >
                                 Siguiente
                             </button>

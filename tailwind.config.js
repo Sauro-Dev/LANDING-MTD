@@ -6,7 +6,6 @@ export default {
     ],
     theme: {
         extend: {
-            // Definición de colores
             colors: {
                 primary: '#ED117F',
                 secondary: '#F4C22E',
@@ -14,23 +13,20 @@ export default {
                 dark: '#000000',
                 light: '#FFFFFF',
             },
-            // Configuración del contenedor
             container: {
                 center: true,
                 padding: '1rem',
             },
-            // Fuente personalizada (puedes usar "font-poppins" en tus clases si así lo prefieres)
             fontFamily: {
                 poppins: ['Poppins', 'sans-serif'],
             },
-            // Definición de animaciones para el carrusel infinito:
-            // Se utiliza "translateX(-50%)" para desplazar el contenedor duplicado (dos copias de los ítems)
             animation: {
                 'infinite-scroll-half': 'infinite-scroll-half 15s linear infinite',
                 'infinite-scroll-half-mobile': 'infinite-scroll-half-mobile 20s linear infinite',
                 'infinite-scroll-highres': 'infinite-scroll-highres 10s linear infinite',
                 'fade-in': 'fadeIn 300ms cubic-bezier(0.4, 0, 0.6, 1) forwards',
                 'fade-out': 'fadeOut 300ms cubic-bezier(0.4, 0, 0.6, 1) forwards',
+                'fadeInUp': 'fadeInUp 500ms ease-out',
             },
             keyframes: {
                 'infinite-scroll-half': {
@@ -45,22 +41,18 @@ export default {
                     from: { transform: 'translateX(0)' },
                     to: { transform: 'translateX(-50%)' },
                 },
-            },
-
-            fadeIn: {
-                '0%': {
-                    opacity: '0.4',
-                    transform: 'scale(1.02)',
+                fadeIn: {
+                    '0%': { opacity: '0.4', transform: 'scale(1.02)' },
+                    '100%': { opacity: '1', transform: 'scale(1)' },
                 },
-                '100%': {
-                    opacity: '1',
-                    transform: 'scale(1)',
+                fadeOut: {
+                    '0%': { opacity: '1' },
+                    '100%': { opacity: '0' },
                 },
-            },
-
-            fadeOut: {
-                '0%': { opacity: '1' },
-                '100%': { opacity: '0' },
+                fadeInUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
             },
         },
     },
