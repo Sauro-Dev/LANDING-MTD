@@ -20,10 +20,11 @@ interface CertificationProps {
 const Certification: FC<CertificationProps> = ({ image, title, description }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }} // Animación inicial (desaparecido y desplazado hacia abajo)
-            whileInView={{ opacity: 1, y: 0 }} // Aparece cuando entra en la vista
-            transition={{ duration: 0.5 }} // Duración de la animación
-            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-xs mx-auto"
+            initial={{ opacity: 0, y: 30 }} // Desaparecido y desplazado hacia abajo
+            whileInView={{ opacity: 1, y: 0 }} // Aparece con desplazamiento hacia arriba
+            viewport={{ once: false, amount: 0.2 }} // Asegura que la animación funcione al hacer scroll
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-300 max-w-xs mx-auto"
         >
             {/* Imagen de la certificación */}
             <div className="w-48 h-48 mb-6 relative">
@@ -34,8 +35,11 @@ const Certification: FC<CertificationProps> = ({ image, title, description }) =>
                 />
             </div>
 
+            {/* Nombre de la certificación */}
+            <h3 className="text-lg font-bold text-gray-800">{title}</h3>
+
             {/* Descripción de la certificación */}
-            <p className="text-sm text-gray-600 text-center mt-4">{description}</p>
+            <p className="text-sm text-gray-600 text-center mt-2">{description}</p>
         </motion.div>
     );
 };
@@ -71,20 +75,26 @@ const CertificationSection: FC = () => {
     ];
 
     return (
-        <section className="py-16 px-4 bg-white">
+        <motion.section
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="py-16 px-6 bg-white"
+        >
             <div className="container mx-auto">
-
                 {/* Título de la sección con animación */}
                 <motion.h2
-                    initial={{ opacity: 0, y: -20 }} // Desaparece y está desplazado hacia arriba inicialmente
-                    animate={{ opacity: 1, y: 0 }} // Aparece con desplazamiento hacia abajo
-                    className="text-4xl font-semibold text-center mb-12"
+                    initial={{ opacity: 0, y: -10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-4xl font-extrabold text-black text-center mb-12"
                 >
                     Certificaciones
                 </motion.h2>
 
-                {/* Grid de tarjetas de certificación */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                {/* Grid de tarjetas de certificación con mayor margen en móviles */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                     {certifications.map((cert, index) => (
                         <Certification
                             key={index} // Uso del índice como clave (mejor si fuera un ID único)
@@ -95,7 +105,7 @@ const CertificationSection: FC = () => {
                     ))}
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 };
 

@@ -1,5 +1,6 @@
-import React from 'react';
-import { Users, GraduationCap, TrendingUp } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Users, GraduationCap, TrendingUp } from "lucide-react";
 
 /**
  * Componente JoinChange
@@ -9,80 +10,86 @@ import { Users, GraduationCap, TrendingUp } from 'lucide-react';
  */
 const JoinChange: React.FC = () => {
     return (
-        <div className="bg-white py-8">
-            <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <section className="bg-white py-20 px-8 sm:px-12 font-poppins">
+            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
 
-                    {/* Imagen decorativa con efecto de desenfoque */}
-                    <div className="relative">
-                        <div className="absolute inset-0 bg-blue-500/70 rounded-10xl blur-xl group-hover:blur-2xl transition-all" />
+                {/* Imagen decorativa (solo visible en pantallas grandes) */}
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.7 }}
+                    className="hidden lg:flex relative w-full max-w-md lg:max-w-lg"
+                >
+                    <div className="relative flex items-center justify-center">
                         <img
-                            src="/src/assets/faq/Team1.png" // Ruta de la imagen del equipo
-                            alt="Team members" // Descripción accesible
-                            className="relative drop-shadow-xl"
-                            style={{ maskImage: "linear-gradient(black 80%, transparent)" }} // Efecto de degradado
+                            src="/src/assets/faq/Team1.png"
+                            alt="Team members"
+                            className="w-full rounded-2xl shadow-xl ring-4 ring-pink-300 hover:scale-105 transition-transform duration-300"
                         />
                     </div>
+                </motion.div>
 
-                    {/* Contenido textual con información y pilares clave */}
-                    <div className="space-y-8">
-                        {/* Encabezado */}
-                        <div className="text-right">
-                            <p className="text-blue-600 font-medium">Sé un líder</p>
-                            <h2 className="text-4xl font-bold text-blue-950 mt-2">
-                                Únete Y Sé Parte Del Cambio
-                            </h2>
-                        </div>
+                {/* Contenido textual con pilares clave */}
+                <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.7 }}
+                    className="flex flex-col space-y-8 text-center lg:text-left"
+                >
+                    {/* Encabezado */}
+                    <div>
+                        <p className="text-pink-600 font-semibold text-lg uppercase tracking-wide">
+                            Sé un líder
+                        </p>
+                        <h2 className="text-3xl sm:text-4xl font-bold text-black leading-tight">
+                            Únete y sé parte del cambio
+                        </h2>
+                    </div>
 
-                        {/* Lista de características (Liderazgo, Educación, Cambio Positivo) */}
-                        <div className="space-y-8">
-
-                            {/* Pilar: Liderazgo */}
-                            <div className="flex items-start justify-end gap-4">
-                                <div className="text-right">
-                                    <h3 className="font-semibold text-lg text-blue-950">Liderazgo</h3>
-                                    <p className="text-gray-600 mt-1">
-                                        Fomentamos el desarrollo de habilidades de liderazgo en jóvenes
-                                        para que puedan guiar y transformar sus comunidades.
+                    {/* Lista de pilares con mejor espacio en móviles */}
+                    <div className="space-y-6 sm:space-y-8">
+                        {[
+                            {
+                                title: "Liderazgo",
+                                description:
+                                    "Fomentamos el desarrollo de habilidades de liderazgo en jóvenes para que puedan transformar sus comunidades.",
+                                icon: <Users className="w-7 h-7 text-pink-600" />,
+                            },
+                            {
+                                title: "Educación",
+                                description:
+                                    "Promovemos una educación inclusiva y accesible para todos, creando espacios seguros y saludables donde puedan aprender y crecer.",
+                                icon: <GraduationCap className="w-7 h-7 text-pink-600" />,
+                            },
+                            {
+                                title: "Cambio Positivo",
+                                description:
+                                    "Inspiramos a los jóvenes a ser agentes de cambio positivo en el mundo, construyendo un futuro más justo y equitativo.",
+                                icon: <TrendingUp className="w-7 h-7 text-pink-600" />,
+                            },
+                        ].map((pillar, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.2 }}
+                                className="flex items-center gap-4 bg-pink-100 p-6 sm:p-7 rounded-xl shadow-md"
+                            >
+                                <div className="bg-pink-200 p-3 rounded-lg">{pillar.icon}</div>
+                                <div>
+                                    <h3 className="text-lg sm:text-xl font-bold text-black">
+                                        {pillar.title}
+                                    </h3>
+                                    <p className="text-gray-700 leading-relaxed text-base sm:text-lg">
+                                        {pillar.description}
                                     </p>
                                 </div>
-                                <div className="bg-blue-100 p-2 rounded-lg">
-                                    <Users className="w-6 h-6 text-blue-600" />
-                                </div>
-                            </div>
-
-                            {/* Pilar: Educación */}
-                            <div className="flex items-start justify-end gap-4">
-                                <div className="text-right">
-                                    <h3 className="font-semibold text-lg text-blue-950">Educación</h3>
-                                    <p className="text-gray-600 mt-1">
-                                        Promovemos una educación inclusiva y accesible para todos los jóvenes,
-                                        creando espacios seguros y saludables donde puedan aprender y crecer.
-                                    </p>
-                                </div>
-                                <div className="bg-blue-100 p-2 rounded-lg">
-                                    <GraduationCap className="w-6 h-6 text-blue-600" />
-                                </div>
-                            </div>
-
-                            {/* Pilar: Cambio Positivo */}
-                            <div className="flex items-start justify-end gap-4">
-                                <div className="text-right">
-                                    <h3 className="font-semibold text-lg text-blue-950">Cambio Positivo</h3>
-                                    <p className="text-gray-600 mt-1">
-                                        Inspiramos a los jóvenes a ser agentes de cambio positivo en el mundo,
-                                        construyendo un futuro más justo y equitativo.
-                                    </p>
-                                </div>
-                                <div className="bg-blue-100 p-2 rounded-lg">
-                                    <TrendingUp className="w-6 h-6 text-blue-600" />
-                                </div>
-                            </div>
-                        </div>
-                    </div> {/* Fin de la sección de contenido */}
-                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
             </div>
-        </div>
+        </section>
     );
 };
 
