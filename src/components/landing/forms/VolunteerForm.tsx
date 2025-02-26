@@ -5,6 +5,12 @@ import environment from "../../../enviroment.ts";
 import CountrySelect from "../../common/CountrySelect.tsx";
 import {CountryCode, getCountries, getCountryCallingCode} from "libphonenumber-js";
 
+// Areas
+interface Area {
+    areaId: number;
+    name: string;
+    color: string;
+}
 
 type estimatedHours =
     | "THREE"
@@ -45,6 +51,7 @@ interface VolunteerFormData {
     region: string;
     motivation: string;
     estimatedHours: estimatedHours;
+    areaId: string;
 }
 
 const VolunteerForm: FC = () => {
@@ -62,15 +69,17 @@ const VolunteerForm: FC = () => {
         region: "",
         motivation: "",
         estimatedHours: "THREE",
+        areaId: "",
     });
 
+    const [areas, setAreas] = useState<Area[]>([]);
     const [selectedCountry, setSelectedCountry] = useState<CountryCode>("PE");
     const [countries, setCountries] = useState<{ code: CountryCode; name: string }[]>([]);
 
     useEffect(() => {
         const countryList = getCountries().map((code) => ({
             code,
-            name: new Intl.DisplayNames(["es"], { type: "region" }).of(code) || code,
+            name: new Intl.DisplayNames(["es"], {type: "region"}).of(code) || code,
         }));
         setCountries(countryList);
     }, []);
@@ -81,6 +90,24 @@ const VolunteerForm: FC = () => {
             codeNumber: `+${getCountryCallingCode(selectedCountry)}`,
         }));
     }, [selectedCountry]);
+
+    // Función para obtener las áreas disponibles
+    const fetchAreas = async () => {
+        try {
+            const response = await fetch(`${environment.API_URL}/areas/public/all`);
+            if (!response.ok) throw new Error("Error al obtener áreas");
+
+            const data: Area[] = await response.json();
+            setAreas(data);
+        } catch (error) {
+            console.error("Error obteniendo áreas:", error);
+        }
+    };
+
+    // Llamar a fetchAreas cuando se monte el componente
+    useEffect(() => {
+        fetchAreas();
+    }, []);
 
     // Para mostrar mensajes de éxito o error
     const [serverResponse, setServerResponse] = useState("");
@@ -117,7 +144,7 @@ const VolunteerForm: FC = () => {
             }
 
             const data = await response.json();
-            setServerResponse(data); // "Solicitud de voluntariado enviada correctamente." o similar
+            setServerResponse(data.message || "Operación exitosa");// "Solicitud de voluntariado enviada correctamente." o similar
             // Limpiar campos si lo deseas
             setFormData({
                 name: "",
@@ -132,6 +159,7 @@ const VolunteerForm: FC = () => {
                 region: "",
                 motivation: "",
                 estimatedHours: "THREE",
+                areaId: "",
             });
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -157,6 +185,7 @@ const VolunteerForm: FC = () => {
             region: "",
             motivation: "",
             estimatedHours: "THREE",
+            areaId: "",
         });
         setError("");
         setServerResponse("");
@@ -391,6 +420,27 @@ const VolunteerForm: FC = () => {
                                 </select>
                             </div>
 
+                            <div className="flex flex-col">
+                                <label className="text-gray-700 font-medium mb-1" htmlFor="areaId">
+                                    Área de Voluntariado
+                                </label>
+                                <select
+                                    id="areaId"
+                                    name="areaId"
+                                    value={formData.areaId}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded-md p-2"
+                                    required
+                                >
+                                    <option value="" disabled>Selecciona un área</option>
+                                    {areas.map((area) => (
+                                        <option key={area.areaId} value={area.areaId}>
+                                            {area.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
                             {/* Motivación */}
                             <div className="flex flex-col md:col-span-2">
                                 <label className="text-gray-700 font-medium mb-1" htmlFor="motivation">
@@ -411,9 +461,15 @@ const VolunteerForm: FC = () => {
                             {/* Mensajes de respuesta o error */}
                             <div className="md:col-span-2 flex flex-col items-center">
                                 {serverResponse && (
-                                    <p className="text-green-600 font-medium mb-2">{serverResponse}</p>
+                                    <p className="text-green-600 font-medium mb-2">
+                                        {typeof serverResponse === "string" ? serverResponse : JSON.stringify(serverResponse)}
+                                    </p>
                                 )}
-                                {error && <p className="text-red-600 font-medium mb-2">{error}</p>}
+                                {error && (
+                                    <p className="text-red-600 font-medium mb-2">
+                                        {typeof error === "string" ? error : JSON.stringify(error)}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
