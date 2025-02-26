@@ -68,6 +68,16 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
         setNumPages(pdf.numPages);
     };
 
+    const downloadFile = (file: LandingFile) => {
+        const url = `${environment.API_URL}/landing-files/${file.idLandingFiles}`;
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.fileName.includes('_')
+            ? file.fileName.split('_').slice(1).join('_')
+            : file.fileName;
+        a.click();
+    };
+
     if (loading) {
         return <div className="text-center py-8 animate-fade-in">Cargando...</div>;
     }
@@ -82,7 +92,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
 
     return (
         <>
-            {/* Contenedor de tarjetas */}
+            {/* Tarjetas de previsualización */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 {files.map(file => {
                     const displayName = file.fileName.includes('_')
@@ -138,6 +148,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                 })}
             </div>
 
+            {/* Modal del visor PDF */}
             {selectedFile && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 animate-fade-in">
                     <div
@@ -152,12 +163,23 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                                     ? selectedFile.fileName.split('_').slice(1).join('_')
                                     : selectedFile.fileName}
                             </h2>
-                            <button
-                                onClick={closePdfViewer}
-                                className="text-black font-bold px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition-colors"
-                            >
-                                Cerrar
-                            </button>
+                            <div className="flex items-center space-x-4">
+                                {/* Botón de descargar */}
+                                <button
+                                    onClick={() => downloadFile(selectedFile)}
+                                    className="transition-colors hover:opacity-80"
+                                    title="Descargar"
+                                >
+                                    <img src="/download.png" alt="Descargar" className="h-6 w-6" />
+                                </button>
+                                {/* Botón de cerrar */}
+                                <button
+                                    onClick={closePdfViewer}
+                                    className="text-black font-bold px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition-colors"
+                                >
+                                    Cerrar
+                                </button>
+                            </div>
                         </div>
 
                         {/* Contenedor scrollable para el PDF */}
