@@ -22,9 +22,9 @@ const JoinChange: React.FC = () => {
                 >
                     <div className="relative flex items-center justify-center">
                         <img
-                            src="/src/assets/faq/Team1.png"
+                            src="/src/assets/faq/Team2.png"
                             alt="Team members"
-                            className="w-full rounded-2xl shadow-xl ring-4 ring-pink-300 hover:scale-105 transition-transform duration-300"
+                            className="w-full rounded-2xl shadow-xl  hover:scale-105 transition-transform duration-300"
                         />
                     </div>
                 </motion.div>
