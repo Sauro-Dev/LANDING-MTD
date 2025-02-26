@@ -5,22 +5,10 @@ const HistoryAchievementsSection: FC = () => (
         <div className="container mx-auto px-4">
             <div className="space-y-16">
                 <div>
-                    <h2 className="text-3xl font-bold text-center mb-8">Historia</h2>
-                    <div className="bg-gray-50 p-8 rounded-lg">
-                        <p className="text-gray-700">Contenido de la historia...</p>
-                    </div>
-                </div>
-                <div>
-                    <h2 className="text-3xl font-bold text-center mb-8">Logros</h2>
-                    <div className="bg-gray-50 p-8 rounded-lg">
-                        <ul className="space-y-4">
-                            <li className="flex items-center gap-2">
-                                <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
-                                <span>Logro destacado 1</span>
-                            </li>
-                            {/* Más logros */}
-                        </ul>
-                    </div>
+                    <h2 className="text-6xl font-[League Spartan] font-bold text-center mb-8 max-w-[900px] mx-auto">
+                        <span className="text-[#ED117F]">HISTORIA REAL:</span>
+                        <span className="text-[#902B74]"> COMENZÓ CON MI SUEÑO PERO SE ESTABLECIÓ CON SU ESTRATEGIA</span>
+                    </h2>
                 </div>
             </div>
         </div>
