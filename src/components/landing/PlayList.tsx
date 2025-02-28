@@ -40,12 +40,17 @@ const PlayList: FC = () => {
             const text = await response.text();
 
             try {
-                // Intentamos parsear como JSON
-                const data = JSON.parse(text) as Playlist[];
-                setPlaylists(data);
-                setCurrentIndex(0);
+                const data = JSON.parse(text);
+
+                if (Array.isArray(data)) {
+                    // data es un array de playlists
+                    setPlaylists(data);
+                    setCurrentIndex(0);
+                } else if (data.message) {
+                    // data es un objeto con "message"
+                    setError(data.message);
+                }
             } catch {
-                // Si falla, es un string. Lo guardamos en error
                 setError(text);
             }
         } catch (err: unknown) {
@@ -59,6 +64,7 @@ const PlayList: FC = () => {
             setLoading(false);
         }
     };
+
 
     useEffect(() => {
         void fetchPlaylists();
