@@ -4,7 +4,7 @@ import Navbar from '../common/Navbar.tsx';
 import Footer from "../common/Footer.tsx";
 import spotifyLogo from "../../assets/logos/spotify-logo.svg";
 import environment from "../../enviroment.ts";
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { DocumentIcon } from '@heroicons/react/24/outline';
 
 interface Playlist {
     idPlaylist: number;
@@ -89,15 +89,20 @@ const PlayList: FC = () => {
         );
     }
 
-    // 2) Si el backend devolvió la cadena "No se encontraron playlists habilitadas en la BD"
-    //    mostramos tarjeta con ícono Heroicon y mensaje personalizado.
+    // 2) Caso específico: el backend devolvió el texto "No se encontraron playlists habilitadas en la BD"
+    //    Muestra un mensaje más amigable y consistente con boletines.
     if (error === 'No se encontraron playlists habilitadas en la BD') {
         return (
             <div className="flex flex-col min-h-screen bg-gray-100">
                 <Navbar />
-                <main className="flex-grow pt-24 pb-8 px-4 flex flex-col items-center justify-center">
-                    <ExclamationTriangleIcon className="w-16 h-16 text-gray-500 mb-4" />
-                    <p className="text-xl text-gray-700">{error}</p>
+                <main className="flex-grow pt-24 pb-8 px-4 flex flex-col items-center justify-center gap-4">
+                    <DocumentIcon className="w-16 h-16 text-gray-500" />
+                    <h2 className="text-3xl font-bold animate-fade-in">
+                        No hay playlists disponibles
+                    </h2>
+                    <p className="text-lg animate-fade-in">
+                        Intenta nuevamente más tarde
+                    </p>
                 </main>
                 <Footer />
             </div>
@@ -117,14 +122,19 @@ const PlayList: FC = () => {
         );
     }
 
-    // 4) Si parseamos un array vacío (p.ej. []), podrías mostrar un fallback
+    // 4) Si parseamos un array vacío, mostramos el mismo estilo de mensaje
     if (!playlists.length) {
         return (
             <div className="flex flex-col min-h-screen bg-gray-100">
                 <Navbar />
-                <main className="flex-grow pt-24 pb-8 px-4 flex flex-col items-center justify-center">
-                    <ExclamationTriangleIcon className="w-16 h-16 text-gray-500 mb-4" />
-                    <p className="text-xl text-gray-700">No hay playlists para mostrar</p>
+                <main className="flex-grow pt-24 pb-8 px-4 flex flex-col items-center justify-center gap-4">
+                    <DocumentIcon className="w-16 h-16 text-gray-500" />
+                    <h2 className="text-3xl font-bold animate-fade-in">
+                        No hay playlists disponibles
+                    </h2>
+                    <p className="text-lg animate-fade-in">
+                        Intenta nuevamente más tarde
+                    </p>
                 </main>
                 <Footer />
             </div>
@@ -167,10 +177,10 @@ const PlayList: FC = () => {
                                         <path
                                             fillRule="evenodd"
                                             d="M12.293 16.293a1 1 0
-                      01-1.414 0l-5-5a1 1 0
-                      010-1.414l5-5a1 1 0
-                      011.414 1.414L8.414 10l3.879
-                      3.879a1 1 0 010 1.414z"
+                                                01-1.414 0l-5-5a1 1 0
+                                                010-1.414l5-5a1 1 0
+                                                011.414 1.414L8.414 10l3.879
+                                                3.879a1 1 0 010 1.414z"
                                             clipRule="evenodd"
                                         />
                                     </svg>
@@ -212,10 +222,10 @@ const PlayList: FC = () => {
                                         <path
                                             fillRule="evenodd"
                                             d="M7.707 16.293a1 1 0
-                      001.414 0l5-5a1 1 0
-                      000-1.414l-5-5a1 1 0
-                      10-1.414 1.414L11.586 10l-3.879
-                      3.879a1 1 0 000 1.414z"
+                                                001.414 0l5-5a1 1 0
+                                                000-1.414l-5-5a1 1 0
+                                                10-1.414 1.414L11.586 10l-3.879
+                                                3.879a1 1 0 000 1.414z"
                                             clipRule="evenodd"
                                         />
                                     </svg>
