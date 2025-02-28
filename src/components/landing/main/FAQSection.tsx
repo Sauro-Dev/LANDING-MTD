@@ -60,6 +60,10 @@ const FAQSection: FC = () => {
                                 <ArrowLeft className="w-6 h-6 text-white" />
                             </button>
 
+
+
+
+
                             {faqs.map((faq, index) => (
                                 <div key={index} className="border-b border-gray-300 pb-2">
                                     <button
@@ -78,13 +82,14 @@ const FAQSection: FC = () => {
                             {/* Botón de contacto por WhatsApp más pequeño y centrado */}
                             <div className="mt-6 flex justify-center">
                                 <a
-                                    href="https://wa.me/51912609733"
+                                    href="https://api.whatsapp.com/send/?phone=51912609733&text=Hola%2C+me+gustar%C3%ADa+saber+m%C3%A1s+sobre+sus+servicios&type=phone_number&app_absent=0"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="bg-green-500 hover:bg-green-600 text-white font-bold rounded-full px-4 py-2 md:px-6 md:py-3 text-sm md:text-base shadow-md transition-all"
                                 >
                                     ¿Aún tienes duda?
                                 </a>
+
                             </div>
                         </div>
                     ) : (
