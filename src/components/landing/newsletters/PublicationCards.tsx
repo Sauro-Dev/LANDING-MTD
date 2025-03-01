@@ -76,7 +76,12 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                 setLoading(false);
             })
             .catch((err) => {
-                setError(err.message);
+                console.error(err);
+                if (err.message.includes("Failed to fetch")) {
+                    setError("No se pudo conectar con el servidor.");
+                } else {
+                    setError(err.message);
+                }
                 setLoading(false);
             });
     }, [type]);
@@ -134,11 +139,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
         return <div className="text-center py-8 animate-fade-in">Cargando...</div>;
     }
 
-    if (error) {
-        return <div className="text-center py-8 animate-fade-in">Error: {error}</div>;
-    }
-
-    if (files.length === 0) {
+    if (error || files.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center w-full min-h-[65vh] gap-4 ">
                 {type === 'noticias' ? (
@@ -172,9 +173,8 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                         />
                     </svg>
                 )}
-
                 <p className="text-3xl font-bold animate-fade-in">
-                    {type === 'noticias' ? 'No hay noticias disponibles' : 'No hay revistas disponibles'}
+                    {error ? error : (type === 'noticias' ? 'No hay noticias disponibles' : 'No hay revistas disponibles')}
                 </p>
                 <p className="text-lg animate-fade-in">
                     Intenta nuevamente más tarde
@@ -183,10 +183,12 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
         );
     }
 
+
     return (
         <>
             {/* Tarjetas de previsualización */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center my-24 ">
+
 
             {files.map(file => {
                     const displayName = file.displayName || cleanFileName(file.fileName);
