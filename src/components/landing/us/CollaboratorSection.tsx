@@ -1,5 +1,4 @@
 import { FC, useState, useEffect } from "react";
-import { Edit } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCards } from "swiper/modules";
 // @ts-ignore
@@ -75,10 +74,6 @@ const CollaboratorSection: FC = () => {
                             <div className="bg-gray-100 p-6 rounded-lg min-h-[200px] flex items-center justify-center text-center text-lg">
                                 {makers[activeIndex]?.description}
                             </div>
-                            <button className="flex items-center gap-2 bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition">
-                                <Edit size={20} />
-                                Editar
-                            </button>
                         </div>
                     )}
                 </div>
