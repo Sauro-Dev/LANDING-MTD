@@ -6,12 +6,13 @@ interface PublicationCardsProps {
     type: string; // "noticias" o "revistas"
 }
 
-interface LandingFile {
+export interface LandingFile {
     idLandingFiles: number;
     fileName: string;
     fileTypes: string;
     fileSector: string;
     normalizedSector?: string;
+    displayName?: string;
 }
 
 const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
@@ -24,6 +25,28 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
     const [pageNumber, setPageNumber] = useState<number>(1);
     const [isClosing, setIsClosing] = useState(false);
 
+    // Helper para extraer el nombre real del archivo
+    const cleanFileName = (fileName: string): string => {
+        let key = fileName;
+        if (key.startsWith('http')) {
+            try {
+                const urlObj = new URL(key);
+                key = urlObj.pathname; // ej: "/1740758337052_CV%20Zahir%20Aredo.pdf"
+                if (key.startsWith('/')) {
+                    key = key.substring(1);
+                }
+            } catch (e) {
+                const pos = key.indexOf("?");
+                if (pos > 0) {
+                    key = key.substring(0, pos);
+                }
+            }
+        }
+        // Quitar el prefijo timestamp (se asume que está separado por "_")
+        let namePart = key.includes('_') ? key.split('_').slice(1).join('_') : key;
+        return decodeURIComponent(namePart);
+    };
+
     useEffect(() => {
         fetch(`${environment.API_URL}/landing-files/all`)
             .then(response => {
@@ -33,15 +56,19 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                 return response.json();
             })
             .then((data: LandingFile[]) => {
-                const normalizedFiles = data.map(file => ({
-                    ...file,
-                    normalizedSector:
+                const normalizedFiles = data.map(file => {
+                    const normalizedSector =
                         file.fileSector === "NEWS"
                             ? "noticias"
                             : file.fileSector === "MAGAZINE"
                                 ? "revistas"
-                                : file.fileSector.toLowerCase()
-                }));
+                                : file.fileSector.toLowerCase();
+                    return {
+                        ...file,
+                        normalizedSector,
+                        displayName: cleanFileName(file.fileName)
+                    };
+                });
                 const filtered = normalizedFiles.filter(file =>
                     file.normalizedSector === type.toLowerCase()
                 );
@@ -66,21 +93,41 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
             setNumPages(0);
             setPageNumber(1);
             setIsClosing(false);
-        }, 300); // 300ms: duración de la animación de fade out
+        }, 300);
     };
 
     const onDocumentLoadSuccess = (pdf: any) => {
         setNumPages(pdf.numPages);
     };
 
+    // Para PDFs, usamos el endpoint /download
+    const getPdfUrl = (file: LandingFile): string => {
+        return `${environment.API_URL}/landing-files/${file.idLandingFiles}/download`;
+    };
+
+    // Descarga forzada mediante fetch
     const downloadFile = (file: LandingFile) => {
-        const url = `${environment.API_URL}/landing-files/${file.idLandingFiles}`;
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = file.fileName.includes('_')
-            ? file.fileName.split('_').slice(1).join('_')
-            : file.fileName;
-        a.click();
+        const downloadUrl = getPdfUrl(file);
+        fetch(downloadUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la descarga');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.displayName || cleanFileName(file.fileName) || 'archivo.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => {
+                console.error('Error al descargar el archivo:', error);
+            });
     };
 
     if (loading) {
@@ -94,7 +141,6 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
     if (files.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center w-full min-h-[65vh] gap-4 ">
-                {/* Ícono dinámico según el tipo (noticias o revistas) */}
                 {type === 'noticias' ? (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -140,11 +186,10 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
     return (
         <>
             {/* Tarjetas de previsualización */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                {files.map(file => {
-                    const displayName = file.fileName.includes('_')
-                        ? file.fileName.split('_').slice(1).join('_')
-                        : file.fileName;
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center">
+
+            {files.map(file => {
+                    const displayName = file.displayName || cleanFileName(file.fileName);
                     return (
                         <div
                             key={file.idLandingFiles}
@@ -167,7 +212,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                                 ) : file.fileTypes === 'application/pdf' ? (
                                     <div>
                                         <Document
-                                            file={`${environment.API_URL}/landing-files/${file.idLandingFiles}`}
+                                            file={getPdfUrl(file)}
                                             loading="Cargando PDF..."
                                         >
                                             <Page
@@ -205,13 +250,9 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                         {/* Navbar del visor PDF */}
                         <div className="bg-gray-100 p-4 flex justify-between items-center rounded-t-lg w-full border-b">
                             <h2 className="text-xl font-semibold">
-                                {type === 'noticias' ? 'Noticia' : 'Revista'} -{" "}
-                                {selectedFile.fileName.includes('_')
-                                    ? selectedFile.fileName.split('_').slice(1).join('_')
-                                    : selectedFile.fileName}
+                                {type === 'noticias' ? 'Noticia' : 'Revista'} - {cleanFileName(selectedFile.fileName)}
                             </h2>
                             <div className="flex items-center space-x-4">
-                                {/* Botón de descargar usando el icono de public/download.png */}
                                 <button
                                     onClick={() => downloadFile(selectedFile)}
                                     className="transition-colors hover:opacity-80"
@@ -219,7 +260,6 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                                 >
                                     <img src="/download.png" alt="Descargar" className="h-6 w-6" />
                                 </button>
-                                {/* Botón de cerrar */}
                                 <button
                                     onClick={closePdfViewer}
                                     className="text-black font-bold px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition-colors"
@@ -235,7 +275,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                             style={{ maxHeight: 'calc(80vh - 140px)' }}
                         >
                             <Document
-                                file={`${environment.API_URL}/landing-files/${selectedFile.idLandingFiles}`}
+                                file={getPdfUrl(selectedFile)}
                                 onLoadSuccess={onDocumentLoadSuccess}
                                 loading="Cargando PDF..."
                             >
