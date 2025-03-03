@@ -13,15 +13,27 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const modalRef = useRef<HTMLDivElement>(null);
 
-    // Leer el token de localStorage al cargar
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            setIsAuthenticated(true);
+        const checkToken = () => {
+            const token = localStorage.getItem("token");
+            setIsAuthenticated(!!token);
+        };
+
+        checkToken();
+
+        window.addEventListener('storage', checkToken);
+        return () => window.removeEventListener('storage', checkToken);
+    }, []);
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('logout') === 'true') {
+            localStorage.removeItem('token');
+            setIsAuthenticated(false);
+            window.history.replaceState({}, '', window.location.pathname);
         }
     }, []);
 
-    // Cerrar modal si el usuario hace clic fuera
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
@@ -31,18 +43,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
         if (isOpen) {
             document.addEventListener("mousedown", handleClickOutside);
-        } else {
-            document.removeEventListener("mousedown", handleClickOutside);
         }
 
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [isOpen, onClose]);
 
-    if (!isOpen) return null;
-
     const handleLogin = async () => {
         setError(null);
-
         try {
             const response = await fetch(`${environment.API_URL}/users/login`, {
                 method: "POST",
@@ -60,8 +67,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
             const data = await response.json();
             localStorage.setItem("token", data.token);
-
-            window.location.href = `http://localhost:4200/admin-panel?token=${data.token}`;
+            window.location.href = `http://localhost:4200/admin-panel?token=${encodeURIComponent(data.token)}`;
         } catch {
             setError("Error al conectar con el servidor. Intente nuevamente.");
         }
@@ -69,21 +75,24 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
     const handleLogout = async () => {
         const token = localStorage.getItem("token");
-
         if (token) {
-            await fetch(`${environment.API_URL}/users/logout`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-            });
+            try {
+                await fetch(`${environment.API_URL}/users/logout`, {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+            } catch (error) {
+                console.error("Error al cerrar sesión:", error);
+            }
         }
 
+        // Eliminar token y notificar a Angular
         localStorage.removeItem("token");
-        window.dispatchEvent(new StorageEvent("storage", { key: "token", newValue: null }));
-        window.location.reload();
+        window.dispatchEvent(new Event('storage'));
+        window.location.href = '/home?logout=true';
     };
+
+    if (!isOpen) return null;
 
     return (
         <div className="fixed top-16 right-4 z-50">
@@ -93,7 +102,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 </h2>
 
                 {isAuthenticated ? (
-                    // Si está autenticado, mostrar opciones de sistema y logout
                     <div className="space-y-4">
                         <a
                             href={environment.ANGULAR_APP_URL}
@@ -109,7 +117,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                         </button>
                     </div>
                 ) : (
-                    // Si no está autenticado, mostrar el formulario de login
                     <form onSubmit={(e) => e.preventDefault()}>
                         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
                         <div className="mb-4">
@@ -132,7 +139,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-
                         <button
                             type="button"
                             className="w-full px-4 py-2 bg-primary text-light rounded-lg hover:bg-primary-dark transition-colors"
@@ -140,7 +146,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                         >
                             Iniciar Sesión
                         </button>
-
                         <p className="text-center text-sm text-blue-600 mt-2 cursor-pointer hover:underline">
                             Recuperar Contraseña
                         </p>

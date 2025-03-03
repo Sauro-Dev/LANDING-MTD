@@ -6,11 +6,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
-
-
-
-
-
 const App: FC = () => {
     return <AppRouter />;
 };

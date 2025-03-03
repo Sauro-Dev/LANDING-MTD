@@ -1,30 +1,67 @@
-import { FC } from "react";
-import bannerImage from "../../../assets/banner/banner principal.png";
-import { motion } from "framer-motion";
+import { FC, useEffect, useState } from "react";
+import { EmblaOptionsType } from "embla-carousel";
+import environment from "../../../enviroment.ts";
+import Carousel, { Slider, SliderContainer } from "../../ui/carousel/AutoCarousel.tsx";
+import useEmblaCarousel from "embla-carousel-react";
 
-/**
- * Componente HeroSection
- *
- * Sección principal de la página de inicio. Muestra un banner con un diseño optimizado
- * sin transparencia y con una mejor integración con la navbar.
- */
+interface Banner {
+    idLandingFiles: number;
+    fileName: string;
+    fileSector: string;
+}
+
+const API_URL = `${environment.API_URL}/landing-files/all`;
+
+const getS3ImageUrl = (fileKey: string): string => {
+    return fileKey.startsWith("http") ? fileKey : `https://tu-bucket-s3.s3.amazonaws.com/${fileKey}`;
+};
+
 const HeroSection: FC = () => {
+    const [banners, setBanners] = useState<Banner[]>([]);
+    const OPTIONS: EmblaOptionsType = { loop: true };
+    const [, emblaApi] = useEmblaCarousel(OPTIONS);
+    const [, setSelectedIndex] = useState(0);
+
+    useEffect(() => {
+        fetch(API_URL)
+            .then((response) => response.json())
+            .then((data: Banner[]) => {
+                const bannerList = data.filter((file) => file.fileSector === "BANNER");
+                setBanners(bannerList);
+            })
+            .catch((error) => console.error("Error cargando los banners:", error));
+    }, []);
+
+
+    useEffect(() => {
+        if (!emblaApi) return;
+
+        const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+        emblaApi.on("select", onSelect);
+        onSelect();
+    }, [emblaApi]);
+
     return (
         <section className="relative w-full">
-            {/* Contenedor del banner */}
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="relative w-full aspect-[2000/500] overflow-hidden"
-            >
-                {/* Imagen del banner */}
-                <img
-                    src={bannerImage}
-                    alt="Banner principal"
-                    className="w-full h-full object-cover"
-                />
-            </motion.div>
+            <Carousel options={OPTIONS} isAutoPlay={true} className="w-full mx-auto">
+                <SliderContainer className="gap-2">
+                    {banners.length > 0 ? (
+                        banners.map((banner) => (
+                            <Slider key={banner.idLandingFiles} className="w-full">
+                                <img
+                                    src={getS3ImageUrl(banner.fileName)}
+                                    alt="Banner"
+                                    className="w-full h-auto max-h-[500px]"
+                                />
+                            </Slider>
+                        ))
+                    ) : (
+                        <Slider className="w-full">
+                            <p className="text-center text-gray-500">Cargando banners...</p>
+                        </Slider>
+                    )}
+                </SliderContainer>
+            </Carousel>
         </section>
     );
 };

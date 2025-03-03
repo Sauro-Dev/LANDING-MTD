@@ -1,28 +1,39 @@
-import { FC, useState } from "react";
-import { Edit } from "lucide-react";
+import { FC, useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCards } from "swiper/modules";
 // @ts-ignore
 import "swiper/css";
 // @ts-ignore
 import "swiper/css/effect-cards";
-import "../../../App.css"; // Asegúrate de que la ruta sea correcta
+import environment from "../../../enviroment.ts";
 
-const collaborators = [
-    { name: "Nombre 1", image: "src/assets/team/celine.jpg", description: "Descripción del colaborador 1." },
-    { name: "Nombre 2", image: "src/assets/team/aref.jpg", description: "Descripción del colaborador 2." },
-    { name: "Nombre 3", image: "/images/collab3.jpg", description: "Descripción del colaborador 3." },
-    { name: "Nombre 4", image: "/images/collab4.jpg", description: "Descripción del colaborador 4." },
-    { name: "Nombre 5", image: "/images/collab5.jpg", description: "Descripción del colaborador 5." },
-    { name: "Nombre 6", image: "/images/collab6.jpg", description: "Descripción del colaborador 6." },
-    { name: "Nombre 7", image: "/images/collab7.jpg", description: "Descripción del colaborador 7." },
-    { name: "Nombre 8", image: "/images/collab8.jpg", description: "Descripción del colaborador 8." },
-    { name: "Nombre 9", image: "/images/collab9.jpg", description: "Descripción del colaborador 9." },
-    { name: "Nombre 10", image: "/images/collab10.jpg", description: "Descripción del colaborador 10." },
-];
+interface Maker {
+    idLandingFiles: number;
+    makerName: string;
+    fileName: string;
+    description: string;
+    fileSector: string;
+}
+
+const API_URL = `${environment.API_URL}/landing-files/all`;
+
+const getS3ImageUrl = (fileKey: string): string => {
+    return fileKey.startsWith("http") ? fileKey : `https://tu-bucket-s3.s3.amazonaws.com/${fileKey}`;
+};
 
 const CollaboratorSection: FC = () => {
+    const [makers, setMakers] = useState<Maker[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
+
+    useEffect(() => {
+        fetch(API_URL)
+            .then((response) => response.json())
+            .then((data: Maker[]) => {
+                const featuredMakers = data.filter((file) => file.fileSector === "FEATURED_MAKER");
+                setMakers(featuredMakers);
+            })
+            .catch((error) => console.error("Error cargando los Makers Destacados:", error));
+    }, []);
 
     return (
         <div className="py-16 bg-white">
@@ -31,38 +42,40 @@ const CollaboratorSection: FC = () => {
                     Colaborador del mes
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    {/* Swiper Carrusel */}
                     <div className="flex flex-col items-center">
-                        <Swiper
-                            effect="cards"
-                            grabCursor={true}
-                            modules={[EffectCards]}
-                            className="mySwiper w-60 h-80" // Ajuste de tamaño de la carta
-                            onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)} // Cambia la descripción según la tarjeta activa
-                        >
-                            {collaborators.map((collab, index) => (
-                                <SwiperSlide key={index} className="flex items-center justify-center">
-                                    <img
-                                        src={collab.image}
-                                        alt={collab.name}
-                                        className="w-full h-full object-cover rounded-lg"
-                                    />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
+                        {makers.length > 0 ? (
+                            <Swiper
+                                effect="cards"
+                                grabCursor={true}
+                                modules={[EffectCards]}
+                                className="mySwiper w-60 h-80"
+                                onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+                            >
+                                {makers.map((maker) => (
+                                    <SwiperSlide key={maker.idLandingFiles} className="swiper-slide">
+                                        <div className="card-container">
+                                            <img
+                                                src={getS3ImageUrl(maker.fileName)}
+                                                alt={maker.makerName}
+                                                className="card-image"
+                                            />
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        ) : (
+                            <p className="text-center text-gray-500">No hay Makers Destacados disponibles.</p>
+                        )}
                     </div>
 
-                    {/* Información sobre el colaborador */}
-                    <div className="space-y-4">
-                        <h3 className="text-xl font-semibold mb-4">{collaborators[activeIndex].name}</h3>
-                        <div className="bg-gray-100 p-6 rounded-lg min-h-[200px] flex items-center justify-center text-center text-lg">
-                            {collaborators[activeIndex].description}
+                    {makers.length > 0 && (
+                        <div className="space-y-4">
+                            <h3 className="text-xl font-semibold mb-4">{makers[activeIndex]?.makerName}</h3>
+                            <div className="bg-gray-100 p-6 rounded-lg min-h-[200px] flex items-center justify-center text-center text-lg">
+                                {makers[activeIndex]?.description}
+                            </div>
                         </div>
-                        <button className="flex items-center gap-2 bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition">
-                            <Edit size={20} />
-                            Editar
-                        </button>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>

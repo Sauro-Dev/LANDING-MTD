@@ -79,6 +79,47 @@ const Navbar: FC = () => {
                 </button>
             </div>
 
+            {/* Barra lateral (sidebar) para móviles con animación */}
+            <div
+                className={`
+          fixed top-0 left-0 h-full w-64 bg-primary z-50
+          transform transition-transform duration-300
+          md:hidden
+          ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+            >
+                <div className="p-4">
+                    {/* Enlaces con texto más grande y más espacio */}
+                    <div className="flex flex-col space-y-4 text-xl">
+                        {routes.map((route) => (
+                            <Link
+                                key={route.path}
+                                to={route.path}
+                                className="
+                  block px-4 py-3
+                  rounded-lg
+                  transition-colors
+                  text-light
+                  hover:text-secondary
+                  hover:bg-primary-dark
+                "
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                {route.name}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Superposición oscura (overlay) al mostrar la barra lateral */}
+            {isMenuOpen && (
+                <div
+                    className="fixed inset-0 bg-black opacity-50 z-40"
+                    onClick={() => setIsMenuOpen(false)}
+                />
+            )}
+
             {/* Modal de inicio de sesión */}
             <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
         </nav>
