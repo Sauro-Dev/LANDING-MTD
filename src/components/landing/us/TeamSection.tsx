@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+
 const TeamSection: FC = () => {
     const teamMembers = [
         {
@@ -23,9 +24,42 @@ const TeamSection: FC = () => {
     ];
 
     return (
-        <div className="py-16 bg-gray-50">
-            <div className="container mx-auto px-4">
-                <h2 className="text-4xl font-bold text-center mb-12">Nuestro Equipo</h2>
+        <div className="relative py-16 bg-[#ED117F]">
+            {/* Nube de título */}
+            <div className="absolute left-10 top-[5px] flex items-center space-x-5 z-50">
+                {/* Círculos para la nube */}
+                <div className="relative">
+
+
+                    <div
+                        className="absolute w-[300px] h-[300px] bg-[#48C3E6] rounded-full left-[50px] top-[170px]"
+                        style={{ boxShadow: "-26px 10px 8px 1.1px rgba(0, 0, 0, 0.25)" }}
+                    ></div>
+                    <div
+                        className="absolute w-[350px] h-[350px] bg-[#48C3E6] rounded-full left-[-180px] top-[90px]"
+                        style={{ boxShadow: "-26px 10px 8px 1.1px rgba(0, 0, 0, 0.25)" }}
+                    ></div>
+                    <div
+                        className="absolute w-[350px] h-[350px] bg-[#48C3E6] rounded-full left-[-180px] top-[200px]"
+                        style={{ boxShadow: "-26px 10px 8px 1.1px rgba(0, 0, 0, 0.25)" }}
+                    ></div>
+
+                    {/* Contenedor del texto */}
+                    <div className="relative w-[280px] h-[650px] rounded-lg flex items-center justify-center leading-[55px] px-4">
+                        <h2
+                            className="text-white font-spartan font-bold text-[70px] text-center"
+                            style={{ textShadow: "-5px 5px 5px rgba(0, 0, 0, 0.25)" }}
+                        >
+                            NUESTRO <br /> EQUIPO
+                        </h2>
+                    </div>
+
+
+                </div>
+            </div>
+
+            {/* Contenedor principal */}
+            <div className="container mx-auto top-[-50px] px-[0px] mt-[10px] w-[85%] max-w-[1100px] ml-[380px]">
                 <div className="group flex max-md:flex-col justify-center gap-4 w-[90%] mx-auto">
                     {teamMembers.map((member) => (
                         <article
@@ -48,17 +82,7 @@ const TeamSection: FC = () => {
                             <img
                                 src={member.url}
                                 alt={member.name}
-                                className="
-                                    object-cover
-                                    object-top
-                                    h-72
-                                    md:h-[500px]
-                                    w-full
-                                    transform
-                                    transition-transform
-                                    duration-300
-                                    group-hover/article:scale-102
-                                "
+                                className="object-cover object-top h-72 md:h-[500px] w-full transform transition-transform duration-300 group-hover/article:scale-102"
                             />
                         </article>
                     ))}

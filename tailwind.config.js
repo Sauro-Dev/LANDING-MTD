@@ -19,6 +19,7 @@ export default {
             },
             fontFamily: {
                 poppins: ['Poppins', 'sans-serif'],
+                spartan: ['League Spartan', 'sans-serif'],
             },
             animation: {
                 'infinite-scroll-half': 'infinite-scroll-half 15s linear infinite',
