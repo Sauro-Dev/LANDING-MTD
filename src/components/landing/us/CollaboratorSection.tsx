@@ -36,11 +36,10 @@ const CollaboratorSection: FC = () => {
     }, []);
 
     return (
-        <div className="py-16 bg-white">
+        <div className="py-16 bg-[#ED117F]">
+
             <div className="container mx-auto px-4">
-                <h2 className="text-3xl font-bold text-center mb-12">
-                    Colaborador del mes
-                </h2>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                     <div className="flex flex-col items-center">
                         {makers.length > 0 ? (
@@ -64,8 +63,28 @@ const CollaboratorSection: FC = () => {
                                 ))}
                             </Swiper>
                         ) : (
-                            <p className="text-center text-gray-500">No hay Makers Destacados disponibles.</p>
+                            <p className="text-center text-white">No hay Makers Destacados disponibles.</p>
                         )}
+                    </div>
+
+                    {/* Texto contenedor*/}
+                    <div className="relative right-4 h-[650px] flex items-center justify-end leading-[55px] px-4">
+
+                        {/* Contenedor del título con las nubes amarillas */}
+                        <div className="relative flex items-center justify-end h-[650px] pr-8">
+                            {/* Círculos amarillos (nubes) */}
+                            <div className="absolute -top-8 -right-10 w-[160px] h-[160px] bg-[#F4C22E] rounded-full shadow-lg"></div>
+                            <div className="absolute top-12 -right-20 w-[120px] h-[120px] bg-[#F4C22E] rounded-full shadow-lg"></div>
+
+                            {/* Título */}
+                            <h2
+                                className="relative text-white font-spartan font-bold text-[70px] text-center"
+                                style={{ textShadow: "-5px 5px 5px rgba(0, 0, 0, 0.25)" }}
+                            >
+                                MAKER <br /> DESTACADO
+                            </h2>
+                        </div>
+
                     </div>
 
                     {makers.length > 0 && (
