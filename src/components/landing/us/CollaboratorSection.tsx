@@ -73,8 +73,9 @@ const CollaboratorSection: FC = () => {
                         {/* Contenedor del título con las nubes amarillas */}
                         <div className="relative flex items-center justify-end h-[650px] pr-8">
                             {/* Círculos amarillos (nubes) */}
-                            <div className="absolute -top-8 -right-10 w-[160px] h-[160px] bg-[#F4C22E] rounded-full shadow-lg"></div>
-                            <div className="absolute top-12 -right-20 w-[120px] h-[120px] bg-[#F4C22E] rounded-full shadow-lg"></div>
+                            <div className="absolute top-[170px] right-[150px] w-[320px] h-[320px] bg-[#F4C22E] rounded-full shadow-lg"></div>
+                            <div className="absolute top-[200px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full shadow-lg"></div>
+                            <div className="absolute top-[100px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full "></div>
 
                             {/* Título */}
                             <h2
