@@ -43,7 +43,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
             }
         }
         // Quitar el prefijo timestamp (se asume que está separado por "_")
-        let namePart = key.includes('_') ? key.split('_').slice(1).join('_') : key;
+        const namePart = key.includes('_') ? key.split('_').slice(1).join('_') : key;
         return decodeURIComponent(namePart);
     };
 
@@ -107,7 +107,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
 
     // Para PDFs, usamos el endpoint /download
     const getPdfUrl = (file: LandingFile): string => {
-        return `${environment.API_URL}/landing-files/${file.idLandingFiles}/download`;
+        return `${environment.API_URL}/landing-files/download/${file.idLandingFiles}`;
     };
 
     // Descarga forzada mediante fetch
