@@ -1,20 +1,24 @@
 import { FC, useState } from "react";
 
 const MissionVisionSection: FC = () => {
-    // Estados para alternar entre imagen y texto
     const [showMissionText, setShowMissionText] = useState(false);
     const [showVisionText, setShowVisionText] = useState(false);
 
     return (
         <div className="relative py-16 bg-white flex items-center justify-center overflow-hidden">
-            {/* Fondos degradados más visibles */}
-            <div className="absolute inset-0 flex justify-end items-center">
-                <div className="w-[500px] h-[400px] bg-[#3DB6B1] rounded-full blur-2xl opacity-70 left-80 top-[180px] absolute"></div>
-                <div className="w-[500px] h-[400px] bg-yellow-400 rounded-full blur-2xl opacity-70 right-80 top-[180px] absolute"></div>
+            {/* Círculos superiores rosados */}
+            <div className="absolute -top-1 left-0 w-full flex justify-around gap-x-[-10px] z-10">
+                <div className="w-[500px] h-[250px] bg-[#ED117F] rounded-b-full"></div>
+                <div className="w-[300px] h-[150px] bg-[#ED117F] rounded-b-full"></div>
+                <div className="w-[130px] h-[75px] bg-[#ED117F] rounded-b-full"></div>
+                <div className="w-[100px] h-[50px] bg-[#ED117F] rounded-b-full"></div>
+                <div className="w-[200px] h-[100px] bg-[#ED117F] rounded-b-full"></div>
+                <div className="w-[300px] h-[150px] bg-[#ED117F] rounded-b-full"></div>
+                <div className="w-[500px] h-[250px] bg-[#ED117F] rounded-b-full"></div>
             </div>
 
             {/* Contenido principal */}
-            <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center gap-4">
+            <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center gap-4 mt-16">
                 {/* Sección Misión */}
                 <div className="relative w-1/2 flex flex-col items-end text-center group">
                     <h2 className="text-[90px] font-semibold text-[#3DB6B1] leading-none tracking-tighter underline z-20">
