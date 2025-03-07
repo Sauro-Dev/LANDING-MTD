@@ -5,19 +5,19 @@ const TeamSection: FC = () => {
     const teamMembers = [
         {
             id: '1',
-            url: 'src/assets/team/celine.jpg',
+            url: 'src/assets/team/exm1.jpg',
             name: 'Celine Flores Mostacero',
             role: 'Fundadora y Presidenta Actual',
         },
         {
             id: '2',
-            url: 'src/assets/team/aref.jpg',
+            url: 'src/assets/team/exm2.jpg',
             name: 'Aref Damian Buendia',
             role: 'Vicepresidente actual',
         },
         {
             id: '3',
-            url: 'src/assets/team/lesly.jpg',
+            url: 'src/assets/team/exm3.jpg',
             name: 'Lesly Sánchez Vergaray',
             role: 'Voluntaria y Tesorera del Club',
         },
@@ -76,30 +76,62 @@ const TeamSection: FC = () => {
             <div className="container mx-auto px-4 md:px-[0px] mt-[120px] md:mt-[10px] w-full md:w-[85%] max-w-[1100px] md:ml-[380px]">
                 {/* Contenedor de los miembros del equipo */}
                 <div className="group flex flex-col md:flex-row justify-center gap-6 md:gap-4 w-full md:w-[90%] mx-auto">
-                {teamMembers.map((member) => (
+                    {teamMembers.map((member) => (
                         <article
-                            key={member.id}
                             className="group/article relative w-full rounded-xl overflow-hidden
-                                md:group-hover:[&:not(:hover)]:w-[20%]
-                                transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.15)]
-                                shadow-lg hover:shadow-xl mb-6 md:mb-0"
+        md:group-hover:[&:not(:hover)]:w-[20%]
+        md:group-focus-within:[&:not(:focus-within):not(:hover)]:w-[20%]
+        transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.15)]
+        before:absolute before:inset-x-0 before:bottom-0 before:h-1/3 before:bg-gradient-to-t
+        before:from-black/50 before:transition-opacity md:before:opacity-0
+        md:hover:before:opacity-100 focus-within:before:opacity-100
+        after:opacity-0 md:group-hover:[&:not(:hover)]:after:opacity-100
+        md:group-focus-within:[&:not(:focus-within):not(:hover)]:after:opacity-100
+        after:absolute after:inset-0 after:bg-black/30 after:backdrop-blur
+        after:rounded-lg after:transition-all focus-within:ring focus-within:ring-[#F6BE43]"
                         >
-                            {/* Capa oscura con la info */}
-                            <div className="absolute inset-0 z-10 p-4 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent">
-                                <h3 className="text-white text-xl md:text-2xl font-semibold md:opacity-0 md:translate-y-4 group-hover/article:opacity-100 group-hover/article:translate-y-0 transition-all duration-200">
+                            {/* Enlace cubriendo toda la tarjeta */}
+                            <a
+                                className="absolute inset-0 text-white z-10 p-3 flex flex-col justify-end"
+                                href="#0"
+                            >
+                                {/* Título con animación */}
+                                <h1
+                                    className="text-xl font-medium md:whitespace-nowrap md:truncate
+                md:opacity-0 group-hover/article:opacity-100 group-focus-within/article:opacity-100
+                md:translate-y-2 group-hover/article:translate-y-0 group-focus-within/article:translate-y-0
+                transition duration-200 ease-[cubic-bezier(.5,.85,.25,1.8)]
+                group-hover/article:delay-300 group-focus-within/article:delay-300"
+                                >
                                     {member.name}
-                                </h3>
-                                <p className="text-gray-200 text-base md:text-lg md:opacity-0 md:translate-y-4 group-hover/article:opacity-100 group-hover/article:translate-y-0 transition-all duration-200 delay-75">
-                                    {member.role}
-                                </p>
-                            </div>
+                                </h1>
+
+                                {/* Descripción con animación */}
+                                <span
+                                    className="text-3xl font-medium md:whitespace-nowrap md:truncate
+                md:opacity-0 group-hover/article:opacity-100 group-focus-within/article:opacity-100
+                md:translate-y-2 group-hover/article:translate-y-0 group-focus-within/article:translate-y-0
+                transition duration-200 ease-[cubic-bezier(.5,.85,.25,1.8)]
+                group-hover/article:delay-500 group-focus-within/article:delay-500"
+                                >
+            {member.role}
+        </span>
+                            </a>
+
                             {/* Imagen */}
                             <img
                                 src={member.url}
                                 alt={member.name}
-                                className="object-cover object-top h-72 md:h-[500px] w-full transform transition-transform duration-300 group-hover/article:scale-102"
+                                width='960'
+                                height='480'
+                                className='object-cover h-[180px] md:h-[520px] w-full'
                             />
+
+
+
+
                         </article>
+
                     ))}
                 </div>
             </div>
