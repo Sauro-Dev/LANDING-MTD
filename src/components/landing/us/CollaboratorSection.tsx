@@ -80,7 +80,7 @@ const CollaboratorSection: FC = () => {
                 </div>
 
                 {/* Contenedor DERECHA: Nubes + Título */}
-                <div className="relative flex items-center -right-[16git px] justify-end w-full md:w-1/2 h-[650px]">
+                <div className="relative flex items-center justify-end w-full md:w-1/2 h-[650px]">
                     {/* Contenedor de las nubes y el título */}
                     <div className="relative flex items-center justify-end h-[650px] pr-[100px] overflow-hidden">
                         {/* Nubes (Círculos amarillos) */}
