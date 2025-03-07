@@ -36,11 +36,11 @@ const CollaboratorSection: FC = () => {
     }, []);
 
     return (
-        <div className="py-16 bg-[#ED117F] min-h-screen flex items-center justify-center">
+        <div className="py-10 md:py-16 bg-[#ED117F] min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden">
             <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8">
 
                 {/* Contenedor IZQUIERDA: Card + Descripción */}
-                <div className="flex flex-col items-center w-full md:w-1/2">
+                <div className="flex flex-col items-center w-full md:w-1/2 order-2 md:order-1 mt-8 md:mt-0">
                     {makers.length > 0 ? (
                         <>
                             {/* Swiper de la tarjeta */}
@@ -48,7 +48,7 @@ const CollaboratorSection: FC = () => {
                                 effect="cards"
                                 grabCursor={true}
                                 modules={[EffectCards]}
-                                className="swiper w-[240px] h-[320px]"
+                                className="swiper w-[240px] h-[320px] z-10"
                                 onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
                             >
                                 {makers.map((maker, index) => (
@@ -66,10 +66,10 @@ const CollaboratorSection: FC = () => {
 
                             {/* Descripción debajo de la tarjeta */}
                             <div className="mt-6 text-center w-full px-4">
-                                <h3 className="text-[40px] font-spartan font-semibold mb-2 text-white">
+                                <h3 className="text-[30px] md:text-[40px] font-spartan font-semibold mb-2 text-white">
                                     {makers[activeIndex]?.makerName}
                                 </h3>
-                                <div className="bg-gray-100 p-6 border-accent border-4 rounded-lg min-h-[200px] flex items-center justify-center text-center text-lg">
+                                <div className="bg-gray-100 p-4 md:p-6 border-accent border-4 rounded-lg min-h-[150px] md:min-h-[200px] flex items-center justify-center text-center text-base md:text-lg">
                                     {makers[activeIndex]?.description}
                                 </div>
                             </div>
@@ -80,18 +80,18 @@ const CollaboratorSection: FC = () => {
                 </div>
 
                 {/* Contenedor DERECHA: Nubes + Título */}
-                <div className="relative flex items-center -right-[16git px] justify-end w-full md:w-1/2 h-[650px]">
+                <div className="relative flex items-center justify-center md:justify-end w-full md:w-1/2 h-[300px] md:h-[650px] order-1 md:order-2">
                     {/* Contenedor de las nubes y el título */}
-                    <div className="relative flex items-center justify-end h-[650px] pr-[100px] overflow-hidden">
-                        {/* Nubes (Círculos amarillos) */}
-                        <div className="absolute top-[170px] right-[150px] w-[320px] h-[320px] bg-[#F4C22E] rounded-full shadow-lg"></div>
-                        <div className="absolute top-[200px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full shadow-lg"></div>
-                        <div className="absolute top-[100px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full"></div>
+                    <div className="relative flex items-center justify-center md:justify-end h-full md:pr-[20px] lg:pr-[50px] overflow-visible">
+                        {/* Nubes (Círculos amarillos) - Ajustados para mejor visualización */}
+                        <div className="absolute top-[50px] md:top-[170px] right-[50%] md:right-[120px] w-[200px] h-[200px] md:w-[320px] md:h-[320px] bg-[#F4C22E] rounded-full shadow-lg transform translate-x-[50%] md:translate-x-0"></div>
+                        <div className="absolute top-[80px] md:top-[200px] right-[50%] md:-right-10 w-[220px] h-[220px] md:w-[350px] md:h-[350px] bg-[#F4C22E] rounded-full shadow-lg transform translate-x-[60%] md:translate-x-0"></div>
+                        <div className="absolute top-[30px] md:top-[100px] right-[50%] md:-right-10 w-[220px] h-[220px] md:w-[350px] md:h-[350px] bg-[#F4C22E] rounded-full transform translate-x-[40%] md:translate-x-0"></div>
 
                         {/* Título MAKER DESTACADO */}
                         <h2
-                            className="relative -right-[80px] text-white font-spartan font-bold text-[70px] text-center"
-                            style={{ textShadow: "-5px 5px 5px rgba(0, 0, 0, 0.25)" }}
+                            className="relative z-10 text-white font-spartan font-bold text-[40px] md:text-[70px] text-center md:text-right md:-right-[40px] lg:-right-[20px]"
+                            style={{ textShadow: "-3px 3px 3px rgba(0, 0, 0, 0.25)" }}
                         >
                             MAKER <br /> DESTACADO
                         </h2>
