@@ -26,9 +26,9 @@ const TeamSection: FC = () => {
     return (
         <div className="relative py-16 bg-[#ED117F]">
             {/* Nube de título */}
-            <div className="absolute left-10 top-[5px] flex items-center space-x-5 z-50">
+            <div className="absolute left-0 md:left-10 top-[5px] flex items-center space-x-5 z-50 w-full md:w-auto">
                 {/* Círculos para la nube */}
-                <div className="relative">
+                <div className="relative hidden md:block">
 
 
                     <div
@@ -56,25 +56,40 @@ const TeamSection: FC = () => {
 
 
                 </div>
+
+                {/* Mobile title */}
+                <div className="md:hidden w-full">
+                    <div className="bg-[#48C3E6] py-6 px-4 rounded-lg mx-auto max-w-[300px] mb-8"
+                         style={{ boxShadow: "-5px 5px 8px 1.1px rgba(0, 0, 0, 0.25)" }}>
+                        <h2
+                            className="text-white font-spartan font-bold text-[40px] text-center"
+                            style={{ textShadow: "-3px 3px 3px rgba(0, 0, 0, 0.25)" }}
+                        >
+                            NUESTRO <br /> EQUIPO
+                        </h2>
+                    </div>
+                </div>
+
             </div>
 
             {/* Contenedor principal */}
-            <div className="container mx-auto top-[-50px] px-[0px] mt-[10px] w-[85%] max-w-[1100px] ml-[380px]">
-                <div className="group flex max-md:flex-col justify-center gap-4 w-[90%] mx-auto">
-                    {teamMembers.map((member) => (
+            <div className="container mx-auto px-4 md:px-[0px] mt-[120px] md:mt-[10px] w-full md:w-[85%] max-w-[1100px] md:ml-[380px]">
+                {/* Contenedor de los miembros del equipo */}
+                <div className="group flex flex-col md:flex-row justify-center gap-6 md:gap-4 w-full md:w-[90%] mx-auto">
+                {teamMembers.map((member) => (
                         <article
                             key={member.id}
                             className="group/article relative w-full rounded-xl overflow-hidden
                                 md:group-hover:[&:not(:hover)]:w-[20%]
                                 transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.15)]
-                                shadow-lg hover:shadow-xl"
+                                shadow-lg hover:shadow-xl mb-6 md:mb-0"
                         >
                             {/* Capa oscura con la info */}
                             <div className="absolute inset-0 z-10 p-4 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent">
-                                <h3 className="text-white text-2xl font-semibold md:opacity-0 md:translate-y-4 group-hover/article:opacity-100 group-hover/article:translate-y-0 transition-all duration-200">
+                                <h3 className="text-white text-xl md:text-2xl font-semibold md:opacity-0 md:translate-y-4 group-hover/article:opacity-100 group-hover/article:translate-y-0 transition-all duration-200">
                                     {member.name}
                                 </h3>
-                                <p className="text-gray-200 text-lg md:opacity-0 md:translate-y-4 group-hover/article:opacity-100 group-hover/article:translate-y-0 transition-all duration-200 delay-75">
+                                <p className="text-gray-200 text-base md:text-lg md:opacity-0 md:translate-y-4 group-hover/article:opacity-100 group-hover/article:translate-y-0 transition-all duration-200 delay-75">
                                     {member.role}
                                 </p>
                             </div>
