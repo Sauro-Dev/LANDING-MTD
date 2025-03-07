@@ -68,10 +68,10 @@ const CollaboratorSection: FC = () => {
                     </div>
 
                     {/* Texto contenedor*/}
-                    <div className="relative right-4 h-[650px] flex items-center justify-end leading-[55px] px-4">
+                    <div className="relative -right-[16px] h-[650px] flex items-center justify-end leading-[55px] px-[10px]">
 
                         {/* Contenedor del título con las nubes amarillas */}
-                        <div className="relative flex items-center justify-end h-[650px] pr-8">
+                        <div className="relative -right-[10px] flex items-center justify-end h-[650px] pr-[100px] overflow-hidden">
                             {/* Círculos amarillos (nubes) */}
                             <div className="absolute top-[170px] right-[150px] w-[320px] h-[320px] bg-[#F4C22E] rounded-full shadow-lg"></div>
                             <div className="absolute top-[200px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full shadow-lg"></div>
@@ -79,7 +79,7 @@ const CollaboratorSection: FC = () => {
 
                             {/* Título */}
                             <h2
-                                className="relative text-white font-spartan font-bold text-[70px] text-center"
+                                className="relative -right-[80px] text-white font-spartan font-bold text-[70px] text-center"
                                 style={{ textShadow: "-5px 5px 5px rgba(0, 0, 0, 0.25)" }}
                             >
                                 MAKER <br /> DESTACADO
