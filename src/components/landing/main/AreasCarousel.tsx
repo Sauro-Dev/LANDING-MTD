@@ -13,62 +13,82 @@ const AreasCarousel: React.FC = () => {
     const carouselItems: CarouselItem[] = [
         {
             id: 1,
-            image: "src/assets/faq/areascarousel1.jpg",
-            circleImage: "src/assets/faq/MEDIOAMBIENTE.png",
-            title: "Medioambiente",
-            phrase: "Cuidamos el planeta con conocimiento y con pasión, porque solo así generamos un cambio real.",
+            image: "src/assets/faq/Comun.jpg",
+            circleImage: "src/assets/faq/COMUNICACIONES.png",
+            title: "",
+            phrase: "",
         },
         {
             id: 2,
-            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80",
-            circleImage: "src/assets/faq/Sociales.png",
-            title: "Proyectos Sociales",
-            phrase: "El verdadero impacto ocurre cuando la empatía y la estrategia trabajan juntas.",
+            image: "src/assets/faq/DISEÑO.jpg",
+            circleImage: "src/assets/faq/Branding.png",
+            title: "",
+            phrase: "",
         },
         {
             id: 3,
-            image: "https://images.unsplash.com/photo-1492496913980-501348b61469?auto=format&fit=crop&q=80",
-            circleImage: "src/assets/faq/STEM.png",
-            title: "STEAM",
-            phrase: "Innovamos con la lógica, pero creamos con el alma para cambiar vidas.",
+            image: "src/assets/faq/TALENTO.jpg",
+            circleImage: "src/assets/faq/Talento.png",
+            title: "",
+            phrase: "",
         },
         {
             id: 4,
-            image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80",
-            circleImage: "src/assets/faq/Talento.png",
-            title: "Diseño",
-            phrase: "Cada diseño equilibra creatividad y propósito para transformar realidades.",
+            image: "src/assets/faq/MARKETING.jpg",
+            circleImage: "src/assets/faq/Ellipse 287.png",
+            title: "",
+            phrase: "",
         },
         {
             id: 5,
-            image: "https://images.unsplash.com/photo-1551836022-deb4988cc6c0?auto=format&fit=crop&q=80",
-            circleImage: "src/assets/faq/Branding.png",
-            title: "Marketing y Storytelling",
-            phrase: "Contamos historias con la mente, pero las hacemos vibrar con el corazón.",
+            image: "src/assets/faq/MEDIOAMBIENTE.jpg",
+            circleImage: "src/assets/faq/MEDIOAMBIENTE.png",
+            title: "",
+            phrase: "",
         },
         {
             id: 6,
-            image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80",
-            circleImage: "src/assets/faq/Comunicaciones.png",
-            title: "Comunicaciones",
-            phrase: "Damos voz a los mensajes equilibrando razón y emoción.",
+            image: "src/assets/faq/P. SOCIALES.jpg",
+            circleImage: "src/assets/faq/Sociales.png",
+            title: "",
+            phrase: "",
+        },
+        {
+            id: 7,
+            image: "src/assets/faq/STEAM.jpg",
+            circleImage: "src/assets/faq/STEM.png",
+            title: "",
+            phrase: "",
         },
     ];
 
     const [activeIndex, setActiveIndex] = useState(0);
     const [loading, setLoading] = useState(true);
 
+    // Handle image load
     useEffect(() => {
         setLoading(true);
         const img = new Image();
         img.src = carouselItems[activeIndex].image;
         img.onload = () => setLoading(false);
-    }, [activeIndex]);
+    }, [activeIndex, carouselItems]);
+
+
+    useEffect(() => {
+        const handleResize = () => {
+
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
-        <div className="bg-white py-8">
-            <div className="max-w-full mx-auto px-4 py-8 sm:py-12 lg:py-16">
-                <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] mb-6 overflow-hidden rounded-xl">
+        <div className="bg-white py-4 w-full">
+            <div className="max-w-full mx-auto px-4 py-4 sm:py-6 lg:py-8">
+                <div className="relative w-full overflow-hidden rounded-xl">
                     {loading && (
                         <motion.div
                             initial={{ opacity: 0 }}
@@ -77,33 +97,63 @@ const AreasCarousel: React.FC = () => {
                             transition={{ duration: 0.5 }}
                             className="absolute inset-0 flex items-center justify-center bg-gray-100"
                         >
-                            Cargando...
+                            <div className="flex flex-col items-center">
+                                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                <p className="mt-2 text-gray-600">Cargando...</p>
+                            </div>
                         </motion.div>
                     )}
-                    <motion.img
-                        key={carouselItems[activeIndex].image}
-                        src={carouselItems[activeIndex].image}
-                        alt={carouselItems[activeIndex].title}
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
+                    <motion.div
+                        key={carouselItems[activeIndex].id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: loading ? 0 : 1 }}
+                        exit={{ opacity: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className={`w-full h-full object-cover ${loading ? 'opacity-0' : 'opacity-100'}`}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-                    <div className="absolute bottom-0 inset-x-0 text-white text-center p-6">
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">{carouselItems[activeIndex].title}</h2>
-                        <p className="text-lg md:text-xl">{carouselItems[activeIndex].phrase}</p>
-                    </div>
+                        className="relative w-full h-full"
+                    >
+                        <div className="relative w-full">
+                            <img
+                                src={carouselItems[activeIndex].image}
+                                alt={carouselItems[activeIndex].title}
+                                className="w-full h-auto"
+                            />
+                        </div>
+                        <div className="absolute bottom-0 inset-x-0 text-center p-4 sm:p-6">
+                            {carouselItems[activeIndex].title && (
+                                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white">{carouselItems[activeIndex].title}</h2>
+                            )}
+                            {carouselItems[activeIndex].phrase && (
+                                <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-white">{carouselItems[activeIndex].phrase}</p>
+                            )}
+                        </div>
+                    </motion.div>
                 </div>
-                <div className="flex justify-center gap-4">
+
+                <div className="flex justify-center flex-wrap gap-8 sm:gap-10 mt-10">
                     {carouselItems.map((item, index) => (
                         <button
                             key={item.id}
                             onClick={() => setActiveIndex(index)}
-                            className={`w-16 h-16 rounded-full border-2 transition-all ${index === activeIndex ? 'border-blue-500 scale-110' : 'border-gray-300 hover:border-gray-400'}`}
+                            className={`w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full border-2 transition-all ${
+                                index === activeIndex ? 'border-blue-500 scale-110' : 'border-gray-300 hover:border-gray-400'
+                            }`}
+                            aria-label={`Ver área ${index + 1}`}
                         >
-                            <img src={item.circleImage} alt={item.title} className="w-full h-full object-cover rounded-full" />
+                            <div className="w-full h-full flex items-center justify-center rounded-full overflow-hidden">
+                                {(item.circleImage.includes("MEDIOAMBIENTE.png") || item.circleImage.includes("STEM.png")) ? (
+                                    <img
+                                        src={item.circleImage}
+                                        alt={`Icono ${index + 1}`}
+                                        className="w-5/6 h-5/6 object-contain"
+                                    />
+                                ) : (
+                                    <img
+                                        src={item.circleImage}
+                                        alt={`Icono ${index + 1}`}
+                                        className="w-full h-full object-cover"
+                                    />
+                                )}
+                            </div>
                         </button>
                     ))}
                 </div>

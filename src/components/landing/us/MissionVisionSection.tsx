@@ -9,7 +9,7 @@ const MissionVisionSection: FC = () => {
             {/* Wave Divider SVG */}
             <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
                 <svg
-                    className="relative block w-[110%] h-[126px]"
+                    className="relative block w-[110%] h-[80px] md:h-[126px]"
                     data-name="Layer 1"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 1200 120"
@@ -32,14 +32,14 @@ const MissionVisionSection: FC = () => {
 
 
             {/* Contenido principal */}
-            <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center gap-4 mt-16">
+            <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center gap-8 mt-8 md:mt-16">
                 {/* Sección Misión */}
-                <div className="relative w-1/2 flex flex-col items-end text-center group">
-                    <h2 className="text-[90px] font-semibold text-[#3DB6B1] leading-none tracking-tighter underline z-20">
+                <div className="relative w-full lg:w-1/2 flex flex-col items-center lg:items-end text-center group mb-12 lg:mb-0">
+                <h2 className="text-[50px] md:text-[70px] lg:text-[90px] font-semibold text-[#3DB6B1] leading-none tracking-tighter underline z-20">
                         Misión
                     </h2>
                     <div
-                        className="relative mt-4 w-[450px] h-[500px] cursor-pointer"
+                        className="relative mt-4 w-full max-w-[350px] md:max-w-[450px] h-[350px] md:h-[500px] cursor-pointer"
                         onClick={() => setShowMissionText(!showMissionText)}
                     >
                         {!showMissionText ? (
@@ -56,8 +56,8 @@ const MissionVisionSection: FC = () => {
                                 />
                             </>
                         ) : (
-                            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white text-black p-6 rounded-lg shadow-lg border-4 border-[#3DB6B1] transition-all duration-500">
-                                <p className="text-2xl font-normal text-[#3DB6B1] font-[Poppins]">
+                            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white text-black p-4 md:p-6 rounded-lg shadow-lg border-4 border-[#3DB6B1] transition-all duration-500">
+                                <p className="text-lg md:text-2xl font-normal text-[#3DB6B1] font-[Poppins]">
                                     Educar a los jóvenes y generar un ambiente inclusivo, saludable y confiable, que los anime a desarrollar sus habilidades y potencialidades.
                                     <br /><br />
                                     Inspirar a generar un cambio positivo en el mundo, logrando que sea descentralizado para todas las personas.
@@ -68,12 +68,12 @@ const MissionVisionSection: FC = () => {
                 </div>
 
                 {/* Sección Visión */}
-                <div className="relative w-1/2 flex flex-col items-start text-center group">
-                    <h2 className="text-[90px] font-semibold text-[#E4A62B] leading-none tracking-tighter underline z-20">
+                <div className="relative w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center group">
+                <h2 className="text-[50px] md:text-[70px] lg:text-[90px] font-semibold text-[#E4A62B] leading-none tracking-tighter underline z-20">
                         Visión
                     </h2>
                     <div
-                        className="relative mt-4 w-[450px] h-[500px] cursor-pointer"
+                        className="relative mt-4 w-full max-w-[350px] md:max-w-[450px] h-[350px] md:h-[500px] cursor-pointer"
                         onClick={() => setShowVisionText(!showVisionText)}
                     >
                         {!showVisionText ? (
@@ -90,8 +90,8 @@ const MissionVisionSection: FC = () => {
                                 />
                             </>
                         ) : (
-                            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white text-black p-6 rounded-lg shadow-lg border-4 border-[#E4A62B] transition-all duration-500">
-                                <p className="text-2xl font-normal text-[#E4A62B] font-[Poppins]">
+                            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white text-black p-4 md:p-6 rounded-lg shadow-lg border-4 border-[#E4A62B] transition-all duration-500">
+                                <p className="text-lg md:text-2xl font-normal text-[#E4A62B] font-[Poppins]">
                                     Ser una organización juvenil presente en América Latina y el Caribe, que anime y desarrolle el potencial de los jóvenes para convertirse en líderes.
                                 </p>
                             </div>
