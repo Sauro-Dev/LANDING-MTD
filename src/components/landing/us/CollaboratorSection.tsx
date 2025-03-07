@@ -36,67 +36,68 @@ const CollaboratorSection: FC = () => {
     }, []);
 
     return (
-        <div className="py-16 bg-[#ED117F]">
+        <div className="py-16 bg-[#ED117F] min-h-screen flex items-center justify-center">
+            <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-8">
 
-            <div className="container mx-auto px-4">
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div className="flex flex-col items-center">
-                        {makers.length > 0 ? (
+                {/* Contenedor IZQUIERDA: Card + Descripción */}
+                <div className="flex flex-col items-center w-full md:w-1/2">
+                    {makers.length > 0 ? (
+                        <>
+                            {/* Swiper de la tarjeta */}
                             <Swiper
                                 effect="cards"
                                 grabCursor={true}
                                 modules={[EffectCards]}
-                                className="mySwiper w-60 h-80"
+                                className="swiper w-[240px] h-[320px]"
                                 onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
                             >
-                                {makers.map((maker) => (
-                                    <SwiperSlide key={maker.idLandingFiles} className="swiper-slide">
-                                        <div className="card-container">
+                                {makers.map((maker, index) => (
+                                    <SwiperSlide key={maker.idLandingFiles} className={`swiper-slide bg-slide-${index % 10}`}>
+                                        <div className="card-container flex items-center justify-center w-full h-full rounded-xl text-white text-2xl font-bold">
                                             <img
                                                 src={getS3ImageUrl(maker.fileName)}
                                                 alt={maker.makerName}
-                                                className="card-image"
+                                                className="w-full h-full object-cover rounded-xl"
                                             />
                                         </div>
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
-                        ) : (
-                            <p className="text-center text-white">No hay Makers Destacados disponibles.</p>
-                        )}
-                    </div>
 
-                    {/* Texto contenedor*/}
-                    <div className="relative -right-[16px] h-[650px] flex items-center justify-end leading-[55px] px-[10px]">
-
-                        {/* Contenedor del título con las nubes amarillas */}
-                        <div className="relative -right-[10px] flex items-center justify-end h-[650px] pr-[100px] overflow-hidden">
-                            {/* Círculos amarillos (nubes) */}
-                            <div className="absolute top-[170px] right-[150px] w-[320px] h-[320px] bg-[#F4C22E] rounded-full shadow-lg"></div>
-                            <div className="absolute top-[200px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full shadow-lg"></div>
-                            <div className="absolute top-[100px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full "></div>
-
-                            {/* Título */}
-                            <h2
-                                className="relative -right-[80px] text-white font-spartan font-bold text-[70px] text-center"
-                                style={{ textShadow: "-5px 5px 5px rgba(0, 0, 0, 0.25)" }}
-                            >
-                                MAKER <br /> DESTACADO
-                            </h2>
-                        </div>
-
-                    </div>
-
-                    {makers.length > 0 && (
-                        <div className="space-y-4">
-                            <h3 className="text-xl font-semibold mb-4">{makers[activeIndex]?.makerName}</h3>
-                            <div className="bg-gray-100 p-6 rounded-lg min-h-[200px] flex items-center justify-center text-center text-lg">
-                                {makers[activeIndex]?.description}
+                            {/* Descripción debajo de la tarjeta */}
+                            <div className="mt-6 text-center w-full px-4">
+                                <h3 className="text-[40px] font-spartan font-semibold mb-2 text-white">
+                                    {makers[activeIndex]?.makerName}
+                                </h3>
+                                <div className="bg-gray-100 p-6 border-accent border-4 rounded-lg min-h-[200px] flex items-center justify-center text-center text-lg">
+                                    {makers[activeIndex]?.description}
+                                </div>
                             </div>
-                        </div>
+                        </>
+                    ) : (
+                        <p className="text-center text-white">No hay Makers Destacados disponibles.</p>
                     )}
                 </div>
+
+                {/* Contenedor DERECHA: Nubes + Título */}
+                <div className="relative flex items-center -right-[16git px] justify-end w-full md:w-1/2 h-[650px]">
+                    {/* Contenedor de las nubes y el título */}
+                    <div className="relative flex items-center justify-end h-[650px] pr-[100px] overflow-hidden">
+                        {/* Nubes (Círculos amarillos) */}
+                        <div className="absolute top-[170px] right-[150px] w-[320px] h-[320px] bg-[#F4C22E] rounded-full shadow-lg"></div>
+                        <div className="absolute top-[200px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full shadow-lg"></div>
+                        <div className="absolute top-[100px] -right-20 w-[350px] h-[350px] bg-[#F4C22E] rounded-full"></div>
+
+                        {/* Título MAKER DESTACADO */}
+                        <h2
+                            className="relative -right-[80px] text-white font-spartan font-bold text-[70px] text-center"
+                            style={{ textShadow: "-5px 5px 5px rgba(0, 0, 0, 0.25)" }}
+                        >
+                            MAKER <br /> DESTACADO
+                        </h2>
+                    </div>
+                </div>
+
             </div>
         </div>
     );
