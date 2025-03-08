@@ -42,26 +42,33 @@ const HeroSection: FC = () => {
     }, [emblaApi]);
 
     return (
-        <section className="relative w-full">
-            <Carousel options={OPTIONS} isAutoPlay={true} className="w-full mx-auto">
-                <SliderContainer className="gap-2">
-                    {banners.length > 0 ? (
-                        banners.map((banner) => (
-                            <Slider key={banner.idLandingFiles} className="w-full">
-                                <img
-                                    src={getS3ImageUrl(banner.fileName)}
-                                    alt="Banner"
-                                    className="w-full h-auto max-h-[500px]"
-                                />
+        <section className="relative w-full overflow-hidden">
+            <div className="max-w-screen-2xl mx-auto">
+                <Carousel options={OPTIONS} isAutoPlay={true} className="w-full">
+                    <SliderContainer className="gap-2">
+                        {banners.length > 0 ? (
+                            banners.map((banner) => (
+                                <Slider key={banner.idLandingFiles} className="w-full">
+                                    <div className="relative aspect-[16/9] sm:aspect-[21/9] md:aspect-[21/8] lg:aspect-[21/7]">
+                                        <img
+                                            src={getS3ImageUrl(banner.fileName)}
+                                            alt={`Banner promocional ${banner.idLandingFiles}`}
+                                            className="w-full h-full object-cover"
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                </Slider>
+                            ))
+                        ) : (
+                            <Slider className="w-full">
+                                <div className="flex items-center justify-center h-40 sm:h-60 md:h-80 lg:h-96 bg-gray-100">
+                                    <p className="text-center text-gray-500">Cargando banners...</p>
+                                </div>
                             </Slider>
-                        ))
-                    ) : (
-                        <Slider className="w-full">
-                            <p className="text-center text-gray-500">Cargando banners...</p>
-                        </Slider>
-                    )}
-                </SliderContainer>
-            </Carousel>
+                        )}
+                    </SliderContainer>
+                </Carousel>
+            </div>
         </section>
     );
 };

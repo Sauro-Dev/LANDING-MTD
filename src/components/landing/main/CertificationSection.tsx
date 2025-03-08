@@ -20,26 +20,27 @@ interface CertificationProps {
 const Certification: FC<CertificationProps> = ({ image, title, description }) => {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30 }} // Desaparecido y desplazado hacia abajo
-            whileInView={{ opacity: 1, y: 0 }} // Aparece con desplazamiento hacia arriba
-            viewport={{ once: false, amount: 0.2 }} // Asegura que la animación funcione al hacer scroll
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-300 max-w-xs mx-auto"
+            className="flex flex-col items-center p-4 sm:p-5 md:p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 h-full"
         >
             {/* Imagen de la certificación */}
-            <div className="w-48 h-48 mb-6 relative">
+            <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mb-4 sm:mb-5 md:mb-6 relative flex items-center justify-center">
                 <img
-                    src={image}  // Ruta de la imagen
-                    alt={title}  // Descripción accesible
+                    src={image}
+                    alt={`Logo de ${title}`}
                     className="w-full h-full object-contain"
+                    loading="lazy"
                 />
             </div>
 
             {/* Nombre de la certificación */}
-            <h3 className="text-lg font-bold text-gray-800">{title}</h3>
+            <h3 className="text-base sm:text-lg font-bold text-gray-800 text-center">{title}</h3>
 
             {/* Descripción de la certificación */}
-            <p className="text-sm text-gray-600 text-center mt-2">{description}</p>
+            <p className="text-xs sm:text-sm text-gray-600 text-center mt-2 flex-grow">{description}</p>
         </motion.div>
     );
 };
@@ -75,29 +76,27 @@ const CertificationSection: FC = () => {
     ];
 
     return (
-        <motion.section
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="py-16 px-6 bg-white"
+        <section 
+            className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
+            aria-labelledby="certifications-heading"
         >
-            <div className="container mx-auto">
+            <div className="max-w-7xl mx-auto">
                 {/* Título de la sección con animación */}
                 <motion.h2
+                    id="certifications-heading"
                     initial={{ opacity: 0, y: -10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="text-4xl font-extrabold text-black text-center mb-12"
+                    className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-black text-center mb-8 sm:mb-10 md:mb-12"
                 >
                     Certificaciones
                 </motion.h2>
 
-                {/* Grid de tarjetas de certificación con mayor margen en móviles */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                {/* Grid de tarjetas de certificación con mejor responsividad */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
                     {certifications.map((cert, index) => (
                         <Certification
-                            key={index} // Uso del índice como clave (mejor si fuera un ID único)
+                            key={`certification-${index}`}
                             image={cert.image}
                             title={cert.title}
                             description={cert.description}
@@ -105,7 +104,7 @@ const CertificationSection: FC = () => {
                     ))}
                 </div>
             </div>
-        </motion.section>
+        </section>
     );
 };
 

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import Navbar from "../common/Navbar.tsx";
 import HeroSection from "./main/HeroSection.tsx";
 import AreasSection from "./main/AreasSection.tsx";
@@ -16,8 +16,21 @@ import AreasCarousel from "./main/AreasCarousel.tsx";
  * Ojito porque se va a comentar que hace cada componente.
  */
 const Home: FC = () => {
+    // Prevenir overflow horizontal
+    useEffect(() => {
+        // Asegurarse de que no haya overflow horizontal
+        document.body.style.overflowX = 'hidden';
+        document.documentElement.style.overflowX = 'hidden';
+        
+        return () => {
+            // Limpiar al desmontar
+            document.body.style.overflowX = '';
+            document.documentElement.style.overflowX = '';
+        };
+    }, []);
+
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen overflow-x-hidden w-full">
             <Navbar />
 
             {/* Banner en el cual se destaca información de la ONG */}

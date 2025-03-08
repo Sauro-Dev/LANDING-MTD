@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CarouselItem {
     id: number;
@@ -70,95 +70,118 @@ const AreasCarousel: React.FC = () => {
         setLoading(true);
         const img = new Image();
         img.src = carouselItems[activeIndex].image;
-        img.onload = () => setLoading(false);
+        img.onload = () => {
+            setLoading(false);
+        };
+        img.onerror = () => {
+            console.error(`Error loading image: ${carouselItems[activeIndex].image}`);
+            setLoading(false);
+        };
     }, [activeIndex, carouselItems]);
 
-
-    useEffect(() => {
-        const handleResize = () => {
-
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
     return (
-        <div className="bg-white py-4 w-full">
-            <div className="max-w-full mx-auto px-4 py-4 sm:py-6 lg:py-8">
-                <div className="relative w-full overflow-hidden rounded-xl">
-                    {loading && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.5 }}
-                            className="absolute inset-0 flex items-center justify-center bg-gray-100"
-                        >
-                            <div className="flex flex-col items-center">
-                                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                                <p className="mt-2 text-gray-600">Cargando...</p>
-                            </div>
-                        </motion.div>
-                    )}
-                    <motion.div
-                        key={carouselItems[activeIndex].id}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: loading ? 0 : 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="relative w-full h-full"
-                    >
-                        <div className="relative w-full">
-                            <img
-                                src={carouselItems[activeIndex].image}
-                                alt={carouselItems[activeIndex].title}
-                                className="w-full h-auto"
-                            />
-                        </div>
-                        <div className="absolute bottom-0 inset-x-0 text-center p-4 sm:p-6">
-                            {carouselItems[activeIndex].title && (
-                                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white">{carouselItems[activeIndex].title}</h2>
+        <section className="bg-white py-8 sm:py-12 md:py-16 w-full font-poppins" aria-labelledby="areas-carousel-heading">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 id="areas-carousel-heading" className="sr-only">Áreas de Make The Difference</h2>
+                
+                {/* Contenedor principal optimizado para imágenes 1920x1080 (16:9) */}
+                <div className="relative w-full overflow-hidden rounded-xl shadow-lg bg-gray-100">
+                    {/* Contenedor con aspect ratio 16:9 para mantener proporción exacta */}
+                    <div className="relative w-full pb-[56.25%]">
+                        {/* Loading indicator */}
+                        <AnimatePresence>
+                            {loading && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10"
+                                    aria-live="polite"
+                                    aria-busy={loading}
+                                >
+                                    <div className="flex flex-col items-center">
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-pink-600 border-t-transparent rounded-full animate-spin" role="status"></div>
+                                        <p className="mt-2 text-gray-700 font-medium">Cargando...</p>
+                                    </div>
+                                </motion.div>
                             )}
-                            {carouselItems[activeIndex].phrase && (
-                                <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-white">{carouselItems[activeIndex].phrase}</p>
-                            )}
-                        </div>
-                    </motion.div>
+                        </AnimatePresence>
+
+                        {/* Carousel image - Optimizado para 1920x1080 */}
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={carouselItems[activeIndex].id}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: loading ? 0 : 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="absolute inset-0"
+                            >
+                                <img
+                                    src={carouselItems[activeIndex].image}
+                                    alt={carouselItems[activeIndex].title || `Área ${activeIndex + 1} de Make The Difference`}
+                                    className="absolute w-full h-full object-cover"
+                                    loading="lazy"
+                                />
+                                
+                                {/* Gradient overlay for better text visibility */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
+                                
+                                {/* Text overlay */}
+                                <div className="absolute bottom-0 inset-x-0 text-center p-4 sm:p-6 md:p-8">
+                                    {carouselItems[activeIndex].title && (
+                                        <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2 text-white">
+                                            {carouselItems[activeIndex].title}
+                                        </h3>
+                                    )}
+                                    {carouselItems[activeIndex].phrase && (
+                                        <p className="text-sm sm:text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-white">
+                                            {carouselItems[activeIndex].phrase}
+                                        </p>
+                                    )}
+                                </div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 </div>
 
-                <div className="flex justify-center flex-wrap gap-8 sm:gap-10 mt-10">
-                    {carouselItems.map((item, index) => (
-                        <button
-                            key={item.id}
-                            onClick={() => setActiveIndex(index)}
-                            className={`w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-full border-2 transition-all ${
-                                index === activeIndex ? 'border-blue-500 scale-110' : 'border-gray-300 hover:border-gray-400'
-                            }`}
-                            aria-label={`Ver área ${index + 1}`}
-                        >
-                            <div className="w-full h-full flex items-center justify-center rounded-full overflow-hidden">
-                                {(item.circleImage.includes("MEDIOAMBIENTE.png") || item.circleImage.includes("STEM.png")) ? (
+                {/* Circle navigation buttons - Ajustados para estar en fila */}
+                <div className="mt-8 sm:mt-10 md:mt-12 overflow-x-auto pb-4">
+                    <div className="flex flex-row flex-nowrap min-w-full gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-between px-2">
+                        {carouselItems.map((item, index) => (
+                            <button
+                                key={item.id}
+                                onClick={() => setActiveIndex(index)}
+                                className={`
+                                    flex-shrink-0
+                                    w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28
+                                    rounded-full border-2 transition-all duration-300
+                                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500
+                                    ${index === activeIndex 
+                                        ? 'border-pink-600 scale-110 shadow-lg' 
+                                        : 'border-gray-300 hover:border-pink-400 hover:scale-105'
+                                    }
+                                    overflow-hidden bg-white p-1
+                                `}
+                                aria-label={`Ver área ${index + 1}`}
+                                aria-pressed={index === activeIndex}
+                            >
+                                <div className="w-full h-full flex items-center justify-center rounded-full overflow-hidden bg-white">
                                     <img
                                         src={item.circleImage}
-                                        alt={`Icono ${index + 1}`}
-                                        className="w-5/6 h-5/6 object-contain"
+                                        alt=""
+                                        className="max-w-[90%] max-h-[90%] object-contain"
+                                        aria-hidden="true"
+                                        loading="lazy"
                                     />
-                                ) : (
-                                    <img
-                                        src={item.circleImage}
-                                        alt={`Icono ${index + 1}`}
-                                        className="w-full h-full object-cover"
-                                    />
-                                )}
-                            </div>
-                        </button>
-                    ))}
+                                </div>
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

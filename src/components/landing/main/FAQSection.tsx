@@ -31,114 +31,136 @@ const FAQSection: FC = () => {
     ];
 
     return (
-        <div className="py-16 px-6 flex flex-col items-center justify-center font-poppins bg-white relative">
-            {/* Título de la sección con animación */}
-            <motion.h1
-                initial={{ opacity: 0, y: -20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="text-4xl font-extrabold text-black mb-8 md:mb-12 text-center"
-            >
-                Preguntas Frecuentes
-            </motion.h1>
-
-            <div className="max-w-5xl w-full flex flex-col-reverse md:flex-row items-center justify-center gap-10 p-6">
-                {/* Contenedor dinámico */}
-                <motion.div
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 bg-white" aria-labelledby="faq-heading">
+            {/* Improved heading structure and spacing */}
+            <div className="max-w-7xl mx-auto">
+                <motion.h2
+                    id="faq-heading"
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="bg-pink-100 rounded-2xl p-6 md:p-8 lg:p-10 shadow-lg flex-1 flex flex-col items-center text-center space-y-6 relative"
+                    className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black mb-8 sm:mb-12 text-center"
                 >
-                    {showQuestions ? (
-                        <div className="w-full text-left space-y-4 relative">
-                            {/* Botón de regreso con color y estilo correcto */}
-                            <button
-                                onClick={() => setShowQuestions(false)}
-                                className="absolute -top-10 left-2 p-2 rounded-full bg-pink-500 hover:bg-pink-600 transition-all shadow-md"
-                            >
-                                <ArrowLeft className="w-6 h-6 text-white" />
-                            </button>
+                    Preguntas Frecuentes
+                </motion.h2>
 
-                            {faqs.map((faq, index) => (
-                                <div key={index} className="border-b border-gray-300 pb-2">
-                                    <button
-                                        onClick={() => toggleAnswer(index)}
-                                        className="text-lg md:text-xl font-semibold text-gray-800 flex justify-between w-full"
-                                    >
-                                        {faq.question}
-                                        <motion.span
-                                            animate={{ rotate: expandedIndex === index ? 180 : 0 }}
-                                            transition={{ duration: 0.3 }}
-                                        >
-                                            {expandedIndex === index ? "▲" : "▼"}
-                                        </motion.span>
-                                    </button>
-
-                                    <AnimatePresence>
-                                        {expandedIndex === index && (
-                                            <motion.p
-                                                initial={{ opacity: 0, height: 0 }}
-                                                animate={{ opacity: 1, height: "auto" }}
-                                                exit={{ opacity: 0, height: 0 }}
-                                                transition={{ duration: 0.3 }}
-                                                className="mt-2 text-gray-700 overflow-hidden"
-                                            >
-                                                {faq.answer}
-                                            </motion.p>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            ))}
-
-                            {/* Botón de contacto por WhatsApp más pequeño y centrado */}
-                            <div className="mt-6 flex justify-center">
-                                <a
-                                    href="https://api.whatsapp.com/send/?phone=51912609733&text=Hola%2C+me+gustar%C3%ADa+saber+m%C3%A1s+sobre+sus+servicios&type=phone_number&app_absent=0"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="bg-green-500 hover:bg-green-600 text-white font-bold rounded-full px-4 py-2 md:px-6 md:py-3 text-sm md:text-base shadow-md transition-all"
+                <div className="grid md:grid-cols-5 gap-8 md:gap-12 items-start">
+                    {/* FAQ Content Container - Spans 3 columns on md+ screens */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="md:col-span-3 bg-pink-100 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-lg"
+                    >
+                        {showQuestions ? (
+                            <div className="space-y-6" role="region" aria-label="Lista de preguntas frecuentes">
+                                {/* Back button with improved accessibility */}
+                                <button
+                                    onClick={() => setShowQuestions(false)}
+                                    className="group absolute -top-4 left-4 p-2 rounded-full bg-pink-500 hover:bg-pink-600 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                                    aria-label="Regresar a la introducción"
                                 >
-                                    ¿Aún tienes duda?
-                                </a>
-                            </div>
-                        </div>
-                    ) : (
-                        <>
-                            <p className="text-base md:text-lg lg:text-xl text-gray-800 leading-relaxed">
-                                En <span className="text-pink-600 font-bold">Make The Difference</span>,
-                                estamos comprometidos con nuestro público. Si tienes alguna pregunta,
-                                estaremos encantados de aclarar tus inquietudes.
-                            </p>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => setShowQuestions(true)}
-                                className="bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-full px-6 py-3 md:px-8 md:py-4 text-lg md:text-xl shadow-md transition-all"
-                            >
-                                ¿Otra duda?
-                            </motion.button>
-                        </>
-                    )}
-                </motion.div>
+                                    <ArrowLeft className="w-6 h-6 text-white" aria-hidden="true" />
+                                </button>
 
-                {/* Contenedor de la imagen ilustrativa (permanece siempre) */}
-                <motion.div
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="flex justify-center md:justify-start mb-6 md:mb-0"
-                >
-                    <div className="w-32 h-32 md:w-48 md:h-48 lg:w-56 lg:h-56 relative">
-                        <img
-                            src="src/assets/faq/person.png"
-                            alt="Ilustración de persona con preguntas"
-                            className="w-full h-full object-contain drop-shadow-lg"
-                        />
-                    </div>
-                </motion.div>
+                                {/* FAQ List with improved spacing and accessibility */}
+                                <div className="space-y-4">
+                                    {faqs.map((faq, index) => (
+                                        <div 
+                                            key={index} 
+                                            className="border-b border-pink-200 last:border-b-0"
+                                        >
+                                            <button
+                                                onClick={() => toggleAnswer(index)}
+                                                className="w-full py-4 text-left flex justify-between items-center gap-4 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 rounded-lg"
+                                                aria-expanded={expandedIndex === index}
+                                                aria-controls={`faq-answer-${index}`}
+                                            >
+                                                <span className="text-base sm:text-lg font-semibold text-gray-800 flex-1">
+                                                    {faq.question}
+                                                </span>
+                                                <motion.span
+                                                    animate={{ rotate: expandedIndex === index ? 180 : 0 }}
+                                                    transition={{ duration: 0.3 }}
+                                                    className="text-pink-600 flex-shrink-0"
+                                                    aria-hidden="true"
+                                                >
+                                                    {expandedIndex === index ? "▲" : "▼"}
+                                                </motion.span>
+                                            </button>
+
+                                            <AnimatePresence>
+                                                {expandedIndex === index && (
+                                                    <motion.div
+                                                        id={`faq-answer-${index}`}
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: "auto" }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        <p className="py-4 text-gray-700 text-sm sm:text-base">
+                                                            {faq.answer}
+                                                        </p>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* WhatsApp button with improved accessibility */}
+                                <div className="pt-6 flex justify-center">
+                                    <a
+                                        href="https://api.whatsapp.com/send/?phone=51912609733&text=Hola%2C+me+gustar%C3%ADa+saber+m%C3%A1s+sobre+sus+servicios&type=phone_number&app_absent=0"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full px-6 py-3 text-sm sm:text-base shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                        aria-label="Contactar por WhatsApp para más información"
+                                    >
+                                        ¿Aún tienes duda?
+                                    </a>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="text-center space-y-6">
+                                <p className="text-base sm:text-lg text-gray-800 leading-relaxed">
+                                    En <span className="text-pink-600 font-bold">Make The Difference</span>,
+                                    estamos comprometidos con nuestro público. Si tienes alguna pregunta,
+                                    estaremos encantados de aclarar tus inquietudes.
+                                </p>
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => setShowQuestions(true)}
+                                    className="inline-flex items-center justify-center bg-pink-600 hover:bg-pink-700 text-white font-bold rounded-full px-6 py-3 text-lg shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                                    aria-label="Ver preguntas frecuentes"
+                                >
+                                    ¿Otra duda?
+                                </motion.button>
+                            </div>
+                        )}
+                    </motion.div>
+
+                    {/* Image Container - Spans 2 columns on md+ screens */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="md:col-span-2 flex justify-center items-start"
+                    >
+                        <div className="w-40 sm:w-48 md:w-full max-w-md aspect-square relative">
+                            <img
+                                src="src/assets/faq/person.png"
+                                alt="Ilustración decorativa de persona con preguntas"
+                                className="w-full h-full object-contain drop-shadow-lg"
+                                aria-hidden="true"
+                            />
+                        </div>
+                    </motion.div>
+                </div>
             </div>
-        </div>
+        </section>
     );
 };
 
