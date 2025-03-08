@@ -187,7 +187,7 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
     return (
         <>
             {/* Tarjetas de previsualización */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center my-24 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-center my-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
 
             {files.map(file => {
@@ -195,10 +195,10 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                     return (
                         <div
                             key={file.idLandingFiles}
-                            className="flex flex-col items-center animate-fadeInUp transition transform duration-500 hover:scale-105"
+                            className="flex flex-col items-center animate-fadeInUp transition transform duration-500 hover:scale-105 w-full max-w-sm"
                         >
                             <div
-                                className="w-full max-w-md aspect-[3/4] relative cursor-pointer"
+                                className="w-full aspect-[3/4] relative cursor-pointer border-2 border-black rounded-lg overflow-hidden shadow-lg"
                                 onClick={() => {
                                     if (file.fileTypes === 'application/pdf') {
                                         openPdfViewer(file);
@@ -207,64 +207,66 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
                             >
                                 {file.fileTypes.startsWith('image/') ? (
                                     <img
-                                        src={`${environment.API_URL}/landing-files/${file.idLandingFiles}`}
-                                        alt={type === 'noticias' ? 'Portada de la noticia' : 'Portada de la revista'}
-                                        className="w-full h-full object-cover rounded-lg shadow-lg"
+                                    src={`${environment.API_URL}/landing-files/${file.idLandingFiles}`}
+                                    alt={type === 'noticias' ? 'Portada de la noticia' : 'Portada de la revista'}
+                                    className="w-full h-full object-cover"
                                     />
                                 ) : file.fileTypes === 'application/pdf' ? (
-                                    <div>
+                                    <div className="w-full h-full flex items-center justify-center bg-white">
                                         <Document
                                             file={getPdfUrl(file)}
                                             loading="Cargando PDF..."
                                         >
                                             <Page
                                                 pageNumber={1}
-                                                width={350}
+                                                width={300}
                                                 renderTextLayer={false}
                                                 renderAnnotationLayer={false}
                                             />
                                         </Document>
                                     </div>
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-lg shadow-lg">
+                                    <div className="w-full h-full flex items-center justify-center bg-gray-200">
                                         <span className="text-gray-700">Vista previa no disponible</span>
                                     </div>
                                 )}
                             </div>
-                            <div className="mt-4 text-center">
+                            <div className="mt-4 text-center w-full">
                                 <h3 className="text-lg font-bold">
                                     {type === 'noticias' ? 'Noticia Destacada' : 'Revista Informativa'}
                                 </h3>
-                                <p className="text-gray-600">{displayName}</p>
+                                <p className="text-gray-600 truncate max-w-full">{displayName}</p>
                             </div>
                         </div>
                     );
                 })}
             </div>
 
-            {/* Modal del visor PDF */}
-            {selectedFile && (
-                <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}>
+                        {/* Modal del visor PDF */}
+                        {selectedFile && (
+                <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4 sm:p-6 md:p-8 ${isClosing ? 'animate-fade-out' : 'animate-fade-in'}`}>
                     <div
-                        className="bg-white rounded-lg w-full max-w-6xl relative shadow-xl"
-                        style={{ maxHeight: '80vh' }}
+                        className="bg-white rounded-lg w-full max-w-5xl relative shadow-xl overflow-hidden"
+                        style={{ maxHeight: '90vh' }}
                     >
                         {/* Navbar del visor PDF */}
-                        <div className="bg-gray-100 p-4 flex justify-between items-center rounded-t-lg w-full border-b">
-                            <h2 className="text-xl font-semibold">
+                        <div className="bg-gray-100 p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center rounded-t-lg w-full border-b">
+                            <h2 className="text-lg sm:text-xl font-semibold truncate max-w-full sm:max-w-md md:max-w-xl mb-2 sm:mb-0">
                                 {type === 'noticias' ? 'Noticia' : 'Revista'} - {cleanFileName(selectedFile.fileName)}
                             </h2>
-                            <div className="flex items-center space-x-4">
+                            <div className="flex items-center space-x-4 self-end sm:self-auto">
                                 <button
                                     onClick={() => downloadFile(selectedFile)}
-                                    className="transition-colors hover:opacity-80"
+                                    className="transition-colors hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#ED117F] focus:ring-opacity-50"
                                     title="Descargar"
+                                    aria-label="Descargar PDF"
                                 >
                                     <img src="/download.png" alt="Descargar" className="h-6 w-6" />
                                 </button>
                                 <button
                                     onClick={closePdfViewer}
-                                    className="text-black font-bold px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition-colors"
+                                    className="text-black font-bold px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"
+                                    aria-label="Cerrar visor de PDF"
                                 >
                                     Cerrar
                                 </button>
@@ -273,39 +275,52 @@ const PublicationCards: FC<PublicationCardsProps> = ({ type }) => {
 
                         {/* Contenedor scrollable para el PDF */}
                         <div
-                            className="overflow-y-auto flex justify-center p-4"
-                            style={{ maxHeight: 'calc(80vh - 140px)' }}
+                            className="overflow-y-auto flex justify-center p-2 sm:p-4 bg-gray-50"
+                            style={{ maxHeight: 'calc(90vh - 160px)' }}
                         >
                             <Document
                                 file={getPdfUrl(selectedFile)}
                                 onLoadSuccess={onDocumentLoadSuccess}
-                                loading="Cargando PDF..."
+                                loading={
+                                    <div className="flex flex-col items-center justify-center py-10">
+                                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#ED117F]"></div>
+                                        <p className="mt-4 text-gray-600">Cargando PDF...</p>
+                                    </div>
+                                }
+                                error={
+                                    <div className="text-center py-10 text-red-500">
+                                        Error al cargar el PDF. Intente descargar el archivo.
+                                    </div>
+                                }
                             >
                                 <Page
                                     pageNumber={pageNumber}
-                                    width={700}
+                                    width={Math.min(window.innerWidth * 0.8, 700)}
                                     renderTextLayer={false}
                                     renderAnnotationLayer={false}
+                                    className="border border-gray-300 shadow-md"
                                 />
                             </Document>
                         </div>
 
                         {/* Footer de navegación */}
-                        <div className="px-8 pb-4 flex justify-between items-center border-t">
+                        <div className="px-4 sm:px-8 py-3 sm:pb-4 flex justify-between items-center border-t bg-gray-100">
                             <button
                                 onClick={() => setPageNumber(prev => Math.max(prev - 1, 1))}
                                 disabled={pageNumber <= 1}
-                                className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 transition-colors"
+                                className="px-3 sm:px-4 py-2 bg-gray-300 rounded disabled:opacity-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm sm:text-base"
+                                aria-label="Página anterior"
                             >
                                 Anterior
                             </button>
-                            <span className="text-lg">
-                Página {pageNumber} de {numPages}
-              </span>
+                            <span className="text-base sm:text-lg">
+                                Página {pageNumber} de {numPages || 1}
+                            </span>
                             <button
                                 onClick={() => setPageNumber(prev => Math.min(prev + 1, numPages))}
                                 disabled={pageNumber >= numPages}
-                                className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50 transition-colors"
+                                className="px-3 sm:px-4 py-2 bg-gray-300 rounded disabled:opacity-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm sm:text-base"
+                                aria-label="Página siguiente"
                             >
                                 Siguiente
                             </button>
