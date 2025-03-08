@@ -1,142 +1,103 @@
-import { FC } from 'react';
-
+import { FC, memo } from 'react';
 
 const TeamSection: FC = () => {
     const teamMembers = [
         {
             id: '1',
-            url: 'src/assets/team/exm1.jpg',
+            url: 'src/assets/team/celine.jpg',
             name: 'Celine Flores Mostacero',
             role: 'Fundadora y Presidenta Actual',
         },
         {
             id: '2',
-            url: 'src/assets/team/exm2.jpg',
+            url: 'src/assets/team/aref.jpg',
             name: 'Aref Damian Buendia',
             role: 'Vicepresidente actual',
         },
         {
             id: '3',
-            url: 'src/assets/team/exm3.jpg',
+            url: 'src/assets/team/lesly.jpg',
             name: 'Lesly Sánchez Vergaray',
             role: 'Voluntaria y Tesorera del Club',
         },
     ];
 
     return (
-        <div className="relative py-16 bg-[#ED117F]">
-            {/* Nube de título */}
-            <div className="absolute left-0 md:left-10 top-[5px] flex items-center space-x-5 z-50 w-full md:w-auto">
-                {/* Círculos para la nube */}
-                <div className="relative hidden md:block">
-
-
-                    <div
-                        className="absolute w-[300px] h-[300px] bg-[#48C3E6] rounded-full left-[50px] top-[170px]"
-                        style={{ boxShadow: "-26px 10px 8px 1.1px rgba(0, 0, 0, 0.25)" }}
-                    ></div>
-                    <div
-                        className="absolute w-[350px] h-[350px] bg-[#48C3E6] rounded-full left-[-180px] top-[90px]"
-                        style={{ boxShadow: "-26px 10px 8px 1.1px rgba(0, 0, 0, 0.25)" }}
-                    ></div>
-                    <div
-                        className="absolute w-[350px] h-[350px] bg-[#48C3E6] rounded-full left-[-180px] top-[200px]"
-                        style={{ boxShadow: "-26px 10px 8px 1.1px rgba(0, 0, 0, 0.25)" }}
-                    ></div>
-
-                    {/* Contenedor del texto */}
-                    <div className="relative w-[280px] h-[650px] rounded-lg flex items-center justify-center leading-[55px] px-4">
-                        <h2
-                            className="text-white font-spartan font-bold text-[70px] text-center"
-                            style={{ textShadow: "-5px 5px 5px rgba(0, 0, 0, 0.25)" }}
-                        >
-                            NUESTRO <br /> EQUIPO
-                        </h2>
-                    </div>
-
-
-                </div>
-
-                {/* Mobile title */}
-                <div className="md:hidden w-full">
-                    <div className="bg-[#48C3E6] py-6 px-4 rounded-lg mx-auto max-w-[300px] mb-8"
-                         style={{ boxShadow: "-5px 5px 8px 1.1px rgba(0, 0, 0, 0.25)" }}>
-                        <h2
-                            className="text-white font-spartan font-bold text-[40px] text-center"
-                            style={{ textShadow: "-3px 3px 3px rgba(0, 0, 0, 0.25)" }}
-                        >
-                            NUESTRO <br /> EQUIPO
-                        </h2>
-                    </div>
-                </div>
-
-            </div>
-
-            {/* Contenedor principal */}
-            <div className="container mx-auto px-4 md:px-[0px] mt-[120px] md:mt-[10px] w-full md:w-[85%] max-w-[1100px] md:ml-[380px]">
-                {/* Contenedor de los miembros del equipo */}
-                <div className="group flex flex-col md:flex-row justify-center gap-6 md:gap-4 w-full md:w-[90%] mx-auto">
-                    {teamMembers.map((member) => (
-                        <article
-                            className="group/article relative w-full rounded-xl overflow-hidden
-        md:group-hover:[&:not(:hover)]:w-[20%]
-        md:group-focus-within:[&:not(:focus-within):not(:hover)]:w-[20%]
-        transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.15)]
-        before:absolute before:inset-x-0 before:bottom-0 before:h-1/3 before:bg-gradient-to-t
-        before:from-black/50 before:transition-opacity md:before:opacity-0
-        md:hover:before:opacity-100 focus-within:before:opacity-100
-        after:opacity-0 md:group-hover:[&:not(:hover)]:after:opacity-100
-        md:group-focus-within:[&:not(:focus-within):not(:hover)]:after:opacity-100
-        after:absolute after:inset-0 after:bg-black/30 after:backdrop-blur
-        after:rounded-lg after:transition-all focus-within:ring focus-within:ring-[#F6BE43]"
-                        >
-                            {/* Enlace cubriendo toda la tarjeta */}
-                            <a
-                                className="absolute inset-0 text-white z-10 p-3 flex flex-col justify-end"
-                                href="#0"
+        <div className="relative pt-32 pb-16 bg-[#ED117F] overflow-hidden">
+            {/* Diseño integrado - Cloud y miembros centrados juntos */}
+            <div className="container mx-auto px-4 mt-[50px]">
+                <div className="flex flex-col md:flex-row items-center justify-center">
+                    {/* Cloud design - Ahora como parte del layout principal */}
+                    <div className="relative w-full md:w-1/4 mb-8 md:mb-0">
+                        <div className="relative mx-auto md:mx-0 w-[280px] h-[280px]">
+                            {/* Círculo principal */}
+                            <div className="absolute w-[280px] h-[280px] bg-[#48C3E6] rounded-full 
+                                flex items-center justify-center"
+                                style={{ 
+                                    boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.2)",
+                                    background: "radial-gradient(circle, #5ECFEF 0%, #48C3E6 70%)"
+                                }}
                             >
-                                {/* Título con animación */}
-                                <h1
-                                    className="text-xl font-medium md:whitespace-nowrap md:truncate
-                md:opacity-0 group-hover/article:opacity-100 group-focus-within/article:opacity-100
-                md:translate-y-2 group-hover/article:translate-y-0 group-focus-within/article:translate-y-0
-                transition duration-200 ease-[cubic-bezier(.5,.85,.25,1.8)]
-                group-hover/article:delay-300 group-focus-within/article:delay-300"
+                                <h2
+                                    className="text-white font-spartan font-bold text-[42px] text-center"
+                                    style={{ textShadow: "-2px 2px 4px rgba(0, 0, 0, 0.25)" }}
                                 >
-                                    {member.name}
-                                </h1>
+                                    NUESTRO <br /> EQUIPO
+                                </h2>
+                            </div>
+                            
+                            {/* Decoración adicional */}
+                            <div className="absolute w-[80px] h-[80px] bg-[#5ECFEF] rounded-full right-[-20px] top-[-30px]"
+                                style={{ boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)" }}
+                            ></div>
+                            <div className="absolute w-[60px] h-[60px] bg-[#5ECFEF] rounded-full left-[-20px] bottom-[20px]"
+                                style={{ boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)" }}
+                            ></div>
+                        </div>
+                    </div>
 
-                                {/* Descripción con animación */}
-                                <span
-                                    className="text-3xl font-medium md:whitespace-nowrap md:truncate
-                md:opacity-0 group-hover/article:opacity-100 group-focus-within/article:opacity-100
-                md:translate-y-2 group-hover/article:translate-y-0 group-focus-within/article:translate-y-0
-                transition duration-200 ease-[cubic-bezier(.5,.85,.25,1.8)]
-                group-hover/article:delay-500 group-focus-within/article:delay-500"
+                    {/* Contenedor de los miembros del equipo */}
+                    <div className="w-full md:w-3/4">
+                        <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-6 w-full">
+                            {teamMembers.map((member) => (
+                                <article
+                                    key={member.id}
+                                    className="group/article relative w-full md:w-1/3 max-w-[280px] rounded-xl overflow-hidden
+                                        border-4 border-white shadow-md"
+                                    aria-labelledby={`member-name-${member.id}`}
                                 >
-            {member.role}
-        </span>
-                            </a>
-
-                            {/* Imagen */}
-                            <img
-                                src={member.url}
-                                alt={member.name}
-                                width='960'
-                                height='480'
-                                className='object-cover h-[180px] md:h-[520px] w-full'
-                            />
-
-
-
-
-                        </article>
-
-                    ))}
+                                    {/* Imagen */}
+                                    <img
+                                        src={member.url}
+                                        alt={`Foto de ${member.name}`}
+                                        width='400'
+                                        height='300'
+                                        className='object-cover h-[250px] sm:h-[280px] md:h-[320px] w-full'
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                    
+                                    {/* Nombre y rol visible siempre */}
+                                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent 
+                                        flex flex-col justify-end p-3 text-center">
+                                        <h3
+                                            id={`member-name-${member.id}`}
+                                            className="text-lg font-bold text-white truncate"
+                                        >
+                                            {member.name}
+                                        </h3>
+                                        <p className="text-white text-sm sm:text-base truncate">
+                                            {member.role}
+                                        </p>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     );
 };
 
-export default TeamSection;
+export default memo(TeamSection);
