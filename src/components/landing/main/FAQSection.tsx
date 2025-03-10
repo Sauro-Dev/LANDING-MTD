@@ -54,20 +54,23 @@ const FAQSection: FC = () => {
                     >
                         {showQuestions ? (
                             <div className="space-y-6" role="region" aria-label="Lista de preguntas frecuentes">
-                                {/* Back button with improved accessibility */}
-                                <button
+                                {/* Back button with improved accessibility  Regreso*/ }
+                                <motion.button
+                                    initial={{opacity: 0, y: 10}}
+                                    animate={{opacity: 1, y: 0}}
                                     onClick={() => setShowQuestions(false)}
-                                    className="group absolute -top-4 left-4 p-2 rounded-full bg-pink-500 hover:bg-pink-600 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                                    className="group flex items-center justify-center mb-4 p-2 rounded-full bg-pink-500 hover:bg-pink-600 transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 text-white"
                                     aria-label="Regresar a la introducción"
                                 >
-                                    <ArrowLeft className="w-6 h-6 text-white" aria-hidden="true" />
-                                </button>
+                                    <ArrowLeft className="w-5 h-5" aria-hidden="true"/>
+                                </motion.button>
+
 
                                 {/* FAQ List with improved spacing and accessibility */}
                                 <div className="space-y-4">
                                     {faqs.map((faq, index) => (
-                                        <div 
-                                            key={index} 
+                                        <div
+                                            key={index}
                                             className="border-b border-pink-200 last:border-b-0"
                                         >
                                             <button
@@ -112,7 +115,7 @@ const FAQSection: FC = () => {
                                 {/* WhatsApp button with improved accessibility */}
                                 <div className="pt-6 flex justify-center">
                                     <a
-                                        href="https://api.whatsapp.com/send/?phone=51912609733&text=Hola%2C+me+gustar%C3%ADa+saber+m%C3%A1s+sobre+sus+servicios&type=phone_number&app_absent=0"
+                                        href="https://api.whatsapp.com/send/?phone=51982170196&text=Hola%2C+me+gustar%C3%ADa+saber+m%C3%A1s+sobre+sus+servicios&type=phone_number&app_absent=0"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full px-6 py-3 text-sm sm:text-base shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
@@ -153,7 +156,8 @@ const FAQSection: FC = () => {
                             <img
                                 src="src/assets/faq/person.png"
                                 alt="Ilustración decorativa de persona con preguntas"
-                                className="w-full h-full object-contain drop-shadow-lg"
+                                className="w-full h-ful http://localhost:5173/
+l object-contain drop-shadow-lg"
                                 aria-hidden="true"
                             />
                         </div>
