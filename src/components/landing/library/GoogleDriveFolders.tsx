@@ -154,14 +154,14 @@ const GoogleDriveFolders: FC = () => {
             ) : (
                 // Si hay carpetas, las mostramos
                 <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl animate-fade-in">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-6xl animate-fade-in">
                         {folders.map((folder) => (
                             <a
-                                key={folder.id}
-                                href={`https://drive.google.com/drive/u/1/folders/${folder.id}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bg-white text-black rounded-xl p-6 shadow-lg flex flex-col items-center animate-fade-in"
+                            key={folder.id}
+                            href={`https://drive.google.com/drive/u/1/folders/${folder.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-white text-black rounded-xl p-6 shadow-lg flex flex-col items-center animate-fade-in"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

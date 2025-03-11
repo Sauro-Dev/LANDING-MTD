@@ -200,23 +200,25 @@ const VolunteerForm: FC = () => {
               Barra rosa debajo del navbar
               Botón "Volver" a la izquierda, título centrado
             */}
-            <div className="w-full  relative flex items-center justify-center py-4 mb-4">
+            <div className="w-full bg-pink-100 relative flex items-center justify-center py-4 mb-4 px-4 sm:px-6">
                 <button
                     onClick={() => navigate("/home")}
-                    className="absolute left-4 bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700 transition-colors"
+                    className="absolute left-4 bg-pink-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-md hover:bg-pink-700 transition-colors text-sm sm:text-base flex items-center"
+                    aria-label="Volver a la página principal"
                 >
-                    Volver
+                    <span className="hidden sm:inline">Volver</span>
+                    <span className="sm:hidden">←</span>
                 </button>
-                <h1 className="text-2xl font-semibold text-black">
+                <h1 className="text-xl sm:text-2xl font-semibold text-black">
                     Formulario de Voluntariado
                 </h1>
             </div>
 
             {/* Contenedor principal (tarjeta blanca con el formulario) */}
-            <div className="flex-1 flex flex-col items-center justify-center p-4 w-full">
-                <div className="max-w-4xl w-full bg-white shadow-md rounded-md p-6">
-                    <form onSubmit={handleSubmit}>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex-1 flex flex-col items-center justify-center p-2 sm:p-4 w-full">
+                <div className="w-full max-w-4xl bg-white shadow-md rounded-md p-3 sm:p-6">
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                             {/* Nombres */}
                             <div className="flex flex-col">
                                 <label className="text-gray-700 font-medium mb-1" htmlFor="name">
@@ -230,10 +232,10 @@ const VolunteerForm: FC = () => {
                                     value={formData.name}
                                     onChange={handleChange}
                                     placeholder="Nombres"
-                                    className="border border-gray-300 rounded-md p-2"
+                                    className="border border-gray-300 rounded-md p-2 w-full"
                                     required
                                 />
-                                <span className="text-gray-400 text-sm">Ej. Eduardo</span>
+                                <span id="name-hint" className="text-gray-400 text-xs sm:text-sm mt-1">Ej. Eduardo</span>
                             </div>
 
                             {/* Apellido Paterno */}
