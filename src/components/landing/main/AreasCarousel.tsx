@@ -143,8 +143,8 @@ const AreasCarousel: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Circle navigation buttons - Ajustados para mejor visualización de las imágenes */}
-                <div className="mt-16 sm:mt-20 md:mt-24 overflow-x-auto pb-4 px-4">
+                {/* Circle navigation buttons - Corregidos para evitar el recorte en la parte superior */}
+                <div className="mt-16 sm:mt-20 md:mt-24 overflow-visible pb-4 px-4">
                     <div className="flex flex-row flex-nowrap min-w-full gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-evenly px-2">
                         {carouselItems.map((item, index) => {
                             // Special handling for icons 5 and 7 as requested
@@ -160,35 +160,40 @@ const AreasCarousel: React.FC = () => {
                                         rounded-full border-2 transition-all duration-300
                                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500
                                         ${index === activeIndex
-                                        ? 'border-pink-600 scale-105 shadow-lg'
+                                        ? 'border-pink-600 shadow-lg transform scale-105'
                                         : 'border-gray-300 hover:border-pink-400 hover:scale-105'
                                     }
-                                        overflow-hidden ${isSpecialIcon ? 'bg-white p-0.5' : 'p-0 bg-transparent'}
+                                        overflow-visible ${isSpecialIcon ? 'bg-white' : 'bg-transparent'}
                                     `}
                                     aria-label={`Ver área ${index + 1}`}
                                     aria-pressed={index === activeIndex}
+                                    style={{
+                                        // Aseguramos espacio suficiente para la escala
+                                        margin: index === activeIndex ? '0.5rem' : '0.5rem',
+                                        transform: index === activeIndex ? 'scale(1.05)' : 'scale(1)',
+                                        transformOrigin: 'center center',
+                                        position: 'relative',
+                                        zIndex: index === activeIndex ? 10 : 1
+                                    }}
                                 >
-                                    {isSpecialIcon ? (
-                                        // Keep special icons with original styling and container
-                                        <div className="w-full h-full flex items-center justify-center rounded-full overflow-hidden bg-white">
-                                            <img
-                                                src={item.circleImage}
-                                                alt=""
-                                                className="max-w-[90%] max-h-[90%] object-contain"
-                                                aria-hidden="true"
-                                                loading="lazy"
-                                            />
-                                        </div>
-                                    ) : (
-                                        // For other icons, remove the extra container div to eliminate white borders
+                                    <div className={`
+                                        w-full h-full rounded-full overflow-hidden
+                                        ${isSpecialIcon ? 'p-0.5 bg-white' : 'p-0 bg-transparent'}
+                                    `}>
                                         <img
                                             src={item.circleImage}
                                             alt=""
-                                            className="w-full h-full object-cover rounded-full"
+                                            className={`
+                                                ${isSpecialIcon
+                                                ? 'max-w-[90%] max-h-[90%] object-contain m-auto'
+                                                : 'w-full h-full object-cover'
+                                            } 
+                                                rounded-full
+                                            `}
                                             aria-hidden="true"
                                             loading="lazy"
                                         />
-                                    )}
+                                    </div>
                                 </button>
                             );
                         })}
