@@ -65,11 +65,11 @@ const Footer: FC = () => (
                     <h3 className="font-bold text-lg mb-3">CONTÁCTANOS</h3>
                     <div className="space-y-1">
                         <a
-                            href="mailto:girlupmakethedifference5@gmail.com"
+                            href="mailto:contacto@makethedifferenceperu.org"
                             className="flex items-center justify-center md:justify-end hover:text-pink-300 transition-colors"
                         >
                             <MdEmail className="mr-2 text-xl" />
-                            girlupmakethedifference5@gmail.com
+                            contacto@makethedifferenceperu.org
                         </a>
                     </div>
                 </div>
