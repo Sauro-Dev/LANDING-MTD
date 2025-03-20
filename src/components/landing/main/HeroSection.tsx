@@ -43,17 +43,17 @@ const HeroSection: FC = () => {
 
     return (
         <section className="relative w-full overflow-hidden">
-            <div className="max-w-screen-2xl mx-auto">
+            <div className="w-full">
                 <Carousel options={OPTIONS} isAutoPlay={true} className="w-full">
-                    <SliderContainer className="gap-2">
+                    <SliderContainer className="gap-0">
                         {banners.length > 0 ? (
                             banners.map((banner) => (
                                 <Slider key={banner.idLandingFiles} className="w-full">
-                                    <div className="relative aspect-[16/9] sm:aspect-[21/9] md:aspect-[21/8] lg:aspect-[21/7]">
+                                    <div className="relative aspect-[10/3] w-full overflow-hidden">
                                         <img
                                             src={getS3ImageUrl(banner.fileName)}
                                             alt={`Banner promocional ${banner.idLandingFiles}`}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover absolute inset-0"
                                             loading="lazy"
                                         />
                                     </div>
@@ -61,7 +61,7 @@ const HeroSection: FC = () => {
                             ))
                         ) : (
                             <Slider className="w-full">
-                                <div className="flex items-center justify-center h-40 sm:h-60 md:h-80 lg:h-96 bg-gray-100">
+                                <div className="flex items-center justify-center h-40 sm:h-60 md:h-80 lg:h-96 bg-gray-100 w-full">
                                     <p className="text-center text-gray-500">Cargando banners...</p>
                                 </div>
                             </Slider>
