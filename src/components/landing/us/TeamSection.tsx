@@ -2,8 +2,11 @@ import { FC, memo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 
+// @ts-ignore
 import "swiper/css";
+// @ts-ignore
 import "swiper/css/effect-coverflow";
+// @ts-ignore
 import "swiper/css/pagination";
 
 const TeamSection: FC = () => {
