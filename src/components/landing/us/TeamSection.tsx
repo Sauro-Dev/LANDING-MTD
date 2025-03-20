@@ -30,10 +30,10 @@ const TeamSection: FC = () => {
 
     return (
         <div className="relative pt-32 pb-16 bg-[#ED117F] overflow-hidden flex items-center h-full">
-            <div className="relative w-[280px] h-[280px] mb-8 flex justify-center items-center">
+            {/*nube*/}
+            <div className="relative w-[280px] h-[280px] mb-8 left-16 flex justify-center items-center">
                 <div
                     className="w-[280px] h-[280px] bg-[#48C3E6] rounded-full flex items-center justify-center shadow-lg"
-                    className="w-[280px] h-[280px] bg-[#48C3E6] rounded-full flex items-center justify-center left-[50px] shadow-lg"
                     style={{ background: "radial-gradient(circle, #5ECFEF 0%, #48C3E6 70%)" }}
                 >
                     <h2 className="text-white font-spartan font-bold text-[42px] text-center drop-shadow-md">
