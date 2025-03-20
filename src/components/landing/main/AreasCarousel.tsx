@@ -87,7 +87,7 @@ const AreasCarousel: React.FC = () => {
                 {/* Contenedor principal optimizado para imágenes 1920x1080 (16:9) */}
                 <div className="relative w-full overflow-hidden rounded-xl shadow-lg bg-gray-100">
                     {/* Contenedor con aspect ratio 16:9 para mantener proporción exacta */}
-                    <div className="relative w-full pb-[56.25%]">
+                    <div className="relative w-full aspect-[16/9]">
                         {/* Loading indicator */}
                         <AnimatePresence>
                             {loading && (
