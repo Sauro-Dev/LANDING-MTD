@@ -80,14 +80,14 @@ const AreasCarousel: React.FC = () => {
     }, [activeIndex, carouselItems]);
 
     return (
-        <section className="bg-white py-8 sm:py-12 md:py-16 w-full font-poppins" aria-labelledby="areas-carousel-heading">
+        <section className="bg-white py-12 sm:py-16 md:py-20 w-full font-poppins" aria-labelledby="areas-carousel-heading">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 id="areas-carousel-heading" className="sr-only">Áreas de Make The Difference</h2>
-                
+
                 {/* Contenedor principal optimizado para imágenes 1920x1080 (16:9) */}
                 <div className="relative w-full overflow-hidden rounded-xl shadow-lg bg-gray-100">
                     {/* Contenedor con aspect ratio 16:9 para mantener proporción exacta */}
-                    <div className="relative w-full pb-[56.25%]">
+                    <div className="relative w-full aspect-[16/9]">
                         {/* Loading indicator */}
                         <AnimatePresence>
                             {loading && (
@@ -124,10 +124,7 @@ const AreasCarousel: React.FC = () => {
                                     className="absolute w-full h-full object-cover"
                                     loading="lazy"
                                 />
-                                
-                                {/* Gradient overlay for better text visibility */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
-                                
+
                                 {/* Text overlay */}
                                 <div className="absolute bottom-0 inset-x-0 text-center p-4 sm:p-6 md:p-8">
                                     {carouselItems[activeIndex].title && (
@@ -146,38 +143,60 @@ const AreasCarousel: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Circle navigation buttons - Ajustados para estar en fila */}
-                <div className="mt-8 sm:mt-10 md:mt-12 overflow-x-auto pb-4">
-                    <div className="flex flex-row flex-nowrap min-w-full gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-between px-2">
-                        {carouselItems.map((item, index) => (
-                            <button
-                                key={item.id}
-                                onClick={() => setActiveIndex(index)}
-                                className={`
-                                    flex-shrink-0
-                                    w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28
-                                    rounded-full border-2 transition-all duration-300
-                                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500
-                                    ${index === activeIndex 
-                                        ? 'border-pink-600 scale-110 shadow-lg' 
+                {/* Circle navigation buttons - Corregidos para evitar el recorte en la parte superior */}
+                <div className="mt-16 sm:mt-20 md:mt-24 overflow-visible pb-4 px-4">
+                    <div className="flex flex-row flex-nowrap min-w-full gap-4 sm:gap-6 md:gap-8 justify-center lg:justify-evenly px-2">
+                        {carouselItems.map((item, index) => {
+                            // Special handling for icons 5 and 7 as requested
+                            const isSpecialIcon = index === 4 || index === 6; // id 5 is index 4, id 7 is index 6
+
+                            return (
+                                <button
+                                    key={item.id}
+                                    onClick={() => setActiveIndex(index)}
+                                    className={`
+                                        flex-shrink-0
+                                        w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28
+                                        rounded-full border-2 transition-all duration-300
+                                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500
+                                        ${index === activeIndex
+                                        ? 'border-pink-600 shadow-lg transform scale-105'
                                         : 'border-gray-300 hover:border-pink-400 hover:scale-105'
                                     }
-                                    overflow-hidden bg-white p-1
-                                `}
-                                aria-label={`Ver área ${index + 1}`}
-                                aria-pressed={index === activeIndex}
-                            >
-                                <div className="w-full h-full flex items-center justify-center rounded-full overflow-hidden bg-white">
-                                    <img
-                                        src={item.circleImage}
-                                        alt=""
-                                        className="max-w-[90%] max-h-[90%] object-contain"
-                                        aria-hidden="true"
-                                        loading="lazy"
-                                    />
-                                </div>
-                            </button>
-                        ))}
+                                        overflow-visible ${isSpecialIcon ? 'bg-white' : 'bg-transparent'}
+                                    `}
+                                    aria-label={`Ver área ${index + 1}`}
+                                    aria-pressed={index === activeIndex}
+                                    style={{
+                                        // Aseguramos espacio suficiente para la escala
+                                        margin: index === activeIndex ? '0.5rem' : '0.5rem',
+                                        transform: index === activeIndex ? 'scale(1.05)' : 'scale(1)',
+                                        transformOrigin: 'center center',
+                                        position: 'relative',
+                                        zIndex: index === activeIndex ? 10 : 1
+                                    }}
+                                >
+                                    <div className={`
+                                        w-full h-full rounded-full overflow-hidden
+                                        ${isSpecialIcon ? 'p-0.5 bg-white' : 'p-0 bg-transparent'}
+                                    `}>
+                                        <img
+                                            src={item.circleImage}
+                                            alt=""
+                                            className={`
+                                                ${isSpecialIcon
+                                                ? 'max-w-[90%] max-h-[90%] object-contain m-auto'
+                                                : 'w-full h-full object-cover'
+                                            } 
+                                                rounded-full
+                                            `}
+                                            aria-hidden="true"
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

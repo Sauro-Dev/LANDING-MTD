@@ -38,7 +38,8 @@ const AreasSection: FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="mt-2 sm:mt-4 bg-pink-600 text-white font-extrabold py-3 px-8 rounded-full text-xl sm:text-2xl shadow-lg md:py-4 md:px-10 md:text-2xl lg:text-3xl md:shadow-xl hover:bg-pink-700 transition-all focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
-                        onClick={() => navigate("/volunteer-form")}
+                        // onClick={() => navigate("/volunteer-form")}
+                        onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLSeyOHzCCrjtupDh4hRRXYl72ukUne9soRROT4rdKExCGu-MtA/viewform?usp=sf_link", "_blank")}
                         aria-label="Únete a Make The Difference"
                     >
                         ¡ÚNETENOS!
