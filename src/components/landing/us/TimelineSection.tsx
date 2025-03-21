@@ -105,13 +105,15 @@ const TimelineSection: FC = () => {
                                         key={file.idLandingFiles} 
                                         className="w-full flex-shrink-0"
                                     >
-                                        <div className="flex items-center justify-center h-[300px] sm:h-[400px] md:h-[500px] px-4 sm:px-8 md:px-12">
-                                            <img
-                                                src={getS3ImageUrl(file.fileName)}
-                                                alt={`Imagen de trayectoria ${index + 1}`}
-                                                className="w-auto h-full object-contain max-w-full rounded-lg shadow-lg"
-                                                loading={index < 2 ? "eager" : "lazy"}
-                                            />
+                                        <div className="px-4 sm:px-8 md:px-12 w-full max-w-4xl mx-auto">
+                                            <div className="relative aspect-[16/9] w-full">
+                                                <img
+                                                    src={getS3ImageUrl(file.fileName)}
+                                                    alt={`Imagen de trayectoria ${index + 1}`}
+                                                    className="w-full h-full object-contain rounded-lg shadow-lg"
+                                                    loading={index < 2 ? "eager" : "lazy"}
+                                                />
+                                            </div>
                                         </div>
                                     </Slider>
                                 ))
