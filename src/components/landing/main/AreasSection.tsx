@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 /**
@@ -9,7 +8,6 @@ import { motion } from "framer-motion";
  * Contiene un mensaje inspirador y un botón de llamada a la acción para el formulario de voluntariado.
  */
 const AreasSection: FC = () => {
-    const navigate = useNavigate(); // Hook para la navegación dentro de la página
 
     return (
         <section className="relative py-12 sm:py-16 md:py-20 bg-white overflow-hidden font-poppins">
