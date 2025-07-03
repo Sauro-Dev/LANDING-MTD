@@ -68,7 +68,7 @@ const Navbar: FC = () => {
                         <img src={mtdLogo} alt="MTD Logo" className="h-12 w-12 sm:h-16 sm:w-16 object-contain" />
                         <div className="flex flex-col leading-tight">
                             <span className="text-light font-medium text-lg sm:text-xl">MAKE THE</span>
-                            <span className="text-light font-medium text-lg sm:text-xl">DIFFERENCE</span>
+                            <span className="text-light font-medium text-lg sm:text-xl">IAC</span>
                         </div>
                     </Link>
 
